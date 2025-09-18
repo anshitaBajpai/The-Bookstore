@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../components/Header";
 
@@ -7,13 +8,24 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/auth/signup", { username, email, password });
+      const res = await axios.post("http://localhost:5000/auth/signup", { username, email, password });
       setError("");
-      alert("User registered successfully!");
+      // Save user info to localStorage if backend returns token, role, username
+      if (res.data.token && res.data.role && res.data.username) {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("role", res.data.role);
+        localStorage.setItem("username", res.data.username);
+        alert("Signup successful! Redirecting to home page...");
+        navigate("/");
+      } else {
+        alert("User registered successfully! Please login.");
+        navigate("/login");
+      }
     } catch (err) {
       setError(err.response?.data?.error || "Signup failed. Please try again.");
     }

@@ -38,13 +38,15 @@ function Navbar() {
           </Link>
         ) : (
           <>
-            <span style={{ color: "#7fffd4", fontWeight: 600 }}>Hi, {username}</span>
+            <span style={{ color: "#7fffd4", fontWeight: 600, marginLeft: "18px" }}>
+              Hi, {username && username.charAt(0).toUpperCase() + username.slice(1)}
+            </span>
             {role === "admin" && (
               <Link to="/admin" style={{ color: "#a3bffa", textDecoration: "none", fontWeight: 600, fontSize: "1.1rem" }}>
                 Admin Dashboard
               </Link>
             )}
-            <button onClick={handleLogout} style={{ background: "transparent", color: "#ff7f7f", border: "none", cursor: "pointer" }}>
+            <button onClick={handleLogout} style={{ background: "transparent", color: "#a3bffa", border: "none", cursor: "pointer", fontWeight: 600, fontSize: "1.1rem" }}>
               Logout
             </button>
           </>

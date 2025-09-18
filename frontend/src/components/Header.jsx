@@ -4,13 +4,17 @@ import Navbar from "./Navbar";
 const Header = () => (
   <header
     style={{
-      background: "linear-gradient(90deg, #e0ffef 0%, #43c6ac 100%)",
-      color: "#134e4a",
-      padding: "20px 0 8px 0",
-      boxShadow: "0 4px 18px #43c6ac33",
-      marginBottom: "28px",
-      borderRadius: "0 0 24px 24px",
-      borderBottom: "3px solid #43c6ac"
+  background: "#134e4a",
+      color: "#fff",
+      padding: "24px 0 10px 0",
+      boxShadow: "0 6px 24px #134e4a55",
+      marginBottom: "32px",
+  borderRadius: "0",
+      borderBottom: "4px solid #43c6ac",
+      backdropFilter: "blur(2px)",
+      WebkitBackdropFilter: "blur(2px)",
+      position: "relative",
+      zIndex: 2
     }}
   >
     <Navbar />
