@@ -19,19 +19,13 @@ function Navbar() {
   return (
     <nav
       style={{
-        background: "#1a223f",
         padding: "18px 32px",
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center",
-        boxShadow: "0 2px 12px #23294655",
-        position: "sticky",
-        top: 0,
-        zIndex: 1000,
-        borderBottom: "2px solid #232946",
+        alignItems: "center"
       }}
     >
-      <h2 style={{ color: "#a3bffa", fontWeight: 700, fontSize: "1.7rem", letterSpacing: 1 }}>BookStore</h2>
+      <h2 style={{ color: "#a3bffa", fontWeight: 700, fontSize: "1.7rem", letterSpacing: 1 }}>The BookStore</h2>
 
       <div style={{ display: "flex", gap: "28px", alignItems: "center" }}>
         <Link to="/" style={{ color: "#a3bffa", textDecoration: "none", fontWeight: 600, fontSize: "1.1rem" }}>

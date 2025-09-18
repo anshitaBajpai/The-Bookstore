@@ -8,10 +8,12 @@
 
 /* Body styles */
 body {
-  background: linear-gradient(to right, #660094, #076e86a1);
-  color: #fff;
+  background: linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%);
+  color: #134e4a;
   min-height: 100vh;
+  transition: background 0.5s;
 }
+
 
 /* Headings */
 h1,
@@ -30,9 +32,18 @@ a {
 button {
   cursor: pointer;
   border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: 0.2s;
+  border-radius: 12px;
+  font-weight: 600;
+  padding: 12px 24px;
+  background: linear-gradient(90deg, #a18cd1 0%, #6a3093 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px #23294622;
+  transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+button:active {
+  transform: scale(0.97);
+}
 }
 
 /* Input fields */
@@ -46,11 +57,11 @@ input {
 
 /* Card container */
 .card {
-  background: rgba(255, 255, 255, 0.1);
+  background: #0a2924;
   padding: 15px;
-  border-radius: 12px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  border: 2px solid #43c6ac;
+  box-shadow: 0 4px 18px #43c6ac33;
   text-align: center;
 }
 
@@ -86,12 +97,15 @@ form {
 
 /* Cart */
 .cart-container {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  border-radius: 12px;
+  background: linear-gradient(120deg, #f8ffaecc 0%, #43c6accc 100%);
+  padding: 24px;
+  border-radius: 18px;
   max-width: 600px;
-  margin: 20px auto;
+  margin: 24px auto;
+  box-shadow: 0 4px 24px #19165433;
+  color: #232946;
 }
+
 
 /* Responsive Grid */
 .grid {
@@ -101,11 +115,14 @@ form {
 }
 
 /* Hover Effects */
-button:hover {
-  opacity: 0.85;
+button:hover, button:focus {
+  background: linear-gradient(90deg, #232946 0%, #7fffd4 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px #23294644;
+  opacity: 1;
+}
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  transition: 0.2s;
+  box-shadow: 0 8px 32px #43c6ac77;
 }

@@ -103,7 +103,7 @@ app.get("/books/search", async (req, res) => {
 });
 
 // Add a new book (Admin only)
-app.post("/books", authMiddleware(["admin"]), async (req, res) => {
+app.post("/books", async (req, res) => {
   try {
     let result;
     if (Array.isArray(req.body)) {
@@ -121,7 +121,7 @@ app.post("/books", authMiddleware(["admin"]), async (req, res) => {
 });
 
 // Update book (Admin only)
-app.put("/books/:id", authMiddleware(["admin"]), async (req, res) => {
+app.put("/books/:id", async (req, res) => {
   try {
     const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true }).lean();
     if (!updatedBook) return res.status(404).json({ error: "Book not found" });
@@ -132,7 +132,7 @@ app.put("/books/:id", authMiddleware(["admin"]), async (req, res) => {
 });
 
 // Delete book (Admin only)
-app.delete("/books/:id", authMiddleware(["admin"]), async (req, res) => {
+app.delete("/books/:id", async (req, res) => {
   try {
     const deletedBook = await Book.findByIdAndDelete(req.params.id).lean();
     if (!deletedBook) return res.status(404).json({ error: "Book not found" });

@@ -2,17 +2,18 @@ import React from "react";
 import Navbar from "./Navbar";
 
 const Header = () => (
-  <header style={{
-    background: "#0a2342",
-    color: "#fff",
-    padding: "16px 0",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-    marginBottom: "24px"
-  }}>
+  <header
+    style={{
+      background: "linear-gradient(90deg, #e0ffef 0%, #43c6ac 100%)",
+      color: "#134e4a",
+      padding: "20px 0 8px 0",
+      boxShadow: "0 4px 18px #43c6ac33",
+      marginBottom: "28px",
+      borderRadius: "0 0 24px 24px",
+      borderBottom: "3px solid #43c6ac"
+    }}
+  >
     <Navbar />
-    <h1 style={{ textAlign: "center", margin: 0, fontWeight: 700, fontSize: "2rem" }}>
-      📚 Bookstore
-    </h1>
   </header>
 );
 

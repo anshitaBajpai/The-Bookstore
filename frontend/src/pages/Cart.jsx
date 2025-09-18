@@ -19,12 +19,14 @@ function Cart() {
         <Header />
         <div style={{
           minHeight: "100vh",
-          background: "linear-gradient(120deg, #1a223f 0%, #232946 100%)",
-          color: "#a3bffa",
+          background: "linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%)",
+          color: "#134e4a",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: "1.5rem"
+          fontSize: "1.5rem",
+          fontWeight: 600,
+          letterSpacing: 1
         }}>
           Your cart is empty
         </div>
@@ -37,8 +39,8 @@ function Cart() {
       <Header />
       <div style={{
         minHeight: "100vh",
-        background: "linear-gradient(120deg, #1a223f 0%, #232946 100%)",
-        color: "#a3bffa",
+        background: "linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%)",
+        color: "#134e4a",
         padding: "32px 0"
       }}>
         <h2 style={{ marginBottom: "28px", textAlign: "center", fontSize: "2rem", fontWeight: 700 }}>Your Cart</h2>

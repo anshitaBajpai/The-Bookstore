@@ -63,14 +63,14 @@ const Admin = () => {
     <>
       <Header />
       <div style={{
-        padding: "32px",
-        maxWidth: 700,
-        margin: "0 auto",
-        background: "linear-gradient(120deg, #232946 0%, #7fffd4 100%)",
-        borderRadius: "16px",
-        boxShadow: "0 4px 24px #1a223f55"
+  padding: "32px",
+  maxWidth: 700,
+  margin: "0 auto",
+  background: "linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%)",
+  borderRadius: "16px",
+  boxShadow: "0 4px 24px #134e4a55"
       }}>
-        <h1 style={{ textAlign: "center", color: "#232946", fontWeight: 700, fontSize: "2rem", marginBottom: 32, letterSpacing: 1 }}>Admin Dashboard</h1>
+  <h1 style={{ textAlign: "center", color: "#134e4a", fontWeight: 700, fontSize: "2rem", marginBottom: 32, letterSpacing: 1 }}>Admin Dashboard</h1>
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
           <input
             placeholder="Title"
@@ -80,13 +80,13 @@ const Admin = () => {
             style={{
               padding: "12px",
               borderRadius: "8px",
-              border: "1.5px solid #7fffd4",
+              border: "1.5px solid #43c6ac",
               fontSize: "1.1rem",
               transition: "border 0.2s, box-shadow 0.2s",
-              boxShadow: "0 2px 8px #23294622"
+              boxShadow: "0 2px 8px #134e4a22"
             }}
-            onFocus={e => e.target.style.border = "2px solid #232946"}
-            onBlur={e => e.target.style.border = "1.5px solid #7fffd4"}
+            onFocus={e => e.target.style.border = "2px solid #134e4a"}
+            onBlur={e => e.target.style.border = "1.5px solid #43c6ac"}
           />
           <input
             placeholder="Author"
@@ -138,42 +138,42 @@ const Admin = () => {
           <button
             type="submit"
             style={{
-              background: "#7fffd4",
-              color: "#232946",
+              background: "#43c6ac",
+              color: "#134e4a",
               fontWeight: 700,
               border: "none",
               borderRadius: "8px",
               padding: "14px",
               fontSize: "1.1rem",
               cursor: "pointer",
-              boxShadow: "0 2px 8px #23294622",
+              boxShadow: "0 2px 8px #134e4a22",
               transition: "background 0.2s, color 0.2s"
             }}
             onMouseOver={e => {
-              e.currentTarget.style.background = "#232946";
-              e.currentTarget.style.color = "#7fffd4";
+              e.currentTarget.style.background = "#134e4a";
+              e.currentTarget.style.color = "#43c6ac";
             }}
             onMouseOut={e => {
-              e.currentTarget.style.background = "#7fffd4";
-              e.currentTarget.style.color = "#232946";
+              e.currentTarget.style.background = "#43c6ac";
+              e.currentTarget.style.color = "#134e4a";
             }}
           >
             {editingBook ? "Update Book" : "Add Book"}
           </button>
         </form>
-        <div style={{ background: "#232946", borderRadius: "12px", padding: "24px", boxShadow: "0 2px 12px #1a223f99", marginTop: "24px" }}>
+  <div style={{ background: "#e0ffef", borderRadius: "12px", padding: "24px", boxShadow: "0 2px 12px #43c6ac99", marginTop: "24px" }}>
           {books.map((book) => (
-            <div key={book.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "18px", padding: "12px 0", borderBottom: "1px solid #7fffd4" }}>
+            <div key={book.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "18px", padding: "12px 0", borderBottom: "1px solid #43c6ac" }}>
               <div>
-                <span style={{ color: "#a3bffa", fontWeight: 600 }}>{book.title}</span> - <span style={{ color: "#7fffd4" }}>{book.author}</span> - <span style={{ color: "#eebbc3" }}>₹{book.price}</span>
+                <span style={{ color: "#134e4a", fontWeight: 600 }}>{book.title}</span> - <span style={{ color: "#43c6ac" }}>{book.author}</span> - <span style={{ color: "#191654" }}>₹{book.price}</span>
               </div>
               <div>
                 <button
                   onClick={() => handleEdit(book)}
                   style={{
                     marginRight: 8,
-                    background: "#eebbc3",
-                    color: "#232946",
+                    background: "#43c6ac",
+                    color: "#134e4a",
                     border: "none",
                     borderRadius: "8px",
                     padding: "6px 12px",
@@ -182,12 +182,12 @@ const Admin = () => {
                     transition: "background 0.2s, color 0.2s"
                   }}
                   onMouseOver={e => {
-                    e.currentTarget.style.background = "#232946";
-                    e.currentTarget.style.color = "#eebbc3";
+                    e.currentTarget.style.background = "#134e4a";
+                    e.currentTarget.style.color = "#43c6ac";
                   }}
                   onMouseOut={e => {
-                    e.currentTarget.style.background = "#eebbc3";
-                    e.currentTarget.style.color = "#232946";
+                    e.currentTarget.style.background = "#43c6ac";
+                    e.currentTarget.style.color = "#134e4a";
                   }}
                 >Edit</button>
                 <button
@@ -203,8 +203,8 @@ const Admin = () => {
                     transition: "background 0.2s, color 0.2s"
                   }}
                   onMouseOver={e => {
-                    e.currentTarget.style.background = "#232946";
-                    e.currentTarget.style.color = "#eebbc3";
+                    e.currentTarget.style.background = "#134e4a";
+                    e.currentTarget.style.color = "#43c6ac";
                   }}
                   onMouseOut={e => {
                     e.currentTarget.style.background = "#e53935";
