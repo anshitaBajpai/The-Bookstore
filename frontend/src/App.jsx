@@ -1,24 +1,43 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 import Cart from "./pages/Cart";
+import AuthPage from "./pages/AuthPage";
+import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
-
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/cart" element={<Cart />} />
+      {/* Home and Cart are protected */}
+      <Route
+        path="/"
+        element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/cart"
+        element={
+          <PrivateRoute>
+            <Cart />
+          </PrivateRoute>
+        }
+      />
+
+      {/* Auth page is public */}
+      <Route path="/auth" element={<AuthPage />} />
+
+      {/* Admin page protected for admin only */}
       <Route
         path="/admin"
-        element={token && role === "admin" ? <Admin /> : <Navigate to="/login" />}
+        element={
+          <PrivateRoute adminOnly={true}>
+            <Admin />
+          </PrivateRoute>
+        }
       />
     </Routes>
   );

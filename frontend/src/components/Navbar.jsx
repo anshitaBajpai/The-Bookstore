@@ -6,55 +6,43 @@ function Navbar() {
   const { cart } = useContext(CartContext);
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-  // ✅ Get user info from localStorage
   const username = localStorage.getItem("username");
   const role = localStorage.getItem("role");
 
   const handleLogout = () => {
     localStorage.clear();
-    window.location.href = "/login"; // redirect after logout
+    window.location.href = "/auth"; // redirect to AuthPage
   };
 
   return (
-    <nav
-      style={{
-        padding: "18px 32px",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center"
-      }}
-    >
-      <h2 style={{ color: "#a3bffa", fontWeight: 700, fontSize: "1.7rem", letterSpacing: 1 }}>The BookStore</h2>
+    <nav style={{ padding: "18px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <h2 style={{ color: "#a3bffa", fontWeight: 700, fontSize: "1.7rem" }}>The BookStore</h2>
 
       <div style={{ display: "flex", gap: "28px", alignItems: "center" }}>
-        <Link to="/" style={{ color: "#a3bffa", textDecoration: "none", fontWeight: 600, fontSize: "1.1rem" }}>
-          Home
-        </Link>
+        {username && (
+          <>
+            <Link to="/" style={{ color: "#a3bffa", textDecoration: "none", fontWeight: 600 }}>Home</Link>
+            <Link to="/cart" style={{ color: "#a3bffa", textDecoration: "none", fontWeight: 600 }}>
+              Cart {cartCount > 0 && <span style={{ color: "#7fffd4" }}>({cartCount})</span>}
+            </Link>
+          </>
+        )}
 
         {!username ? (
-          <Link to="/login" style={{ color: "#a3bffa", textDecoration: "none", fontWeight: 600, fontSize: "1.1rem" }}>
-            Login
-          </Link>
+          <Link to="/auth" style={{ color: "#a3bffa", textDecoration: "none", fontWeight: 600 }}>Login</Link>
         ) : (
           <>
             <span style={{ color: "#7fffd4", fontWeight: 600, marginLeft: "18px" }}>
-              Hi, {username && username.charAt(0).toUpperCase() + username.slice(1)}
+              Hi, {username.charAt(0).toUpperCase() + username.slice(1)}
             </span>
             {role === "admin" && (
-              <Link to="/admin" style={{ color: "#a3bffa", textDecoration: "none", fontWeight: 600, fontSize: "1.1rem" }}>
-                Admin Dashboard
-              </Link>
+              <Link to="/admin" style={{ color: "#a3bffa", textDecoration: "none", fontWeight: 600 }}>Admin Dashboard</Link>
             )}
-            <button onClick={handleLogout} style={{ background: "transparent", color: "#a3bffa", border: "none", cursor: "pointer", fontWeight: 600, fontSize: "1.1rem" }}>
+            <button onClick={handleLogout} style={{ background: "transparent", color: "#a3bffa", border: "none", cursor: "pointer", fontWeight: 600 }}>
               Logout
             </button>
           </>
         )}
-
-        <Link to="/cart" style={{ color: "#a3bffa", textDecoration: "none", fontWeight: 600, fontSize: "1.1rem" }}>
-          Cart {cartCount > 0 && <span style={{ color: "#7fffd4" }}>({cartCount})</span>}
-        </Link>
       </div>
     </nav>
   );

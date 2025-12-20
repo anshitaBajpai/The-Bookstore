@@ -57,11 +57,15 @@ app.post("/auth/signup", async (req, res) => {
     const newUser = new User({ username, email, password: hashedPassword, role: role || "user" });
     await newUser.save();
 
-    res.json({ message: "User registered successfully!" });
+    // Create JWT token
+    const token = jwt.sign({ id: newUser._id, role: newUser.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
+
+    res.json({ token, role: newUser.role, username: newUser.username });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 // Login
 app.post("/auth/login", async (req, res) => {
