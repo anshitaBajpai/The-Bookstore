@@ -9,6 +9,8 @@ const Admin = () => {
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
   const [editingBook, setEditingBook] = useState(null);
+  const [category, setCategory] = useState("");
+
 
   const token = localStorage.getItem("token");
 
@@ -27,13 +29,13 @@ const Admin = () => {
       if (editingBook) {
         await axios.put(
           `http://localhost:5000/books/${editingBook.id}`,
-          { title, author, price, image },
+          { title, author, price, image,category },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
         await axios.post(
           "http://localhost:5000/books",
-          { title, author, price, image },
+          { title, author, price, image,category},
           { headers: { Authorization: `Bearer ${token}` } }
         );
       }
@@ -135,6 +137,22 @@ const Admin = () => {
             onFocus={e => e.target.style.border = "2px solid #232946"}
             onBlur={e => e.target.style.border = "1.5px solid #7fffd4"}
           />
+<select
+  value={category}
+  onChange={(e) => setCategory(e.target.value)}
+  required
+  style={{ padding: "10px", marginBottom: "10px" }}
+>
+  <option value="">Select Category</option>
+  <option value="Fiction">Fiction</option>
+  <option value="Business">Business</option>
+  <option value="Technology">Technology</option>
+  <option value="Self-Help">Self-Help</option>
+  <option value="Biography">Biography</option>
+  <option value="Education">Education</option>
+</select>
+
+
           <button
             type="submit"
             style={{

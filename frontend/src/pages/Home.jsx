@@ -6,21 +6,33 @@ import Header from "../components/Header";
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
 
-  const fetchBooks = async () => {
-    const res = search
-      ? await axios.get(`http://localhost:5000/books/search?q=${search}`)
-      : await axios.get("http://localhost:5000/books");
-    setBooks(res.data);
-  };
 
-  useEffect(() => {
-    fetchBooks();
-  }, [search]);
+ const fetchBooks = async () => {
+  let url = "http://localhost:5000/books";
+
+  if (search) {
+    url = `http://localhost:5000/books/search?q=${search}`;
+  } else if (category) {
+    url = `http://localhost:5000/books?category=${category}`;
+  }
+
+  const res = await axios.get(url);
+  setBooks(res.data);
+};
+
+useEffect(() => {
+  fetchBooks();
+}, [search, category]);
+
 
   return (
     <>
       <Header />
+
+
+      
       <div style={{ padding: "20px 48px", minHeight: "100vh", background: "linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%)" }}>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "28px 0 32px 0" }}>
           <input
@@ -50,6 +62,30 @@ const Home = () => {
               e.target.style.boxShadow = "0 2px 12px #43c6ac33";
             }}
           />
+
+           <select
+    value={category}
+    onChange={(e) => setCategory(e.target.value)}
+    style={{
+      padding: "12px 16px",
+      borderRadius: "20px",
+      border: "2px solid #43c6ac",
+      background: "#e0ffef",
+      color: "#134e4a",
+      fontSize: "1rem",
+      cursor: "pointer"
+    }}
+  >
+    <option value="">All Categories</option>
+    <option value="Fiction">Fiction</option>
+    <option value="Business">Business</option>
+    <option value="Technology">Technology</option>
+    <option value="Self-Help">Self-Help</option>
+    <option value="Biography">Biography</option>
+    <option value="Education">Education</option>
+  </select>
+
+          
         </div>
         <div
           style={{

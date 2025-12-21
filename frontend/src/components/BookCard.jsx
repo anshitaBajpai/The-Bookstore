@@ -7,6 +7,8 @@ const BookCard = ({ book }) => {
   const bookId = book.id || book._id;
 
   return (
+
+    
     <div
       style={{
         background: "#b2f1e6",

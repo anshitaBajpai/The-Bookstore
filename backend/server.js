@@ -146,6 +146,20 @@ app.delete("/books/:id", async (req, res) => {
   }
 });
 
+app.get("/books", async (req, res) => {
+  try {
+    const { category } = req.query;
+
+    const filter = category ? { category } : {};
+    const books = await Book.find(filter).lean();
+
+    res.json(books.map(formatBook));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 // Root route
 app.get("/", (req, res) => {
   res.send("📚 Bookstore API is running...");
