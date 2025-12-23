@@ -9,6 +9,11 @@ const bookSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: ["Fiction", "Business", "Technology", "Self-Help", "Biography", "Education"]
+  },
+  stock: {
+    type: Number,
+    required: true,
+    min: 0
   }
 });
 
