@@ -10,7 +10,7 @@ const Admin = () => {
   const [image, setImage] = useState("");
   const [editingBook, setEditingBook] = useState(null);
   const [category, setCategory] = useState("");
-
+  const [stock, setStock] = useState("");
 
   const token = localStorage.getItem("token");
 
@@ -29,17 +29,21 @@ const Admin = () => {
       if (editingBook) {
         await axios.put(
           `http://localhost:5000/books/${editingBook.id}`,
-          { title, author, price, image,category },
+          { title, author, price, image, category, stock },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
         await axios.post(
           "http://localhost:5000/books",
-          { title, author, price, image,category},
+          { title, author, price, image, category, stock },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       }
-      setTitle(""); setAuthor(""); setPrice(""); setImage(""); setEditingBook(null);
+      setTitle("");
+      setAuthor("");
+      setPrice("");
+      setImage("");
+      setEditingBook(null);
       fetchBooks();
     } catch (err) {
       console.error(err);
@@ -64,16 +68,33 @@ const Admin = () => {
   return (
     <>
       <Header />
-      <div style={{
-  padding: "32px",
-  maxWidth: 700,
-  margin: "0 auto",
-  background: "linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%)",
-  borderRadius: "16px",
-  boxShadow: "0 4px 24px #134e4a55"
-      }}>
-  <h1 style={{ textAlign: "center", color: "#134e4a", fontWeight: 700, fontSize: "2rem", marginBottom: 32, letterSpacing: 1 }}>Admin Dashboard</h1>
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+      <div
+        style={{
+          padding: "32px",
+          maxWidth: 700,
+          margin: "0 auto",
+          background:
+            "linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%)",
+          borderRadius: "16px",
+          boxShadow: "0 4px 24px #134e4a55",
+        }}
+      >
+        <h1
+          style={{
+            textAlign: "center",
+            color: "#134e4a",
+            fontWeight: 700,
+            fontSize: "2rem",
+            marginBottom: 32,
+            letterSpacing: 1,
+          }}
+        >
+          Admin Dashboard
+        </h1>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: "18px" }}
+        >
           <input
             placeholder="Title"
             value={title}
@@ -85,10 +106,10 @@ const Admin = () => {
               border: "1.5px solid #43c6ac",
               fontSize: "1.1rem",
               transition: "border 0.2s, box-shadow 0.2s",
-              boxShadow: "0 2px 8px #134e4a22"
+              boxShadow: "0 2px 8px #134e4a22",
             }}
-            onFocus={e => e.target.style.border = "2px solid #134e4a"}
-            onBlur={e => e.target.style.border = "1.5px solid #43c6ac"}
+            onFocus={(e) => (e.target.style.border = "2px solid #134e4a")}
+            onBlur={(e) => (e.target.style.border = "1.5px solid #43c6ac")}
           />
           <input
             placeholder="Author"
@@ -101,10 +122,10 @@ const Admin = () => {
               border: "1.5px solid #7fffd4",
               fontSize: "1.1rem",
               transition: "border 0.2s, box-shadow 0.2s",
-              boxShadow: "0 2px 8px #23294622"
+              boxShadow: "0 2px 8px #23294622",
             }}
-            onFocus={e => e.target.style.border = "2px solid #232946"}
-            onBlur={e => e.target.style.border = "1.5px solid #7fffd4"}
+            onFocus={(e) => (e.target.style.border = "2px solid #232946")}
+            onBlur={(e) => (e.target.style.border = "1.5px solid #7fffd4")}
           />
           <input
             placeholder="Price"
@@ -117,11 +138,21 @@ const Admin = () => {
               border: "1.5px solid #7fffd4",
               fontSize: "1.1rem",
               transition: "border 0.2s, box-shadow 0.2s",
-              boxShadow: "0 2px 8px #23294622"
+              boxShadow: "0 2px 8px #23294622",
             }}
-            onFocus={e => e.target.style.border = "2px solid #232946"}
-            onBlur={e => e.target.style.border = "1.5px solid #7fffd4"}
+            onFocus={(e) => (e.target.style.border = "2px solid #232946")}
+            onBlur={(e) => (e.target.style.border = "1.5px solid #7fffd4")}
           />
+          <input
+            type="number"
+            placeholder="Stock Quantity"
+            value={stock}
+            onChange={(e) => setStock(e.target.value)}
+            required
+            min="0"
+            style={{ padding: "10px", marginBottom: "10px" }}
+          />
+
           <input
             placeholder="Image URL"
             value={image}
@@ -132,26 +163,25 @@ const Admin = () => {
               border: "1.5px solid #7fffd4",
               fontSize: "1.1rem",
               transition: "border 0.2s, box-shadow 0.2s",
-              boxShadow: "0 2px 8px #23294622"
+              boxShadow: "0 2px 8px #23294622",
             }}
-            onFocus={e => e.target.style.border = "2px solid #232946"}
-            onBlur={e => e.target.style.border = "1.5px solid #7fffd4"}
+            onFocus={(e) => (e.target.style.border = "2px solid #232946")}
+            onBlur={(e) => (e.target.style.border = "1.5px solid #7fffd4")}
           />
-<select
-  value={category}
-  onChange={(e) => setCategory(e.target.value)}
-  required
-  style={{ padding: "10px", marginBottom: "10px" }}
->
-  <option value="">Select Category</option>
-  <option value="Fiction">Fiction</option>
-  <option value="Business">Business</option>
-  <option value="Technology">Technology</option>
-  <option value="Self-Help">Self-Help</option>
-  <option value="Biography">Biography</option>
-  <option value="Education">Education</option>
-</select>
-
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+            style={{ padding: "10px", marginBottom: "10px" }}
+          >
+            <option value="">Select Category</option>
+            <option value="Fiction">Fiction</option>
+            <option value="Business">Business</option>
+            <option value="Technology">Technology</option>
+            <option value="Self-Help">Self-Help</option>
+            <option value="Biography">Biography</option>
+            <option value="Education">Education</option>
+          </select>
 
           <button
             type="submit"
@@ -165,13 +195,13 @@ const Admin = () => {
               fontSize: "1.1rem",
               cursor: "pointer",
               boxShadow: "0 2px 8px #134e4a22",
-              transition: "background 0.2s, color 0.2s"
+              transition: "background 0.2s, color 0.2s",
             }}
-            onMouseOver={e => {
+            onMouseOver={(e) => {
               e.currentTarget.style.background = "#134e4a";
               e.currentTarget.style.color = "#43c6ac";
             }}
-            onMouseOut={e => {
+            onMouseOut={(e) => {
               e.currentTarget.style.background = "#43c6ac";
               e.currentTarget.style.color = "#134e4a";
             }}
@@ -179,11 +209,33 @@ const Admin = () => {
             {editingBook ? "Update Book" : "Add Book"}
           </button>
         </form>
-  <div style={{ background: "#e0ffef", borderRadius: "12px", padding: "24px", boxShadow: "0 2px 12px #43c6ac99", marginTop: "24px" }}>
+        <div
+          style={{
+            background: "#e0ffef",
+            borderRadius: "12px",
+            padding: "24px",
+            boxShadow: "0 2px 12px #43c6ac99",
+            marginTop: "24px",
+          }}
+        >
           {books.map((book) => (
-            <div key={book.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "18px", padding: "12px 0", borderBottom: "1px solid #43c6ac" }}>
+            <div
+              key={book.id}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: "18px",
+                padding: "12px 0",
+                borderBottom: "1px solid #43c6ac",
+              }}
+            >
               <div>
-                <span style={{ color: "#134e4a", fontWeight: 600 }}>{book.title}</span> - <span style={{ color: "#43c6ac" }}>{book.author}</span> - <span style={{ color: "#191654" }}>₹{book.price}</span>
+                <span style={{ color: "#134e4a", fontWeight: 600 }}>
+                  {book.title}
+                </span>{" "}
+                - <span style={{ color: "#43c6ac" }}>{book.author}</span> -{" "}
+                <span style={{ color: "#191654" }}>₹{book.price}</span>
               </div>
               <div>
                 <button
@@ -197,17 +249,19 @@ const Admin = () => {
                     padding: "6px 12px",
                     cursor: "pointer",
                     fontWeight: 600,
-                    transition: "background 0.2s, color 0.2s"
+                    transition: "background 0.2s, color 0.2s",
                   }}
-                  onMouseOver={e => {
+                  onMouseOver={(e) => {
                     e.currentTarget.style.background = "#134e4a";
                     e.currentTarget.style.color = "#43c6ac";
                   }}
-                  onMouseOut={e => {
+                  onMouseOut={(e) => {
                     e.currentTarget.style.background = "#43c6ac";
                     e.currentTarget.style.color = "#134e4a";
                   }}
-                >Edit</button>
+                >
+                  Edit
+                </button>
                 <button
                   onClick={() => handleDelete(book.id)}
                   style={{
@@ -218,17 +272,19 @@ const Admin = () => {
                     padding: "6px 12px",
                     cursor: "pointer",
                     fontWeight: 600,
-                    transition: "background 0.2s, color 0.2s"
+                    transition: "background 0.2s, color 0.2s",
                   }}
-                  onMouseOver={e => {
+                  onMouseOver={(e) => {
                     e.currentTarget.style.background = "#134e4a";
                     e.currentTarget.style.color = "#43c6ac";
                   }}
-                  onMouseOut={e => {
+                  onMouseOut={(e) => {
                     e.currentTarget.style.background = "#e53935";
                     e.currentTarget.style.color = "#fff";
                   }}
-                >Delete</button>
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}

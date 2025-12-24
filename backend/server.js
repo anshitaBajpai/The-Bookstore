@@ -159,6 +159,28 @@ app.get("/books", async (req, res) => {
   }
 });
 
+app.post("/orders", authMiddleware(), async (req, res) => {
+  try {
+    const { items } = req.body;
+
+    for (const item of items) {
+      const book = await Book.findById(item.id);
+
+      if (!book || book.stock < item.quantity) {
+        return res.status(400).json({ error: "Insufficient stock" });
+      }
+
+      book.stock -= item.quantity;
+      await book.save();
+    }
+
+    res.json({ message: "Order placed successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 
 // Root route
 app.get("/", (req, res) => {
