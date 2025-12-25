@@ -5,23 +5,19 @@ export const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
-  // ✅ Handle id / _id mismatch
   const getBookId = (book) => book.id || book._id;
 
-  // ✅ ADD TO CART (FIXED)
   const addToCart = (book) => {
     const bookId = getBookId(book);
 
     setCart((prev) => {
       const existing = prev.find((item) => getBookId(item) === bookId);
 
-      // 🚫 Out of stock
       if (Number(book.stock) === 0) {
         alert("❌ This book is out of stock.");
         return prev;
       }
 
-      // 🚫 Stock limit reached
       if (existing) {
         if (existing.quantity >= book.stock) {
           alert("❌ Cannot add more. Stock limit reached.");
@@ -35,17 +31,14 @@ export function CartProvider({ children }) {
         );
       }
 
-      // ✅ Add new item
       return [...prev, { ...book, quantity: 1 }];
     });
   };
 
-  // ✅ Remove item completely
   const removeFromCart = (id) => {
     setCart((prev) => prev.filter((item) => getBookId(item) !== id));
   };
 
-  // ✅ Increase quantity (with stock check)
   const increaseQuantity = (id) => {
     setCart((prev) =>
       prev.map((item) => {
@@ -61,7 +54,6 @@ export function CartProvider({ children }) {
     );
   };
 
-  // ✅ Decrease quantity (remove if 0)
   const decreaseQuantity = (id) => {
     setCart((prev) =>
       prev
