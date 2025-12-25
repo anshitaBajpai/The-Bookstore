@@ -8,4 +8,9 @@ A modern full-stack web application for browsing, purchasing, and managing books
 - **Admin Panel:** Admin users can add, update, and delete books.  
 - **Book Listing & Search:** View all books and search by title.  
 - **Cart:** Add books to cart and view cart items.  
-- **Protected Routes:** Only logged-in users can access Home and Cart pages. 
+- **Protected Routes:** Only logged-in users can access Home and Cart pages.
+
+## 📸Screenshots
+
+<img width="1919" height="893" alt="image" src="https://github.com/user-attachments/assets/71a448f7-1abe-4c1b-ba29-4d82ed27ef68" />
+
