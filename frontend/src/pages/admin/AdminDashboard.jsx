@@ -9,7 +9,6 @@ function AdminDashboard() {
 
   const API_URL = "http://localhost:5000";
 
-  // ✅ Fetch all books
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -24,7 +23,6 @@ function AdminDashboard() {
     fetchBooks();
   }, []);
 
-  // ✅ Delete book (Admin only, with token)
   const deleteBook = async (id) => {
     if (!window.confirm("Are you sure you want to delete this book?")) return;
 

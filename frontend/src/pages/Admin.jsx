@@ -150,7 +150,14 @@ const Admin = () => {
             onChange={(e) => setStock(e.target.value)}
             required
             min="0"
-            style={{ padding: "10px", marginBottom: "10px" }}
+            style={{
+              padding: "12px",
+              borderRadius: "8px",
+              border: "1.5px solid #7fffd4",
+              fontSize: "1.1rem",
+              transition: "border 0.2s, box-shadow 0.2s",
+              boxShadow: "0 2px 8px #23294622",
+            }}
           />
 
           <input
@@ -172,7 +179,14 @@ const Admin = () => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             required
-            style={{ padding: "10px", marginBottom: "10px" }}
+            style={{
+              padding: "12px",
+              borderRadius: "8px",
+              border: "1.5px solid #7fffd4",
+              fontSize: "1.1rem",
+              transition: "border 0.2s, box-shadow 0.2s",
+              boxShadow: "0 2px 8px #23294622",
+            }}
           >
             <option value="">Select Category</option>
             <option value="Fiction">Fiction</option>
