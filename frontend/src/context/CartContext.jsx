@@ -69,6 +69,7 @@ export function CartProvider({ children }) {
     );
   };
 
+  // 🔐 Persist cart data across page refresh using localStorage
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
