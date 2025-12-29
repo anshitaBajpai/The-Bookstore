@@ -8,6 +8,9 @@ import jwt from "jsonwebtoken";
 import Book from "./models/Book.js";
 import User from "./models/User.js";
 
+import Order from "./models/Order.js";
+
+
 dotenv.config();
 
 const app = express();
@@ -175,6 +178,49 @@ app.post("/orders", authMiddleware(), async (req, res) => {
     }
 
     res.json({ message: "Order placed successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post("/orders", authMiddleware(), async (req, res) => {
+  try {
+    const { cart } = req.body;
+
+    if (!cart || cart.length === 0) {
+      return res.status(400).json({ error: "Cart is empty" });
+    }
+
+    const totalAmount = cart.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+
+    const order = new Order({
+      userId: req.user.id,
+      items: cart.map((item) => ({
+        bookId: item.id || item._id,
+        title: item.title,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+      totalAmount,
+    });
+
+    await order.save();
+
+    res.json({ message: "Order placed successfully", order });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/orders", authMiddleware(), async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.user.id }).sort({
+      createdAt: -1,
+    });
+    res.json(orders);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
