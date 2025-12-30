@@ -7,167 +7,187 @@ import jwt from "jsonwebtoken";
 
 import Book from "./models/Book.js";
 import User from "./models/User.js";
-
 import Order from "./models/Order.js";
-
 
 dotenv.config();
 
 const app = express();
 
-// ===================== Middleware =====================
+/* ===================== Middleware ===================== */
 app.use(cors());
 app.use(express.json());
 
-// ===================== MongoDB Connection =====================
+/* ===================== MongoDB Connection ===================== */
 mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// ===================== Helper =====================
+/* ===================== Helpers ===================== */
 const formatBook = ({ _id, __v, ...rest }) => ({
   id: _id.toString(),
   ...rest,
 });
 
-// ===================== Auth Middleware =====================
-export const authMiddleware = (roles = []) => {
+/* ===================== Auth Middleware ===================== */
+const authMiddleware = (roles = []) => {
   return (req, res, next) => {
-    const token = req.headers["authorization"];
-    if (!token) return res.status(401).json({ error: "No token provided" });
+    const authHeader = req.headers.authorization;
+    if (!authHeader)
+      return res.status(401).json({ error: "No token provided" });
 
     try {
-      const decoded = jwt.verify(token.split(" ")[1], process.env.JWT_SECRET);
+      const token = authHeader.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
       if (roles.length && !roles.includes(decoded.role)) {
         return res.status(403).json({ error: "Access denied" });
       }
-      req.user = decoded; // attach user info
+
+      req.user = decoded;
       next();
     } catch (err) {
-      res.status(401).json({ error: "Invalid token" });
+      return res.status(401).json({ error: "Invalid token" });
     }
   };
 };
 
-// ===================== Auth Routes =====================
+/* ===================== AUTH ROUTES ===================== */
+
 // Signup
 app.post("/auth/signup", async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser)
+      return res.status(400).json({ error: "User already exists" });
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new User({ username, email, password: hashedPassword, role: role || "user" });
-    await newUser.save();
+    const user = new User({
+      username,
+      email,
+      password: hashedPassword,
+      role: role || "user",
+    });
 
-    // Create JWT token
-    const token = jwt.sign({ id: newUser._id, role: newUser.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
+    await user.save();
 
-    res.json({ token, role: newUser.role, username: newUser.username });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
 
-
-// Login
-app.post("/auth/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ error: "User not found" });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ error: "Invalid credentials" });
-
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
     res.json({ token, role: user.role, username: user.username });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// ===================== Book Routes =====================
-// Get all books
+// Login
+app.post("/auth/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user)
+      return res.status(400).json({ error: "User not found" });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch)
+      return res.status(400).json({ error: "Invalid credentials" });
+
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    res.json({ token, role: user.role, username: user.username });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ===================== BOOK ROUTES ===================== */
+
+// Unified books route (search + category)
 app.get("/books", async (req, res) => {
   try {
-    const books = await Book.find().lean();
+    const { q, category } = req.query;
+
+    const filter = {};
+    if (q) filter.title = { $regex: q, $options: "i" };
+    if (category) filter.category = category;
+
+    const books = await Book.find(filter).lean();
     res.json(books.map(formatBook));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Search books
-app.get("/books/search", async (req, res) => {
+// Add book (Admin only)
+app.post("/books", authMiddleware(["admin"]), async (req, res) => {
   try {
-    const { q } = req.query;
-    const books = await Book.find({ title: { $regex: q, $options: "i" } }).lean();
-    res.json(books.map(formatBook));
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Add a new book (Admin only)
-app.post("/books", async (req, res) => {
-  try {
-    let result;
-    if (Array.isArray(req.body)) {
-      const books = await Book.insertMany(req.body);
-      result = books.map((b) => formatBook(b.toObject()));
-    } else {
-      const newBook = new Book(req.body);
-      const saved = await newBook.save();
-      result = formatBook(saved.toObject());
-    }
-    res.json(result);
+    const book = new Book(req.body);
+    const saved = await book.save();
+    res.json(formatBook(saved.toObject()));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
 // Update book (Admin only)
-app.put("/books/:id", async (req, res) => {
+app.put("/books/:id", authMiddleware(["admin"]), async (req, res) => {
   try {
-    const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true }).lean();
-    if (!updatedBook) return res.status(404).json({ error: "Book not found" });
-    res.json(formatBook(updatedBook));
+    const updated = await Book.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    ).lean();
+
+    if (!updated)
+      return res.status(404).json({ error: "Book not found" });
+
+    res.json(formatBook(updated));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
 // Delete book (Admin only)
-app.delete("/books/:id", async (req, res) => {
+app.delete("/books/:id", authMiddleware(["admin"]), async (req, res) => {
   try {
-    const deletedBook = await Book.findByIdAndDelete(req.params.id).lean();
-    if (!deletedBook) return res.status(404).json({ error: "Book not found" });
-    res.json({ message: "Book deleted successfully", id: deletedBook._id.toString() });
+    const deleted = await Book.findByIdAndDelete(req.params.id);
+    if (!deleted)
+      return res.status(404).json({ error: "Book not found" });
+
+    res.json({ message: "Book deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-app.get("/books", async (req, res) => {
-  try {
-    const { category } = req.query;
+/* ===================== ORDER ROUTES ===================== */
 
-    const filter = category ? { category } : {};
-    const books = await Book.find(filter).lean();
-
-    res.json(books.map(formatBook));
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
+// Place order
 app.post("/orders", authMiddleware(), async (req, res) => {
   try {
-    const { items } = req.body;
+    const { cart } = req.body;
 
-    for (const item of items) {
-      const book = await Book.findById(item.id);
+    if (!cart || cart.length === 0) {
+      return res.status(400).json({ error: "Cart is empty" });
+    }
+
+    // Stock validation + update
+    for (const item of cart) {
+      const book = await Book.findById(item.id || item._id);
 
       if (!book || book.stock < item.quantity) {
         return res.status(400).json({ error: "Insufficient stock" });
@@ -175,20 +195,6 @@ app.post("/orders", authMiddleware(), async (req, res) => {
 
       book.stock -= item.quantity;
       await book.save();
-    }
-
-    res.json({ message: "Order placed successfully" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.post("/orders", authMiddleware(), async (req, res) => {
-  try {
-    const { cart } = req.body;
-
-    if (!cart || cart.length === 0) {
-      return res.status(400).json({ error: "Cart is empty" });
     }
 
     const totalAmount = cart.reduce(
@@ -209,12 +215,14 @@ app.post("/orders", authMiddleware(), async (req, res) => {
 
     await order.save();
 
-    res.json({ message: "Order placed successfully", order });
+    res.json({ message: "Order placed successfully ✅", order });
   } catch (err) {
+    console.error("ORDER ERROR:", err);
     res.status(500).json({ error: err.message });
   }
 });
 
+// Get user orders
 app.get("/orders", authMiddleware(), async (req, res) => {
   try {
     const orders = await Order.find({ userId: req.user.id }).sort({
@@ -226,13 +234,13 @@ app.get("/orders", authMiddleware(), async (req, res) => {
   }
 });
 
-
-
-// Root route
+/* ===================== Root ===================== */
 app.get("/", (req, res) => {
   res.send("📚 Bookstore API is running...");
 });
 
-// Start server
+/* ===================== Start Server ===================== */
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Backend running on http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`🚀 Backend running on http://localhost:${PORT}`)
+);

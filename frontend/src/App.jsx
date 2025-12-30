@@ -5,6 +5,7 @@ import Admin from "./pages/Admin";
 import Cart from "./pages/Cart";
 import AuthPage from "./pages/AuthPage";
 import PrivateRoute from "./components/PrivateRoute";
+import Orders from "./pages/Orders";
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
           </PrivateRoute>
         }
       />
+      <Route path="/orders" element={<Orders />} />
     </Routes>
   );
 };
