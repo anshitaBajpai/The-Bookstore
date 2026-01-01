@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import BookCard from "../components/BookCard";
-import Header from "../components/Header";
+import Navbar from "../components/Navbar";
 
 const Home = () => {
   const [books, setBooks] = useState([]);
@@ -27,7 +27,7 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      <Navbar />
 
       <div
         style={{

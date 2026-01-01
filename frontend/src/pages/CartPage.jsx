@@ -1,5 +1,3 @@
-
-
 import React, { useContext } from "react";
 import CartContext from "../context/CartContext";
 
@@ -44,7 +42,7 @@ function CartPage() {
               cursor: "pointer",
             }}
           >
-             Remove
+            Remove
           </button>
         </div>
       ))}

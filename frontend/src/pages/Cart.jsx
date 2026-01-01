@@ -1,8 +1,8 @@
-import Header from "../components/Header";
 import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext.jsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Navbar from "../components/Navbar.jsx";
 
 function Cart() {
   const { cart, removeFromCart, increaseQuantity, decreaseQuantity } =
@@ -39,7 +39,7 @@ function Cart() {
   if (cart.length === 0) {
     return (
       <>
-        <Header />
+        <Navbar />
         <div
           style={{
             minHeight: "100vh",
@@ -62,7 +62,7 @@ function Cart() {
 
   return (
     <>
-      <Header />
+      <Navbar />
       <div
         style={{
           minHeight: "100vh",

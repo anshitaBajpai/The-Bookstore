@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
+import Navbar from "../components/Navbar";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -30,17 +30,33 @@ function Login() {
 
   return (
     <>
-      <Header />
-      <div style={{
-        padding: "32px",
-        maxWidth: 400,
-        margin: "0 auto",
-        background: "linear-gradient(120deg, #232946 0%, #7fffd4 100%)",
-        borderRadius: "16px",
-        boxShadow: "0 4px 24px #1a223f55"
-      }}>
-        <h2 style={{ textAlign: "center", color: "#232946", fontWeight: 700, fontSize: "2rem", marginBottom: 32, letterSpacing: 1 }}>Login</h2>
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+      <Navbar />
+      <div
+        style={{
+          padding: "32px",
+          maxWidth: 400,
+          margin: "0 auto",
+          background: "linear-gradient(120deg, #232946 0%, #7fffd4 100%)",
+          borderRadius: "16px",
+          boxShadow: "0 4px 24px #1a223f55",
+        }}
+      >
+        <h2
+          style={{
+            textAlign: "center",
+            color: "#232946",
+            fontWeight: 700,
+            fontSize: "2rem",
+            marginBottom: 32,
+            letterSpacing: 1,
+          }}
+        >
+          Login
+        </h2>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: "18px" }}
+        >
           <input
             type="email"
             placeholder="Email"
@@ -53,10 +69,10 @@ function Login() {
               border: "1.5px solid #7fffd4",
               fontSize: "1.1rem",
               transition: "border 0.2s, box-shadow 0.2s",
-              boxShadow: "0 2px 8px #23294622"
+              boxShadow: "0 2px 8px #23294622",
             }}
-            onFocus={e => e.target.style.border = "2px solid #232946"}
-            onBlur={e => e.target.style.border = "1.5px solid #7fffd4"}
+            onFocus={(e) => (e.target.style.border = "2px solid #232946")}
+            onBlur={(e) => (e.target.style.border = "1.5px solid #7fffd4")}
           />
           <input
             type="password"
@@ -70,10 +86,10 @@ function Login() {
               border: "1.5px solid #7fffd4",
               fontSize: "1.1rem",
               transition: "border 0.2s, box-shadow 0.2s",
-              boxShadow: "0 2px 8px #23294622"
+              boxShadow: "0 2px 8px #23294622",
             }}
-            onFocus={e => e.target.style.border = "2px solid #232946"}
-            onBlur={e => e.target.style.border = "1.5px solid #7fffd4"}
+            onFocus={(e) => (e.target.style.border = "2px solid #232946")}
+            onBlur={(e) => (e.target.style.border = "1.5px solid #7fffd4")}
           />
           <button
             type="submit"
@@ -87,13 +103,13 @@ function Login() {
               fontSize: "1.1rem",
               cursor: "pointer",
               boxShadow: "0 2px 8px #23294622",
-              transition: "background 0.2s, color 0.2s"
+              transition: "background 0.2s, color 0.2s",
             }}
-            onMouseOver={e => {
+            onMouseOver={(e) => {
               e.currentTarget.style.background = "#232946";
               e.currentTarget.style.color = "#7fffd4";
             }}
-            onMouseOut={e => {
+            onMouseOut={(e) => {
               e.currentTarget.style.background = "#7fffd4";
               e.currentTarget.style.color = "#232946";
             }}
