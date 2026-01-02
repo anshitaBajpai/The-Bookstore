@@ -2,13 +2,16 @@
 
 A modern full-stack web application for browsing, purchasing, and managing books. Built with React (frontend), Express.js (backend), and MongoDB (database). Features a clean, sea green-themed UI, cart functionality, admin portal, and secure authentication.
 
-## 🔹 Features
+## 🚀 Features
 
-- **User Authentication:** Signup and Login with JWT-based authentication.  
-- **Admin Panel:** Admin users can add, update, and delete books.  
-- **Book Listing & Search:** View all books and search by title.  
-- **Cart:** Add books to cart and view cart items.  
-- **Protected Routes:** Only logged-in users can access Home and Cart pages.
+- Implemented secure user authentication and authorization using JWT with role-based access control for Admin and User flows.
+- Built a scalable book catalog with search and category-based filtering, enabling efficient browsing and discovery.
+- Developed a dynamic shopping cart with quantity management, stock validation, and persistent state using localStorage.
+- Enabled end-to-end order placement with real-time inventory updates and automatic stock deduction.
+- Designed a user-specific order history view to track past purchases with detailed order summaries.
+- Created an admin management system to add, update, and delete books while maintaining inventory consistency.
+- Integrated RESTful APIs using Express.js and MongoDB with optimized Mongoose schemas and validations.
+- Enhanced user experience with a responsive UI, sticky navigation, conditional rendering, and real-time cart indicators.
 
 ## 📸Screenshots
 
