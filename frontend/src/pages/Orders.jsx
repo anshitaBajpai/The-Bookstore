@@ -2,6 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 
+// 🔹 Status color helper
+const getStatusColor = (status) => {
+  if (status === "PLACED") return "#facc15"; // yellow
+  if (status === "SHIPPED") return "#38bdf8"; // blue
+  if (status === "DELIVERED") return "#22c55e"; // green
+  return "#ffffff";
+};
+
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const token = localStorage.getItem("token");
@@ -77,7 +85,7 @@ const Orders = () => {
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    marginBottom: "16px",
+                    marginBottom: "14px",
                     flexWrap: "wrap",
                   }}
                 >
@@ -86,6 +94,33 @@ const Orders = () => {
                   </span>
                   <span style={{ color: "#7fffd4", fontWeight: 600 }}>
                     {new Date(order.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+
+                {/*  Order Status */}
+                <div
+                  style={{
+                    marginBottom: "18px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                  }}
+                >
+                  <span style={{ color: "#b8c1ec", fontWeight: 600 }}>
+                    Status:
+                  </span>
+                  <span
+                    style={{
+                      padding: "6px 14px",
+                      borderRadius: "20px",
+                      fontWeight: 700,
+                      fontSize: "0.9rem",
+                      color: "#134e4a",
+                      background: getStatusColor(order.status),
+                      letterSpacing: "0.5px",
+                    }}
+                  >
+                    {order.status}
                   </span>
                 </div>
 
