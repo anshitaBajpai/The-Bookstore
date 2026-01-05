@@ -5,8 +5,13 @@ import axios from "axios";
 import Navbar from "../components/Navbar.jsx";
 
 function Cart() {
-  const { cart, removeFromCart, increaseQuantity, decreaseQuantity } =
-    useContext(CartContext);
+  const {
+    cart,
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
+    clearCart,
+  } = useContext(CartContext);
 
   const totalPrice = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -30,6 +35,7 @@ function Cart() {
       );
 
       alert("✅ Order placed successfully");
+      clearCart();
       navigate("/orders");
     } catch (err) {
       alert("❌ Failed to place order");
