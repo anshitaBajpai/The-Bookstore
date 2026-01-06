@@ -219,13 +219,13 @@ function Cart() {
             disabled={cart.length === 0}
             style={{
               padding: "12px 24px",
-              background: "#134e4a",
+              background: cart.length === 0 ? "#ccc" : "#134e4a",
               color: "#fff",
               border: "none",
               borderRadius: "8px",
               fontSize: "1.1rem",
               fontWeight: 700,
-              cursor: "pointer",
+              cursor: cart.length === 0 ? "not-allowed" : "pointer",
               boxShadow: "0 4px 12px #134e4a55",
               opacity: cart.length === 0 ? 0.6 : 1,
             }}
