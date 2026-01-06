@@ -23,6 +23,9 @@ A modern full-stack web application for browsing, purchasing, and managing books
 
 <img width="1919" height="910" alt="image" src="https://github.com/user-attachments/assets/6885314f-e4bd-450b-bd0b-08159574a425" />
 
+<img width="1898" height="769" alt="image" src="https://github.com/user-attachments/assets/78a6bc93-9e87-44fc-8616-b0d21fb5ad4d" />
+
+
 
 
 
