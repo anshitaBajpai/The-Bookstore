@@ -13,6 +13,41 @@ A modern full-stack web application for browsing, purchasing, and managing books
 - Integrated RESTful APIs using Express.js and MongoDB with optimized Mongoose schemas and validations.
 - Enhanced user experience with a responsive UI, sticky navigation, conditional rendering, and real-time cart indicators.
 
+## 🚀 How to Run the Project Locally
+
+### 🔧 Backend Setup
+
+1.Navigate to the backend folder:
+```
+cd backend
+```
+2.Install dependencies:
+```
+npm install
+```
+3.Create a .env file in the backend folder and add:
+```
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+```
+4.Start the backend server:
+```
+npm run dev
+```
+### 🎨 Frontend Setup
+1.Navigate to the frontend folder:
+```
+cd frontend
+```
+2.Install dependencies:
+```
+npm install
+```
+3.Start the frontend development server:
+```
+npm run dev
+```
+
 ## 📸Screenshots
 
 <img width="1919" height="871" alt="image" src="https://github.com/user-attachments/assets/4b42ce5d-9a5d-4bb7-a924-76d34e79b50b" />
