@@ -7,6 +7,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import Orders from "./pages/Orders";
 import Footer from "./components/Footer";
 import { useLocation } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import AuthHeader from "./components/AuthHeader";
 
 const App = () => {
   const location = useLocation();
@@ -14,6 +16,7 @@ const App = () => {
   const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
   return (
     <>
+      {shouldHideFooter ? <AuthHeader /> : <Navbar />}
       <Routes>
         {/* Home and Cart are protected */}
         <Route

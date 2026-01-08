@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Navbar from "../components/Navbar";
 
 const Admin = () => {
   const [books, setBooks] = useState([]);
@@ -67,7 +66,6 @@ const Admin = () => {
 
   return (
     <>
-      <Navbar />
       <div
         style={{
           padding: "32px",

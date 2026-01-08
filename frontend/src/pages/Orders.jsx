@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../components/Navbar";
 
 // 🔹 Status color helper
 const getStatusColor = (status) => {
@@ -33,7 +32,6 @@ const Orders = () => {
 
   return (
     <>
-      <Navbar />
       <div
         style={{
           minHeight: "100vh",

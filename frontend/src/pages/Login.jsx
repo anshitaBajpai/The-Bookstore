@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -30,7 +29,6 @@ function Login() {
 
   return (
     <>
-      <Navbar />
       <div
         style={{
           padding: "32px",

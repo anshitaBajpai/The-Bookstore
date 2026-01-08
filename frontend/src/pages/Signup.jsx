@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navbar from "../components/Navbar";
 
 function Signup() {
   const [username, setUsername] = useState("");
@@ -37,7 +36,6 @@ function Signup() {
 
   return (
     <>
-      <Navbar />
       <div
         style={{
           padding: "32px",

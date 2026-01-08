@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import BookCard from "../components/BookCard";
-import Navbar from "../components/Navbar";
 
 const Home = () => {
   const [books, setBooks] = useState([]);
@@ -27,8 +26,6 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
-
       <div
         style={{
           padding: "20px 48px",

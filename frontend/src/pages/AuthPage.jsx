@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navbar from "../components/Navbar";
 
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -48,7 +47,6 @@ function AuthPage() {
 
   return (
     <>
-      <Navbar />
       <div
         style={{
           padding: "32px",
