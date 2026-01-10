@@ -1,0 +1,48 @@
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%);
+}
+
+.card {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.card h2 {
+    color: #134e4a;
+    margin-bottom: 0.5rem;
+}
+
+.card p {
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+}
+
+.button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #134e4a;
+    color: #ffffff;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.button:hover {
+    background-color: #0f766e;
+    transform: translateY(-2px);
+}

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext.jsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import EmptyCart from "../components/EmptyCart.jsx";
 
 function Cart() {
   const {
@@ -42,26 +43,7 @@ function Cart() {
   };
 
   if (cart.length === 0) {
-    return (
-      <>
-        <div
-          style={{
-            minHeight: "100vh",
-            background:
-              "linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%)",
-            color: "#134e4a",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            letterSpacing: 1,
-          }}
-        >
-          Your cart is empty
-        </div>
-      </>
-    );
+    return <EmptyCart />;
   }
 
   return (
