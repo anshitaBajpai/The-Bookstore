@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import { useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import AuthHeader from "./components/AuthHeader";
+import ErrorPage from "./pages/ErrorPage";
 
 const App = () => {
   const location = useLocation();
@@ -49,6 +50,7 @@ const App = () => {
           }
         />
         <Route path="/orders" element={<Orders />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
       {!shouldHideFooter && <Footer />}
     </>
