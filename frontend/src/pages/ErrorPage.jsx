@@ -63,8 +63,8 @@ const ErrorPage = () => {
             marginBottom: "32px",
           }}
         >
-          The page you are looking for does not exist, was removed, or the URL
-          might be incorrect.
+          The page you are looking for does not exist or the URL might be
+          incorrect.
         </p>
 
         {/* Buttons */}
@@ -119,7 +119,7 @@ const ErrorPage = () => {
                 "0 6px 18px rgba(67, 198, 172, 0.5)";
             }}
           >
-            Go to Home
+            Go Home
           </button>
         </div>
       </div>
