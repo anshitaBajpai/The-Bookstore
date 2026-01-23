@@ -1,0 +1,109 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%);
+  padding: 32px 16px;
+}
+
+.heading {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #134e4a;
+  margin-bottom: 32px;
+}
+
+.cartContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #232946;
+  padding: 18px;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  border: 1.5px solid #3b4a6b;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.bookInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.bookInfo img {
+  width: 60px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.bookInfo h4 {
+  color: #a3bffa;
+  font-weight: 700;
+}
+
+.bookInfo p {
+  color: #7fffd4;
+  font-weight: 600;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity button {
+  background: #3b4a6b;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  color: #a3bffa;
+  cursor: pointer;
+}
+
+.quantity span {
+  font-weight: 700;
+  color: #eebbc3;
+}
+
+.removeBtn {
+  background: #e53935;
+  border: none;
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.summary {
+  max-width: 800px;
+  margin: 32px auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary h3 {
+  color: #006141;
+  font-size: 1.4rem;
+}
+
+.orderBtn {
+  background: #134e4a;
+  color: #fff;
+  padding: 12px 26px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(19, 78, 74, 0.5);
+}
