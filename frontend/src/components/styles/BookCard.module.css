@@ -1,0 +1,71 @@
+.card {
+  background: #b2f1e6;
+  padding: 15px;
+  border-radius: 16px;
+  border: 2px solid #43c6ac;
+  box-shadow: 0 4px 18px #43c6ac33;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.image {
+  width: 150px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #e0ffef;
+}
+
+.title {
+  color: #134e4a;
+}
+
+.author {
+  color: #134e4a;
+  font-weight: 500;
+}
+
+.price {
+  color: #191654;
+}
+
+.button {
+  padding: 8px 12px;
+  margin-top: 16px;
+  border: none;
+  border-radius: 8px;
+  background: #43c6ac;
+  color: #134e4a;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.button:hover {
+  background: #134e4a;
+  color: #43c6ac;
+}
+
+.disabled {
+  background: #bdbdbd;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.stock {
+  font-weight: 600;
+}
+
+.inStock {
+  color: green;
+}
+
+.outStock {
+  color: red;
+}
