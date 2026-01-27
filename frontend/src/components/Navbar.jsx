@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext.jsx";
-import styles from "./styles/Navbar.module.css";
+import styles from "./Navbar.module.css";
 
 function Navbar() {
   const { cart } = useContext(CartContext);

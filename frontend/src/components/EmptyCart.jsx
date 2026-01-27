@@ -1,4 +1,4 @@
-import styles from "./styles/EmptyCart.module.css";
+import styles from "./EmptyCart.module.css";
 import { Link } from "react-router-dom";
 
 const EmptyCart = () => {

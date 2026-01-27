@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./styles/AuthHeader.module.css";
+import styles from "./AuthHeader.module.css";
 
 const AuthHeader = () => {
   return (
