@@ -1,0 +1,20 @@
+.footer {
+  margin-top: auto;
+  background: #134e4a;
+  color: #e0ffef;
+  padding: 20px 16px;
+  text-align: center;
+  border-top: 4px solid #43c6ac;
+  box-shadow: 0 -4px 16px #134e4a55;
+}
+
+.copyright {
+  margin: 0;
+  font-weight: 600;
+}
+
+.tech {
+  margin: 6px 0 0;
+  font-size: 0.9rem;
+  color: #7fffd4;
+}
