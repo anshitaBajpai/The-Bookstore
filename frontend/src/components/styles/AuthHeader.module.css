@@ -1,0 +1,21 @@
+.header {
+  background: #134e4a;
+  padding: 32px 0;
+  text-align: center;
+  box-shadow: 0 6px 24px #134e4a55;
+  border-bottom: 4px solid #43c6ac;
+}
+
+.title {
+  color: #e0ffef;
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  margin-top: 8px;
+  color: #b2f1e6;
+  font-size: 1rem;
+  font-weight: 500;
+}
