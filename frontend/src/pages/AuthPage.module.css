@@ -1,0 +1,71 @@
+.container {
+  padding: 32px;
+  max-width: 400px;
+  margin: 40px auto;
+  background: linear-gradient(120deg, #232946 0%, #7fffd4 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px #1a223f55;
+}
+
+.heading {
+  text-align: center;
+  color: #232946;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 32px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1.5px solid #7fffd4;
+  font-size: 1rem;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #232946;
+  box-shadow: 0 0 0 2px #23294633;
+}
+
+.button {
+  background: #7fffd4;
+  color: #232946;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.button:hover {
+  background: #232946;
+  color: #7fffd4;
+}
+
+.error {
+  color: #e53935;
+  text-align: center;
+  margin-top: 18px;
+  font-weight: 600;
+}
+
+.switchText {
+  text-align: center;
+  margin-top: 20px;
+  color: #232946;
+}
+
+.switchText span {
+  color: #0000ee;
+  cursor: pointer;
+  font-weight: 600;
+}
