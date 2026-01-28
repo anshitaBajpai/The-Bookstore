@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import styles from "./Admin.module.css";
 
 const Admin = () => {
   const [books, setBooks] = useState([]);
@@ -7,9 +8,9 @@ const Admin = () => {
   const [author, setAuthor] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
-  const [editingBook, setEditingBook] = useState(null);
   const [category, setCategory] = useState("");
   const [stock, setStock] = useState("");
+  const [editingBook, setEditingBook] = useState(null);
 
   const token = localStorage.getItem("token");
 
@@ -24,29 +25,30 @@ const Admin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      if (editingBook) {
-        await axios.put(
-          `http://localhost:5000/books/${editingBook.id}`,
-          { title, author, price, image, category, stock },
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-      } else {
-        await axios.post(
-          "http://localhost:5000/books",
-          { title, author, price, image, category, stock },
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-      }
-      setTitle("");
-      setAuthor("");
-      setPrice("");
-      setImage("");
-      setEditingBook(null);
-      fetchBooks();
-    } catch (err) {
-      console.error(err);
+
+    const payload = { title, author, price, image, category, stock };
+
+    if (editingBook) {
+      await axios.put(
+        `http://localhost:5000/books/${editingBook.id}`,
+        payload,
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+    } else {
+      await axios.post("http://localhost:5000/books", payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     }
+
+    setTitle("");
+    setAuthor("");
+    setPrice("");
+    setImage("");
+    setCategory("");
+    setStock("");
+    setEditingBook(null);
+
+    fetchBooks();
   };
 
   const handleEdit = (book) => {
@@ -55,6 +57,8 @@ const Admin = () => {
     setAuthor(book.author);
     setPrice(book.price);
     setImage(book.image);
+    setCategory(book.category);
+    setStock(book.stock);
   };
 
   const handleDelete = async (id) => {
@@ -65,244 +69,93 @@ const Admin = () => {
   };
 
   return (
-    <>
-      <div
-        style={{
-          padding: "32px",
-          maxWidth: 700,
-          margin: "0 auto",
-          background:
-            "linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%)",
-          borderRadius: "16px",
-          boxShadow: "0 4px 24px #134e4a55",
-        }}
-      >
-        <h1
-          style={{
-            textAlign: "center",
-            color: "#134e4a",
-            fontWeight: 700,
-            fontSize: "2rem",
-            marginBottom: 32,
-            letterSpacing: 1,
-          }}
-        >
-          Admin Dashboard
-        </h1>
-        <form
-          onSubmit={handleSubmit}
-          style={{ display: "flex", flexDirection: "column", gap: "18px" }}
-        >
-          <input
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            style={{
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1.5px solid #43c6ac",
-              fontSize: "1.1rem",
-              transition: "border 0.2s, box-shadow 0.2s",
-              boxShadow: "0 2px 8px #134e4a22",
-            }}
-            onFocus={(e) => (e.target.style.border = "2px solid #134e4a")}
-            onBlur={(e) => (e.target.style.border = "1.5px solid #43c6ac")}
-          />
-          <input
-            placeholder="Author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            required
-            style={{
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1.5px solid #7fffd4",
-              fontSize: "1.1rem",
-              transition: "border 0.2s, box-shadow 0.2s",
-              boxShadow: "0 2px 8px #23294622",
-            }}
-            onFocus={(e) => (e.target.style.border = "2px solid #232946")}
-            onBlur={(e) => (e.target.style.border = "1.5px solid #7fffd4")}
-          />
-          <input
-            placeholder="Price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-            style={{
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1.5px solid #7fffd4",
-              fontSize: "1.1rem",
-              transition: "border 0.2s, box-shadow 0.2s",
-              boxShadow: "0 2px 8px #23294622",
-            }}
-            onFocus={(e) => (e.target.style.border = "2px solid #232946")}
-            onBlur={(e) => (e.target.style.border = "1.5px solid #7fffd4")}
-          />
-          <input
-            type="number"
-            placeholder="Stock Quantity"
-            value={stock}
-            onChange={(e) => setStock(e.target.value)}
-            required
-            min="0"
-            style={{
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1.5px solid #7fffd4",
-              fontSize: "1.1rem",
-              transition: "border 0.2s, box-shadow 0.2s",
-              boxShadow: "0 2px 8px #23294622",
-            }}
-          />
+    <div className={styles.container}>
+      <h1 className={styles.heading}>Admin Dashboard</h1>
 
-          <input
-            placeholder="Image URL"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            style={{
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1.5px solid #7fffd4",
-              fontSize: "1.1rem",
-              transition: "border 0.2s, box-shadow 0.2s",
-              boxShadow: "0 2px 8px #23294622",
-            }}
-            onFocus={(e) => (e.target.style.border = "2px solid #232946")}
-            onBlur={(e) => (e.target.style.border = "1.5px solid #7fffd4")}
-          />
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            required
-            style={{
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1.5px solid #7fffd4",
-              fontSize: "1.1rem",
-              transition: "border 0.2s, box-shadow 0.2s",
-              boxShadow: "0 2px 8px #23294622",
-            }}
-          >
-            <option value="">Select Category</option>
-            <option value="Fiction">Fiction</option>
-            <option value="Business">Business</option>
-            <option value="Technology">Technology</option>
-            <option value="Self-Help">Self-Help</option>
-            <option value="Biography">Biography</option>
-            <option value="Education">Education</option>
-          </select>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <input
+          className={styles.input}
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <input
+          className={styles.input}
+          placeholder="Author"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          required
+        />
+        <input
+          className={styles.input}
+          placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          required
+        />
+        <input
+          className={styles.input}
+          type="number"
+          placeholder="Stock"
+          value={stock}
+          onChange={(e) => setStock(e.target.value)}
+          required
+        />
+        <input
+          className={styles.input}
+          placeholder="Image URL"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+        />
 
-          <button
-            type="submit"
-            style={{
-              background: "#43c6ac",
-              color: "#134e4a",
-              fontWeight: 700,
-              border: "none",
-              borderRadius: "8px",
-              padding: "14px",
-              fontSize: "1.1rem",
-              cursor: "pointer",
-              boxShadow: "0 2px 8px #134e4a22",
-              transition: "background 0.2s, color 0.2s",
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = "#134e4a";
-              e.currentTarget.style.color = "#43c6ac";
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = "#43c6ac";
-              e.currentTarget.style.color = "#134e4a";
-            }}
-          >
-            {editingBook ? "Update Book" : "Add Book"}
-          </button>
-        </form>
-        <div
-          style={{
-            background: "#e0ffef",
-            borderRadius: "12px",
-            padding: "24px",
-            boxShadow: "0 2px 12px #43c6ac99",
-            marginTop: "24px",
-          }}
+        <select
+          className={styles.select}
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          required
         >
-          {books.map((book) => (
-            <div
-              key={book.id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: "18px",
-                padding: "12px 0",
-                borderBottom: "1px solid #43c6ac",
-              }}
-            >
-              <div>
-                <span style={{ color: "#134e4a", fontWeight: 600 }}>
-                  {book.title}
-                </span>{" "}
-                - <span style={{ color: "#43c6ac" }}>{book.author}</span> -{" "}
-                <span style={{ color: "#191654" }}>₹{book.price}</span>
-              </div>
-              <div>
-                <button
-                  onClick={() => handleEdit(book)}
-                  style={{
-                    marginRight: 8,
-                    background: "#43c6ac",
-                    color: "#134e4a",
-                    border: "none",
-                    borderRadius: "8px",
-                    padding: "6px 12px",
-                    cursor: "pointer",
-                    fontWeight: 600,
-                    transition: "background 0.2s, color 0.2s",
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.background = "#134e4a";
-                    e.currentTarget.style.color = "#43c6ac";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.background = "#43c6ac";
-                    e.currentTarget.style.color = "#134e4a";
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(book.id)}
-                  style={{
-                    background: "#e53935",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "8px",
-                    padding: "6px 12px",
-                    cursor: "pointer",
-                    fontWeight: 600,
-                    transition: "background 0.2s, color 0.2s",
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.background = "#134e4a";
-                    e.currentTarget.style.color = "#43c6ac";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.background = "#e53935";
-                    e.currentTarget.style.color = "#fff";
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
+          <option value="">Select Category</option>
+          <option>Fiction</option>
+          <option>Business</option>
+          <option>Technology</option>
+          <option>Self-Help</option>
+          <option>Biography</option>
+          <option>Education</option>
+        </select>
+
+        <button className={styles.primaryButton}>
+          {editingBook ? "Update Book" : "Add Book"}
+        </button>
+      </form>
+
+      <div className={styles.listContainer}>
+        {books.map((book) => (
+          <div key={book.id} className={styles.bookRow}>
+            <div>
+              <span className={styles.bookTitle}>{book.title}</span> –{" "}
+              <span className={styles.bookAuthor}>{book.author}</span> –{" "}
+              <span className={styles.bookPrice}>₹{book.price}</span>
             </div>
-          ))}
-        </div>
+
+            <div>
+              <button
+                className={styles.editBtn}
+                onClick={() => handleEdit(book)}
+              >
+                Edit
+              </button>
+              <button
+                className={styles.deleteBtn}
+                onClick={() => handleDelete(book.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 

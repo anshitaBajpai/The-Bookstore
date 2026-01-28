@@ -1,0 +1,109 @@
+.container {
+  padding: 32px;
+  max-width: 700px;
+  margin: 0 auto;
+  background: linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px #134e4a55;
+}
+
+.heading {
+  text-align: center;
+  color: #134e4a;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 32px;
+  letter-spacing: 1px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input,
+.select {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1.5px solid #7fffd4;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px #23294622;
+}
+
+.primaryButton {
+  background: #43c6ac;
+  color: #134e4a;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.primaryButton:hover {
+  background: #134e4a;
+  color: #43c6ac;
+}
+
+.listContainer {
+  background: #e0ffef;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 12px #43c6ac99;
+  margin-top: 24px;
+}
+
+.bookRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #43c6ac;
+}
+
+.bookTitle {
+  color: #134e4a;
+  font-weight: 600;
+}
+
+.bookAuthor {
+  color: #43c6ac;
+}
+
+.bookPrice {
+  color: #191654;
+}
+
+.editBtn {
+  background: #43c6ac;
+  color: #134e4a;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: 600;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.editBtn:hover {
+  background: #134e4a;
+  color: #43c6ac;
+}
+
+.deleteBtn {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+  background: #134e4a;
+  color: #43c6ac;
+}
