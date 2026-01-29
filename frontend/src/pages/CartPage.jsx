@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import CartContext from "../context/CartContext";
+import styles from "./CartPage.module.css";
 
 function CartPage() {
   const { cart, removeFromCart, clearCart } = useContext(CartContext);
@@ -7,60 +8,33 @@ function CartPage() {
   const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
 
   if (cart.length === 0) {
-    return <h2 style={{ padding: "20px" }}>Your cart is empty</h2>;
+    return <h2 className={styles.empty}>Your cart is empty</h2>;
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1> Your Cart</h1>
+    <div className={styles.container}>
+      <h1 className={styles.heading}>🛒 Your Cart</h1>
+
       {cart.map((item) => (
-        <div
-          key={item.id}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            margin: "10px 0",
-            padding: "10px",
-            background: "rgba(255,255,255,0.1)",
-            borderRadius: "8px",
-          }}
-        >
-          <span>
+        <div key={item.id} className={styles.item}>
+          <span className={styles.title}>
             {item.title} (x{item.qty})
           </span>
-          <span>₹{item.price * item.qty}</span>
+
+          <span className={styles.price}>₹{item.price * item.qty}</span>
+
           <button
             onClick={() => removeFromCart(item.id)}
-            style={{
-              marginLeft: "10px",
-              padding: "6px 10px",
-              background: "red",
-              color: "white",
-              border: "none",
-              borderRadius: "6px",
-              cursor: "pointer",
-            }}
+            className={styles.removeBtn}
           >
             Remove
           </button>
         </div>
       ))}
-      <h2 style={{ marginTop: "20px" }}>Total: {total}</h2>
 
-      <button
-        onClick={clearCart}
-        style={{
-          marginTop: "15px",
-          padding: "10px 15px",
-          background: "#ffcc00",
-          color: "#000",
-          fontWeight: "bold",
-          border: "none",
-          borderRadius: "6px",
-          cursor: "pointer",
-        }}
-      >
+      <h2 className={styles.total}>Total: ₹{total}</h2>
+
+      <button onClick={clearCart} className={styles.clearBtn}>
         Clear Cart
       </button>
     </div>
