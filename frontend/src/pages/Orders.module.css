@@ -1,0 +1,98 @@
+.page {
+    min-height: 100vh;
+    padding: 32px;
+    background: linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%);
+}
+
+.title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #134e4a;
+    margin-bottom: 32px;
+}
+
+.empty {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #134e4a;
+    margin-top: 80px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.card {
+    background: #232946;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+    border: 1.5px solid #3b4a6b;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.orderId {
+    color: #a3bffa;
+    font-weight: 600;
+}
+
+.date {
+    color: #7fffd4;
+    font-weight: 600;
+}
+
+.statusRow {
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.statusLabel {
+    color: #b8c1ec;
+    font-weight: 600;
+}
+
+.status {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #134e4a;
+    letter-spacing: 0.5px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #3b4a6b;
+}
+
+.itemTitle {
+    color: #eebbc3;
+    font-weight: 600;
+}
+
+.itemPrice {
+    color: #a3bffa;
+}
+
+.total {
+    text-align: right;
+    margin-top: 16px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #7fffd4;
+}
