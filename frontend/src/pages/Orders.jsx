@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import styles from "./Orders.module.css";
 
 // 🔹 Status color helper
 const getStatusColor = (status) => {
-  if (status === "PLACED") return "#facc15"; // yellow
-  if (status === "SHIPPED") return "#38bdf8"; // blue
-  if (status === "DELIVERED") return "#22c55e"; // green
+  if (status === "PLACED") return "#facc15";
+  if (status === "SHIPPED") return "#38bdf8";
+  if (status === "DELIVERED") return "#22c55e";
   return "#ffffff";
 };
 
@@ -17,9 +18,7 @@ const Orders = () => {
     const fetchOrders = async () => {
       try {
         const res = await axios.get("http://localhost:5000/orders", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(res.data);
       } catch (err) {
@@ -31,136 +30,53 @@ const Orders = () => {
   }, [token]);
 
   return (
-    <>
-      <div
-        style={{
-          minHeight: "100vh",
-          padding: "32px",
-          background:
-            "linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%)",
-        }}
-      >
-        <h1
-          style={{
-            textAlign: "center",
-            fontSize: "2.2rem",
-            fontWeight: 700,
-            color: "#134e4a",
-            marginBottom: "32px",
-          }}
-        >
-          📦 Your Orders
-        </h1>
+    <div className={styles.page}>
+      <h1 className={styles.title}>📦 Your Orders</h1>
 
-        {orders.length === 0 ? (
-          <div
-            style={{
-              textAlign: "center",
-              fontSize: "1.4rem",
-              fontWeight: 600,
-              color: "#134e4a",
-              marginTop: "80px",
-            }}
-          >
-            You haven’t placed any orders yet.
-          </div>
-        ) : (
-          <div style={{ maxWidth: "900px", margin: "0 auto" }}>
-            {orders.map((order) => (
-              <div
-                key={order._id}
-                style={{
-                  background: "#232946",
-                  borderRadius: "16px",
-                  padding: "24px",
-                  marginBottom: "24px",
-                  boxShadow: "0 4px 18px rgba(0,0,0,0.3)",
-                  border: "1.5px solid #3b4a6b",
-                }}
-              >
-                {/* Order Header */}
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginBottom: "14px",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  <span style={{ color: "#a3bffa", fontWeight: 600 }}>
-                    Order ID: {order._id.slice(-6)}
-                  </span>
-                  <span style={{ color: "#7fffd4", fontWeight: 600 }}>
-                    {new Date(order.createdAt).toLocaleDateString()}
-                  </span>
-                </div>
-
-                {/*  Order Status */}
-                <div
-                  style={{
-                    marginBottom: "18px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                  }}
-                >
-                  <span style={{ color: "#b8c1ec", fontWeight: 600 }}>
-                    Status:
-                  </span>
-                  <span
-                    style={{
-                      padding: "6px 14px",
-                      borderRadius: "20px",
-                      fontWeight: 700,
-                      fontSize: "0.9rem",
-                      color: "#134e4a",
-                      background: getStatusColor(order.status),
-                      letterSpacing: "0.5px",
-                    }}
-                  >
-                    {order.status}
-                  </span>
-                </div>
-
-                {/* Items */}
-                {order.items.map((item, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      marginBottom: "10px",
-                      paddingBottom: "10px",
-                      borderBottom: "1px solid #3b4a6b",
-                    }}
-                  >
-                    <span style={{ color: "#eebbc3", fontWeight: 600 }}>
-                      {item.title}
-                    </span>
-                    <span style={{ color: "#a3bffa" }}>
-                      {item.quantity} × ₹{item.price}
-                    </span>
-                  </div>
-                ))}
-
-                {/* Total */}
-                <div
-                  style={{
-                    textAlign: "right",
-                    marginTop: "16px",
-                    fontSize: "1.2rem",
-                    fontWeight: 700,
-                    color: "#7fffd4",
-                  }}
-                >
-                  Total: ₹{order.totalAmount}
-                </div>
+      {orders.length === 0 ? (
+        <div className={styles.empty}>You haven’t placed any orders yet.</div>
+      ) : (
+        <div className={styles.container}>
+          {orders.map((order) => (
+            <div key={order._id} className={styles.card}>
+              {/* Header */}
+              <div className={styles.header}>
+                <span className={styles.orderId}>
+                  Order ID: {order._id.slice(-6)}
+                </span>
+                <span className={styles.date}>
+                  {new Date(order.createdAt).toLocaleDateString()}
+                </span>
               </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </>
+
+              {/* Status */}
+              <div className={styles.statusRow}>
+                <span className={styles.statusLabel}>Status:</span>
+                <span
+                  className={styles.status}
+                  style={{ background: getStatusColor(order.status) }}
+                >
+                  {order.status}
+                </span>
+              </div>
+
+              {/* Items */}
+              {order.items.map((item, index) => (
+                <div key={index} className={styles.item}>
+                  <span className={styles.itemTitle}>{item.title}</span>
+                  <span className={styles.itemPrice}>
+                    {item.quantity} × ₹{item.price}
+                  </span>
+                </div>
+              ))}
+
+              {/* Total */}
+              <div className={styles.total}>Total: ₹{order.totalAmount}</div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 
