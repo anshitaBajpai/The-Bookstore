@@ -5,42 +5,53 @@ import styles from "./AuthPage.module.css";
 
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post("http://localhost:5000/auth/login", {
-        email,
-        password,
-      });
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", res.data.role);
-      localStorage.setItem("username", res.data.username);
-      setError("");
-      navigate("/");
-    } catch (err) {
-      setError(err.response?.data?.error || "Login failed ❌");
-    }
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
-  const handleSignup = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const url = isLogin
+      ? "http://localhost:5000/auth/login"
+      : "http://localhost:5000/auth/signup";
+
+    const payload = isLogin
+      ? {
+          email: formData.email,
+          password: formData.password,
+        }
+      : formData;
+
     try {
-      await axios.post("http://localhost:5000/auth/signup", {
-        username,
-        email,
-        password,
-      });
+      const res = await axios.post(url, payload);
+
+      if (isLogin) {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("role", res.data.role);
+        localStorage.setItem("username", res.data.username);
+        navigate("/");
+      } else {
+        alert("Signup successful! Please login.");
+        setIsLogin(true);
+      }
+
       setError("");
-      alert("Signup successful! Please login.");
-      setIsLogin(true);
     } catch (err) {
-      setError(err.response?.data?.error || "Signup failed ❌");
+      setError(err.response?.data?.error || "Something went wrong ❌");
     }
   };
 
@@ -48,16 +59,14 @@ function AuthPage() {
     <div className={styles.container}>
       <h2 className={styles.heading}>{isLogin ? "Login" : "Signup"}</h2>
 
-      <form
-        onSubmit={isLogin ? handleLogin : handleSignup}
-        className={styles.form}
-      >
+      <form onSubmit={handleSubmit} className={styles.form}>
         {!isLogin && (
           <input
             type="text"
+            name="username"
             placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={formData.username}
+            onChange={handleChange}
             className={styles.input}
             required
           />
@@ -65,21 +74,32 @@ function AuthPage() {
 
         <input
           type="email"
+          name="email"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formData.email}
+          onChange={handleChange}
           className={styles.input}
           required
         />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className={styles.input}
-          required
-        />
+        <div className={styles.passwordWrapper}>
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className={styles.input}
+            required
+          />
+          <button
+            type="button"
+            className={styles.eyeButton}
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? "🙈" : "👁️"}
+          </button>
+        </div>
 
         <button type="submit" className={styles.button}>
           {isLogin ? "Login" : "Signup"}
