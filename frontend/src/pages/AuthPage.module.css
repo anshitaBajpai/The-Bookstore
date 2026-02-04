@@ -4,7 +4,7 @@
   margin: 40px auto;
   background: linear-gradient(120deg, #232946 0%, #7fffd4 100%);
   border-radius: 16px;
-  box-shadow: 0 4px 24px #1a223f55;
+  box-shadow: 0 8px 30px rgba(26, 34, 63, 0.35);
 }
 
 .heading {
@@ -21,35 +21,84 @@
   gap: 18px;
 }
 
+
+
 .input {
-  padding: 12px;
-  border-radius: 8px;
+  padding: 12px 14px;
+  border-radius: 10px;
   border: 1.5px solid #7fffd4;
   font-size: 1rem;
   outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
 }
 
 .input:focus {
   border-color: #232946;
-  box-shadow: 0 0 0 2px #23294633;
+  box-shadow: 0 0 0 2px rgba(35, 41, 70, 0.25);
 }
+
+
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordWrapper .input {
+  width: 100%;
+  padding-right: 44px;
+
+}
+
+.eyeButton {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #232946;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 50%;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.eyeButton:hover {
+  background: rgba(35, 41, 70, 0.15);
+}
+
+.eyeButton:active {
+  transform: scale(0.9);
+}
+
+
 
 .button {
   background: #7fffd4;
   color: #232946;
   font-weight: 700;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 14px;
   font-size: 1.1rem;
   cursor: pointer;
-  transition: 0.2s;
+  transition: background 0.25s, color 0.25s, transform 0.1s;
 }
 
 .button:hover {
   background: #232946;
   color: #7fffd4;
 }
+
+.button:active {
+  transform: translateY(1px);
+}
+
+
 
 .error {
   color: #e53935;
@@ -68,4 +117,10 @@
   color: #0000ee;
   cursor: pointer;
   font-weight: 600;
+  transition: color 0.2s;
+}
+
+.switchText span:hover {
+  color: #232946;
+  text-decoration: underline;
 }
