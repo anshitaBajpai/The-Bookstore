@@ -2,11 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
+import authRoutes from "./routes/authRoutes.js";
 import Book from "./models/Book.js";
-import User from "./models/User.js";
 import Order from "./models/Order.js";
 
 dotenv.config();
@@ -16,6 +14,7 @@ const app = express();
 /* ===================== Middleware ===================== */
 app.use(cors());
 app.use(express.json());
+app.use("/auth", authRoutes);
 
 /* ===================== MongoDB Connection ===================== */
 mongoose
@@ -55,65 +54,6 @@ const authMiddleware = (roles = []) => {
   };
 };
 
-/* ===================== AUTH ROUTES ===================== */
-
-// Signup
-app.post("/auth/signup", async (req, res) => {
-  try {
-    const { username, email, password, role } = req.body;
-
-    const existingUser = await User.findOne({ email });
-    if (existingUser)
-      return res.status(400).json({ error: "User already exists" });
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = new User({
-      username,
-      email,
-      password: hashedPassword,
-      role: role || "user",
-    });
-
-    await user.save();
-
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
-
-    res.json({ token, role: user.role, username: user.username });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Login
-app.post("/auth/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ email });
-    if (!user)
-      return res.status(400).json({ error: "User not found" });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
-      return res.status(400).json({ error: "Invalid credentials" });
-
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
-
-    res.json({ token, role: user.role, username: user.username });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
 /* ===================== BOOK ROUTES ===================== */
 
 // Unified books route (search + category)
@@ -146,14 +86,11 @@ app.post("/books", authMiddleware(["admin"]), async (req, res) => {
 // Update book (Admin only)
 app.put("/books/:id", authMiddleware(["admin"]), async (req, res) => {
   try {
-    const updated = await Book.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    ).lean();
+    const updated = await Book.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    }).lean();
 
-    if (!updated)
-      return res.status(404).json({ error: "Book not found" });
+    if (!updated) return res.status(404).json({ error: "Book not found" });
 
     res.json(formatBook(updated));
   } catch (err) {
@@ -165,8 +102,7 @@ app.put("/books/:id", authMiddleware(["admin"]), async (req, res) => {
 app.delete("/books/:id", authMiddleware(["admin"]), async (req, res) => {
   try {
     const deleted = await Book.findByIdAndDelete(req.params.id);
-    if (!deleted)
-      return res.status(404).json({ error: "Book not found" });
+    if (!deleted) return res.status(404).json({ error: "Book not found" });
 
     res.json({ message: "Book deleted successfully" });
   } catch (err) {
@@ -199,7 +135,7 @@ app.post("/orders", authMiddleware(), async (req, res) => {
 
     const totalAmount = cart.reduce(
       (sum, item) => sum + item.price * item.quantity,
-      0
+      0,
     );
 
     const order = new Order({
@@ -234,7 +170,6 @@ app.get("/orders", authMiddleware(), async (req, res) => {
   }
 });
 
-
 app.put("/orders/:id/status", authMiddleware(["admin"]), async (req, res) => {
   try {
     const { status } = req.body;
@@ -242,7 +177,7 @@ app.put("/orders/:id/status", authMiddleware(["admin"]), async (req, res) => {
     const order = await Order.findByIdAndUpdate(
       req.params.id,
       { status },
-      { new: true }
+      { new: true },
     );
 
     if (!order) {
@@ -255,7 +190,6 @@ app.put("/orders/:id/status", authMiddleware(["admin"]), async (req, res) => {
   }
 });
 
-
 /* ===================== Root ===================== */
 app.get("/", (req, res) => {
   res.send("📚 Bookstore API is running...");
@@ -264,5 +198,5 @@ app.get("/", (req, res) => {
 /* ===================== Start Server ===================== */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
-  console.log(`🚀 Backend running on http://localhost:${PORT}`)
+  console.log(`🚀 Backend running on http://localhost:${PORT}`),
 );
