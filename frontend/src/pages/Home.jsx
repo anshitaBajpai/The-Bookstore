@@ -9,16 +9,18 @@ const Home = () => {
   const [category, setCategory] = useState("");
 
   const fetchBooks = async () => {
-    let url = "http://localhost:5000/books";
+    try {
+      const res = await axios.get("http://localhost:5000/books", {
+        params: {
+          q: search || undefined,
+          category: category || undefined,
+        },
+      });
 
-    if (search) {
-      url = `http://localhost:5000/books/search?q=${search}`;
-    } else if (category) {
-      url = `http://localhost:5000/books?category=${category}`;
+      setBooks(res.data);
+    } catch (err) {
+      console.error("Failed to fetch books", err);
     }
-
-    const res = await axios.get(url);
-    setBooks(res.data);
   };
 
   useEffect(() => {
