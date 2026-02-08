@@ -6,17 +6,26 @@ import styles from "./Home.module.css";
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
+
   const [category, setCategory] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timer);
+  }, [search]);
 
   const fetchBooks = async () => {
     try {
       const res = await axios.get("http://localhost:5000/books", {
         params: {
-          q: search || undefined,
+          q: debouncedSearch || undefined,
           category: category || undefined,
         },
       });
-
       setBooks(res.data);
     } catch (err) {
       console.error("Failed to fetch books", err);
@@ -25,7 +34,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchBooks();
-  }, [search, category]);
+  }, [debouncedSearch, category]);
 
   return (
     <div className={styles.container}>
