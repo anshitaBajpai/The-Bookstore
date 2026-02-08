@@ -63,9 +63,13 @@ const Home = () => {
       </div>
 
       <div className={styles.grid}>
-        {books.map((book) => (
-          <BookCard key={book.id || book._id} book={book} />
-        ))}
+        {books.length > 0 ? (
+          books.map((book) => (
+            <BookCard key={book.id || book._id} book={book} />
+          ))
+        ) : (
+          <p>No books found</p>
+        )}
       </div>
     </div>
   );
