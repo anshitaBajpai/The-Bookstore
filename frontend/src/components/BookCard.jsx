@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext.jsx";
 import styles from "./BookCard.module.css";
+import { useNavigate } from "react-router-dom";
 
 const BookCard = ({ book }) => {
   const { addToCart, cart } = useContext(CartContext);
+  const navigate = useNavigate();
 
   const bookId = book.id || book._id;
   const cartItem = cart.find((item) => (item.id || item._id) === bookId);
@@ -13,7 +15,7 @@ const BookCard = ({ book }) => {
 
   return (
     <div className={styles.card}>
-      <div>
+      <div onClick={() => navigate(`/books/${book._id}`)}>
         <img src={book.image} alt={book.title} className={styles.image} />
 
         <h3 className={styles.title}>{book.title}</h3>
