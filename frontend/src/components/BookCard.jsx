@@ -15,7 +15,7 @@ const BookCard = ({ book }) => {
 
   return (
     <div className={styles.card}>
-      <div onClick={() => navigate(`/books/${book._id}`)}>
+      <div onClick={() => navigate(`/books/${bookId}`)}>
         <img src={book.image} alt={book.title} className={styles.image} />
 
         <h3 className={styles.title}>{book.title}</h3>

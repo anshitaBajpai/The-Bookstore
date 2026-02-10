@@ -8,6 +8,7 @@ import Orders from "./pages/Orders";
 import Footer from "./components/Footer";
 import { useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import BookDetails from "./pages/BookDetails";
 import AuthHeader from "./components/AuthHeader";
 import ErrorPage from "./pages/ErrorPage";
 
@@ -49,6 +50,7 @@ const App = () => {
             </PrivateRoute>
           }
         />
+        <Route path="/books/:id" element={<BookDetails />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>

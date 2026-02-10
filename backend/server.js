@@ -72,6 +72,17 @@ app.get("/books", async (req, res) => {
   }
 });
 
+// Get book by ID
+app.get("/books/:id", async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id).lean();
+    if (!book) return res.status(404).json({ error: "Book not found" });
+    res.json(formatBook(book));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Add book (Admin only)
 app.post("/books", authMiddleware(["admin"]), async (req, res) => {
   try {
