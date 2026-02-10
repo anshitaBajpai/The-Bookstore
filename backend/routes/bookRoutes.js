@@ -11,9 +11,9 @@ const router = express.Router();
 // Add new book
 router.post("/", async (req, res) => {
   try {
-  const book = new Book(req.body);
-  await book.save();
-  res.status(201).json(formatBook(book.toObject()));
+    const book = new Book(req.body);
+    await book.save();
+    res.status(201).json(formatBook(book.toObject()));
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -22,8 +22,19 @@ router.post("/", async (req, res) => {
 // Get all books
 router.get("/", async (req, res) => {
   try {
-  const books = await Book.find().lean();
-  res.json(books.map(formatBook));
+    const books = await Book.find().lean();
+    res.json(books.map(formatBook));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get book by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id).lean();
+    if (!book) return res.status(404).json({ error: "Book not found" });
+    res.json(formatBook(book));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
