@@ -17,7 +17,9 @@ const App = () => {
   const hideFooterRoutes = ["/auth"];
   const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    >
       {shouldHideFooter ? <AuthHeader /> : <Navbar />}
       <Routes>
         {/* Home and Cart are protected */}

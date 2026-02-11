@@ -45,8 +45,22 @@ function AuthPage() {
         localStorage.setItem("username", res.data.username);
         navigate("/");
       } else {
-        alert("Signup successful! Please login.");
-        setIsLogin(true);
+        // After successful signup, attempt to auto-login the user
+        try {
+          const loginRes = await axios.post("http://localhost:5000/auth/login", {
+            email: formData.email,
+            password: formData.password,
+          });
+
+          localStorage.setItem("token", loginRes.data.token);
+          localStorage.setItem("role", loginRes.data.role);
+          localStorage.setItem("username", loginRes.data.username);
+          navigate("/");
+        } catch (loginErr) {
+          // If auto-login fails, fall back to showing signup success and switch to login
+          setError(loginErr.response?.data?.error || "Signup succeeded but auto-login failed");
+          setIsLogin(true);
+        }
       }
 
       setError("");
