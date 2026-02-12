@@ -48,7 +48,8 @@ const BookDetails = () => {
 
   const bookId = book.id || book._id;
   const cartItem = cart.find((item) => (item.id || item._id) === bookId);
-  const remainingStock = Number(book.stock) - (cartItem ? cartItem.quantity : 0);
+  const remainingStock =
+    Number(book.stock) - (cartItem ? cartItem.quantity : 0);
 
   const handleAddToCart = () => {
     const qty = Math.max(1, Math.min(quantity, remainingStock));
@@ -73,14 +74,16 @@ const BookDetails = () => {
 
           <div className={styles.metaRow}>
             <div className={styles.price}>₹{book.price}</div>
-            {book.rating && <div className={styles.rating}>⭐ {book.rating}</div>}
+            {book.rating && (
+              <div className={styles.rating}>⭐ {book.rating}</div>
+            )}
             <div className={styles.category}>{book.category}</div>
           </div>
 
           <p className={styles.summary}>{book.summary}</p>
 
           <div className={styles.actionRow}>
-            <div className={styles.qty}> 
+            <div className={styles.qty}>
               <button
                 className={styles.qtyBtn}
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -90,11 +93,15 @@ const BookDetails = () => {
               <input
                 className={styles.qtyInput}
                 value={quantity}
-                onChange={(e) => setQuantity(Math.max(1, Number(e.target.value) || 1))}
+                onChange={(e) =>
+                  setQuantity(Math.max(1, Number(e.target.value) || 1))
+                }
               />
               <button
                 className={styles.qtyBtn}
-                onClick={() => setQuantity((q) => Math.min(q + 1, remainingStock))}
+                onClick={() =>
+                  setQuantity((q) => Math.min(q + 1, remainingStock))
+                }
               >
                 +
               </button>
@@ -109,7 +116,9 @@ const BookDetails = () => {
             </button>
           </div>
 
-          <p className={styles.stock}>Available: {Math.max(0, remainingStock)}</p>
+          <p className={styles.stock}>
+            Available: {Math.max(0, remainingStock)}
+          </p>
         </div>
       </div>
     </div>
