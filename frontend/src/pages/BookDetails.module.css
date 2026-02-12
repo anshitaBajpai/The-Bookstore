@@ -1,0 +1,152 @@
+.container {
+  max-width: 1000px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.back {
+  background: transparent;
+  border: none;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(20, 20, 40, 0.06);
+  align-items: start;
+}
+
+.imageWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.image {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0 0 6px 0;
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+
+.author {
+  margin: 0 0 12px 0;
+  color: #555;
+}
+
+.metaRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.price {
+  font-weight: 700;
+  color: #b12704;
+}
+
+.rating {
+  background: #f6f7f9;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.category {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.summary {
+  color: #333;
+  margin-bottom: 18px;
+}
+
+.actionRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.qtyBtn {
+  background: #f4f4f6;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.qtyInput {
+  width: 48px;
+  text-align: center;
+  border: none;
+  padding: 8px 6px;
+  font-size: 1rem;
+}
+
+.addButton {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.addButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.stock {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.loading,
+.error,
+.notFound {
+  text-align: center;
+  margin-top: 48px;
+  color: #666;
+}
+
+@media (max-width: 780px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+  .image {
+    max-width: 240px;
+  }
+}
