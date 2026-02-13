@@ -293,55 +293,366 @@
   color: white;
 }
 
-@media (max-width: 1024px) {
+/* Tablet - Large */
+@media (max-width: 1199px) {
   .container {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
 
   .summarySection {
     position: static;
   }
+
+  .summaryCard {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .heading {
+    font-size: 2.2rem;
+  }
 }
 
-@media (max-width: 768px) {
+/* Tablet - Medium */
+@media (max-width: 1024px) {
   .page {
-    padding: 20px 12px;
+    padding: 32px 16px;
+  }
+
+  .cartItem {
+    grid-template-columns: 85px 1fr 110px 90px 36px;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .itemImage img {
+    width: 85px;
+    height: 112px;
   }
 
   .heading {
     font-size: 2rem;
   }
 
+  .quantityControl {
+    height: 38px;
+    padding: 4px;
+    gap: 4px;
+  }
+
+  .quantityBtn {
+    width: 26px;
+    height: 26px;
+    font-size: 1rem;
+  }
+
+  .quantityInput {
+    width: 36px;
+    height: 26px;
+    font-size: 0.9rem;
+  }
+
+  .subtotal {
+    font-size: 1.1rem;
+  }
+
+  .removeBtn {
+    width: 34px;
+    height: 34px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Tablet - Small / Large Phone */
+@media (max-width: 768px) {
+  .page {
+    padding: 24px 12px;
+  }
+
+  .header {
+    margin-bottom: 24px;
+  }
+
+  .heading {
+    font-size: 1.8rem;
+  }
+
+  .itemCount {
+    font-size: 0.95rem;
+  }
+
   .cartItem {
-    grid-template-columns: 80px 1fr;
+    grid-template-columns: 1fr;
     gap: 12px;
-    padding: 16px 12px;
+    padding: 14px;
+  }
+
+  .itemImage {
+    order: -1;
   }
 
   .itemImage img {
-    width: 80px;
-    height: 105px;
+    width: 100%;
+    max-width: 120px;
+    height: 140px;
   }
 
-  .quantityControl,
-  .itemTotal,
-  .removeBtn {
-    grid-column: 2;
-    width: 100%;
+  .itemDetails {
+    gap: 4px;
+  }
+
+  .itemTitle {
+    font-size: 1rem;
+  }
+
+  .itemAuthor {
+    font-size: 0.85rem;
+  }
+
+  .itemPrice {
+    font-size: 0.9rem;
   }
 
   .quantityControl {
-    margin-top: 8px;
-    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .quantityBtn {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+  }
+
+  .quantityInput {
+    width: 44px;
+    height: 28px;
+    font-size: 0.95rem;
   }
 
   .itemTotal {
-    text-align: left;
-    margin-top: 8px;
+    width: 100%;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .itemTotal::before {
+    content: "";
+    margin-right: auto;
+  }
+
+  .subtotal {
+    font-size: 1.15rem;
   }
 
   .removeBtn {
     width: 100%;
-    margin-top: 8px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+
+  .summarySection {
+    position: static;
+  }
+
+  .summaryCard {
+    max-width: 100%;
+    padding: 20px 16px;
+  }
+
+  .summaryTitle {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+
+  .summaryRow {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+
+  .totalRow {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .totalAmount {
+    font-size: 1.3rem;
+  }
+
+  .placeOrderBtn {
+    font-size: 1rem;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+
+  .continueShoppingBtn {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+}
+
+/* Phone - Large */
+@media (max-width: 480px) {
+  .page {
+    padding: 16px 10px;
+  }
+
+  .header {
+    margin-bottom: 16px;
+  }
+
+  .heading {
+    font-size: 1.5rem;
+    margin: 0 0 4px 0;
+  }
+
+  .itemCount {
+    font-size: 0.9rem;
+  }
+
+  .cartItem {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .itemImage img {
+    max-width: 100px;
+    height: 120px;
+  }
+
+  .itemDetails {
+    gap: 3px;
+  }
+
+  .itemTitle {
+    font-size: 0.95rem;
+    line-height: 1.2;
+  }
+
+  .itemAuthor {
+    font-size: 0.8rem;
+  }
+
+  .itemPrice {
+    font-size: 0.85rem;
+  }
+
+  .quantityControl {
+    height: 36px;
+    gap: 4px;
+    padding: 4px;
+  }
+
+  .quantityBtn {
+    width: 26px;
+    height: 26px;
+    font-size: 0.95rem;
+  }
+
+  .quantityInput {
+    width: 38px;
+    height: 26px;
+    font-size: 0.9rem;
+  }
+
+  .itemTotal {
+    padding: 6px 0;
+  }
+
+  .subtotal {
+    font-size: 1.05rem;
+  }
+
+  .removeBtn {
+    height: 34px;
+    font-size: 1rem;
+  }
+
+  .summaryCard {
+    padding: 16px 12px;
+  }
+
+  .summaryTitle {
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+  }
+
+  .summaryRow {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+
+  .divider {
+    margin: 12px 0;
+  }
+
+  .totalRow {
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+
+  .totalAmount {
+    font-size: 1.2rem;
+  }
+
+  .placeOrderBtn {
+    font-size: 0.95rem;
+    padding: 10px;
+    margin-bottom: 8px;
+  }
+
+  .continueShoppingBtn {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+}
+
+/* Phone - Extra Small */
+@media (max-width: 360px) {
+  .page {
+    padding: 12px 8px;
+  }
+
+  .heading {
+    font-size: 1.3rem;
+  }
+
+  .cartItem {
+    padding: 10px;
+  }
+
+  .itemImage img {
+    max-width: 90px;
+    height: 110px;
+  }
+
+  .itemTitle {
+    font-size: 0.9rem;
+  }
+
+  .quantityBtn {
+    width: 24px;
+    height: 24px;
+    font-size: 0.9rem;
+  }
+
+  .quantityInput {
+    width: 34px;
+    height: 24px;
+    font-size: 0.85rem;
+  }
+
+  .subtotal {
+    font-size: 1rem;
+  }
+
+  .removeBtn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
   }
 }

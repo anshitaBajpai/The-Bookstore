@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: center;
     background: linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%);
+    padding: 16px;
 }
 
 .card {
@@ -12,7 +13,7 @@
     border-radius: 16px;
     text-align: center;
     max-width: 420px;
-    width: 90%;
+    width: 100%;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
@@ -24,11 +25,13 @@
 .card h2 {
     color: #134e4a;
     margin-bottom: 0.5rem;
+    font-size: 1.8rem;
 }
 
 .card p {
     color: #4b5563;
     margin-bottom: 1.5rem;
+    font-size: 1rem;
 }
 
 .button {
@@ -39,10 +42,133 @@
     border-radius: 999px;
     text-decoration: none;
     font-weight: 600;
+    font-size: 1rem;
     transition: transform 0.2s ease, background-color 0.2s ease;
+    border: none;
+    cursor: pointer;
 }
 
 .button:hover {
     background-color: #0f766e;
     transform: translateY(-2px);
+}
+
+/* Tablet - Large */
+@media (max-width: 1199px) {
+    .card {
+        padding: 2.2rem;
+    }
+
+    .card h2 {
+        font-size: 1.6rem;
+    }
+
+    .card p {
+        font-size: 0.95rem;
+    }
+
+    .button {
+        padding: 0.7rem 1.3rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* Tablet - Medium */
+@media (max-width: 1024px) {
+    .card {
+        padding: 2rem;
+    }
+
+    .card h2 {
+        font-size: 1.5rem;
+    }
+
+    .button {
+        padding: 0.65rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Tablet - Small / Large Phone */
+@media (max-width: 768px) {
+    .card {
+        padding: 1.8rem;
+        border-radius: 12px;
+    }
+
+    .icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .card h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .card p {
+        font-size: 0.9rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .button {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Phone - Large */
+@media (max-width: 480px) {
+    .wrapper {
+        padding: 12px;
+    }
+
+    .card {
+        padding: 1.5rem;
+        border-radius: 10px;
+    }
+
+    .icon {
+        font-size: 2rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .card h2 {
+        font-size: 1.1rem;
+    }
+
+    .card p {
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+
+    .button {
+        padding: 0.55rem 0.9rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Phone - Extra Small */
+@media (max-width: 360px) {
+    .card {
+        padding: 1.2rem;
+    }
+
+    .icon {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .card h2 {
+        font-size: 1rem;
+    }
+
+    .card p {
+        font-size: 0.8rem;
+    }
+
+    .button {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.75rem;
+    }
 }

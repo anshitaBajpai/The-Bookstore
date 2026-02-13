@@ -62,19 +62,25 @@
   align-items: center;
   padding: 12px 0;
   border-bottom: 1px solid #43c6ac;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .bookTitle {
   color: #134e4a;
   font-weight: 600;
+  flex: 1;
+  min-width: 150px;
 }
 
 .bookAuthor {
   color: #43c6ac;
+  font-size: 0.9rem;
 }
 
 .bookPrice {
   color: #191654;
+  font-weight: 600;
 }
 
 .editBtn {
@@ -86,6 +92,9 @@
   font-weight: 600;
   margin-right: 8px;
   cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .editBtn:hover {
@@ -101,9 +110,229 @@
   padding: 6px 12px;
   font-weight: 600;
   cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .deleteBtn:hover {
-  background: #134e4a;
-  color: #43c6ac;
+  background: #c62828;
+}
+
+/* Tablet - Large */
+@media (max-width: 1199px) {
+  .container {
+    padding: 28px;
+    max-width: 600px;
+  }
+
+  .heading {
+    font-size: 1.8rem;
+    margin-bottom: 28px;
+  }
+
+  .input,
+  .select {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .primaryButton {
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  .listContainer {
+    padding: 20px;
+  }
+}
+
+/* Tablet - Medium */
+@media (max-width: 1024px) {
+  .container {
+    padding: 24px;
+    max-width: 90%;
+    border-radius: 12px;
+  }
+
+  .heading {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+  }
+
+  .form {
+    gap: 14px;
+  }
+
+  .input,
+  .select {
+    font-size: 0.95rem;
+    padding: 9px;
+  }
+
+  .primaryButton {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .listContainer {
+    padding: 16px;
+  }
+
+  .bookRow {
+    padding: 8px 0;
+  }
+
+  .editBtn,
+  .deleteBtn {
+    padding: 5px 10px;
+  }
+}
+
+/* Tablet - Small / Large Phone */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    max-width: 100%;
+    border-radius: 0;
+  }
+
+  .heading {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  .form {
+    gap: 12px;
+  }
+
+  .input,
+  .select {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .primaryButton {
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  .listContainer {
+    padding: 14px;
+    margin-top: 20px;
+  }
+
+  .bookRow {
+    padding: 12px 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .bookTitle {
+    min-width: 100%;
+  }
+
+  .editBtn {
+    margin-right: 4px;
+    padding: 6px 10px;
+  }
+
+  .bookRow > div:last-child {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+  }
+}
+
+/* Phone - Large */
+@media (max-width: 480px) {
+  .container {
+    padding: 16px;
+  }
+
+  .heading {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+
+  .form {
+    gap: 10px;
+  }
+
+  .input,
+  .select {
+    font-size: 0.9rem;
+    padding: 9px;
+  }
+
+  .primaryButton {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .listContainer {
+    padding: 12px;
+    margin-top: 16px;
+  }
+
+  .bookRow {
+    padding: 10px 0;
+  }
+
+  .bookTitle {
+    font-size: 0.9rem;
+  }
+
+  .bookAuthor {
+    font-size: 0.8rem;
+  }
+
+  .bookPrice {
+    font-size: 0.9rem;
+  }
+
+  .editBtn,
+  .deleteBtn {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+    margin-right: 4px;
+  }
+}
+
+/* Phone - Extra Small */
+@media (max-width: 360px) {
+  .container {
+    padding: 12px;
+  }
+
+  .heading {
+    font-size: 1.1rem;
+    letter-spacing: 0;
+  }
+
+  .input,
+  .select {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+
+  .primaryButton {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .listContainer {
+    padding: 10px;
+  }
+
+  .bookRow {
+    padding: 8px 0;
+  }
+
+  .editBtn,
+  .deleteBtn {
+    padding: 4px 6px;
+    font-size: 0.75rem;
+  }
 }

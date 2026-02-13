@@ -11,6 +11,7 @@
   font-size: 2.4rem;
   font-weight: 800;
   letter-spacing: 1px;
+  margin: 0;
 }
 
 .subtitle {
@@ -18,4 +19,85 @@
   color: #b2f1e6;
   font-size: 1rem;
   font-weight: 500;
+  margin: 0;
+}
+
+/* Tablet - Large */
+@media (max-width: 1199px) {
+  .header {
+    padding: 28px 0;
+  }
+
+  .title {
+    font-size: 2.2rem;
+    letter-spacing: 0.5px;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+    margin-top: 6px;
+  }
+}
+
+/* Tablet - Medium */
+@media (max-width: 1024px) {
+  .header {
+    padding: 24px 0;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+}
+
+/* Tablet - Small / Large Phone */
+@media (max-width: 768px) {
+  .header {
+    padding: 20px 0;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+  }
+}
+
+/* Phone - Large */
+@media (max-width: 480px) {
+  .header {
+    padding: 16px 0;
+  }
+
+  .title {
+    font-size: 1.4rem;
+    letter-spacing: 0;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+    margin-top: 4px;
+  }
+}
+
+/* Phone - Extra Small */
+@media (max-width: 360px) {
+  .header {
+    padding: 12px 0;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+  }
 }

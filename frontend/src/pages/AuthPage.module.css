@@ -97,7 +97,6 @@
 }
 
 
-
 .error {
   color: #e53935;
   text-align: center;
@@ -121,4 +120,210 @@
 .switchText span:hover {
   color: #232946;
   text-decoration: underline;
+}
+
+/* Tablet - Large */
+@media (max-width: 1199px) {
+  .container {
+    padding: 28px;
+    max-width: 380px;
+    margin: 36px auto;
+  }
+
+  .heading {
+    font-size: 1.8rem;
+    margin-bottom: 28px;
+  }
+
+  .form {
+    gap: 16px;
+  }
+
+  .input {
+    padding: 11px 13px;
+    font-size: 0.95rem;
+  }
+
+  .button {
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .switchText {
+    margin-top: 18px;
+  }
+}
+
+/* Tablet - Medium */
+@media (max-width: 1024px) {
+  .container {
+    padding: 24px;
+    max-width: 360px;
+    margin: 32px auto;
+  }
+
+  .heading {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+  }
+
+  .form {
+    gap: 14px;
+  }
+
+  .input {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+
+  .button {
+    padding: 11px;
+    font-size: 0.95rem;
+  }
+
+  .error {
+    font-size: 0.9rem;
+  }
+
+  .switchText {
+    font-size: 0.9rem;
+  }
+}
+
+/* Tablet - Small / Large Phone */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    max-width: 90%;
+    margin: 24px auto;
+    border-radius: 12px;
+  }
+
+  .heading {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  .form {
+    gap: 12px;
+  }
+
+  .input {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+
+  .passwordWrapper .input {
+    padding-right: 40px;
+  }
+
+  .eyeButton {
+    right: 8px;
+    font-size: 1.1rem;
+    padding: 5px;
+  }
+
+  .button {
+    padding: 10px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+
+  .error {
+    font-size: 0.85rem;
+    margin-top: 14px;
+  }
+
+  .switchText {
+    font-size: 0.85rem;
+    margin-top: 16px;
+  }
+}
+
+/* Phone - Large */
+@media (max-width: 480px) {
+  .container {
+    padding: 18px;
+    max-width: 95%;
+    margin: 20px auto;
+    border-radius: 10px;
+  }
+
+  .heading {
+    font-size: 1.3rem;
+    margin-bottom: 18px;
+  }
+
+  .form {
+    gap: 11px;
+  }
+
+  .input {
+    padding: 9px 11px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+  }
+
+  .passwordWrapper .input {
+    padding-right: 38px;
+  }
+
+  .eyeButton {
+    font-size: 1rem;
+    padding: 4px;
+  }
+
+  .button {
+    padding: 9px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+  }
+
+  .error {
+    font-size: 0.8rem;
+    margin-top: 12px;
+  }
+
+  .switchText {
+    font-size: 0.8rem;
+    margin-top: 14px;
+  }
+}
+
+/* Phone - Extra Small */
+@media (max-width: 360px) {
+  .container {
+    padding: 16px;
+    max-width: 100%;
+    margin: 16px auto;
+    border-radius: 8px;
+  }
+
+  .heading {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+
+  .form {
+    gap: 10px;
+  }
+
+  .input {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .button {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  .error {
+    font-size: 0.75rem;
+  }
+
+  .switchText {
+    font-size: 0.75rem;
+  }
 }

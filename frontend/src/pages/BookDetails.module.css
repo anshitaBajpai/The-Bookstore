@@ -11,6 +11,13 @@
     font-weight: 600;
     margin-bottom: 12px;
     cursor: pointer;
+    font-size: 1rem;
+    padding: 4px 8px;
+    transition: color 0.2s;
+}
+
+.back:hover {
+    color: #1976d2;
 }
 
 .card {
@@ -60,17 +67,20 @@
     gap: 12px;
     align-items: center;
     margin-bottom: 12px;
+    flex-wrap: wrap;
 }
 
 .price {
     font-weight: 700;
     color: #b12704;
+    font-size: 1.3rem;
 }
 
 .rating {
     background: #f6f7f9;
     padding: 4px 8px;
     border-radius: 6px;
+    font-size: 0.9rem;
 }
 
 .category {
@@ -81,6 +91,7 @@
 .summary {
     color: #333;
     margin-bottom: 18px;
+    line-height: 1.6;
 }
 
 .actionRow {
@@ -88,6 +99,7 @@
     gap: 12px;
     align-items: center;
     margin-bottom: 12px;
+    flex-wrap: wrap;
 }
 
 .qty {
@@ -104,6 +116,11 @@
     padding: 8px 12px;
     cursor: pointer;
     font-size: 1.1rem;
+    transition: background 0.2s;
+}
+
+.qtyBtn:hover {
+    background: #e8e8e8;
 }
 
 .qtyInput {
@@ -122,6 +139,11 @@
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
+    transition: background 0.2s;
+}
+
+.addButton:hover {
+    background: #1565c0;
 }
 
 .addButton:disabled {
@@ -142,12 +164,316 @@
     color: #666;
 }
 
-@media (max-width: 780px) {
+/* Tablet - Large */
+@media (max-width: 1199px) {
+    .container {
+        max-width: 900px;
+        padding: 0 12px;
+    }
+
+    .card {
+        gap: 20px;
+        padding: 18px;
+    }
+
+    .title {
+        font-size: 1.4rem;
+    }
+
+    .price {
+        font-size: 1.2rem;
+    }
+
+    .image {
+        max-width: 320px;
+    }
+}
+
+/* Tablet - Medium / Large Phone */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 800px;
+        padding: 0 12px;
+    }
+
     .card {
         grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 16px;
+    }
+
+    .imageWrap {
+        order: -1;
+    }
+
+    .image {
+        max-width: 280px;
+        height: 350px;
+    }
+
+    .title {
+        font-size: 1.3rem;
+        margin-bottom: 4px;
+    }
+
+    .author {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+
+    .price {
+        font-size: 1.1rem;
+    }
+
+    .metaRow {
+        gap: 10px;
+    }
+
+    .rating {
+        padding: 3px 6px;
+        font-size: 0.85rem;
+    }
+
+    .category {
+        font-size: 0.9rem;
+    }
+
+    .summary {
+        font-size: 0.95rem;
+        margin-bottom: 14px;
+    }
+
+    .actionRow {
+        gap: 10px;
+    }
+
+    .qtyBtn {
+        padding: 6px 10px;
+        font-size: 1rem;
+    }
+
+    .qtyInput {
+        width: 44px;
+        padding: 6px 4px;
+        font-size: 0.95rem;
+    }
+
+    .addButton {
+        padding: 9px 14px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Tablet - Small */
+@media (max-width: 768px) {
+    .container {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .card {
+        padding: 14px;
+        gap: 12px;
+    }
+
+    .imageWrap {
+        padding: 4px;
     }
 
     .image {
         max-width: 240px;
+        height: 300px;
+    }
+
+    .back {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+
+    .title {
+        font-size: 1.2rem;
+        margin-bottom: 2px;
+    }
+
+    .author {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+
+    .metaRow {
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .price {
+        font-size: 1rem;
+    }
+
+    .rating {
+        padding: 2px 6px;
+        font-size: 0.8rem;
+    }
+
+    .category {
+        font-size: 0.85rem;
+    }
+
+    .summary {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+    }
+
+    .actionRow {
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .qtyBtn {
+        padding: 5px 8px;
+        font-size: 0.95rem;
+    }
+
+    .qtyInput {
+        width: 40px;
+        padding: 5px 3px;
+        font-size: 0.9rem;
+    }
+
+    .addButton {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .stock {
+        font-size: 0.85rem;
+    }
+}
+
+/* Phone - Large */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 8px;
+    }
+
+    .card {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .image {
+        max-width: 200px;
+        height: 260px;
+    }
+
+    .back {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+    }
+
+    .title {
+        font-size: 1.1rem;
+    }
+
+    .author {
+        font-size: 0.85rem;
+    }
+
+    .metaRow {
+        gap: 6px;
+        margin-bottom: 8px;
+    }
+
+    .price {
+        font-size: 0.95rem;
+    }
+
+    .rating {
+        font-size: 0.75rem;
+        padding: 2px 4px;
+    }
+
+    .category {
+        font-size: 0.8rem;
+    }
+
+    .summary {
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+    }
+
+    .actionRow {
+        gap: 6px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .qty {
+        width: 100%;
+    }
+
+    .qtyBtn {
+        flex: 1;
+        padding: 6px;
+        font-size: 0.9rem;
+    }
+
+    .qtyInput {
+        flex: 1;
+        padding: 6px;
+    }
+
+    .addButton {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .stock {
+        font-size: 0.8rem;
+    }
+
+    .loading,
+    .error,
+    .notFound {
+        margin-top: 32px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Phone - Extra Small */
+@media (max-width: 360px) {
+    .card {
+        padding: 10px;
+    }
+
+    .image {
+        max-width: 160px;
+        height: 220px;
+    }
+
+    .title {
+        font-size: 1rem;
+    }
+
+    .author {
+        font-size: 0.8rem;
+    }
+
+    .price {
+        font-size: 0.9rem;
+    }
+
+    .summary {
+        font-size: 0.8rem;
+    }
+
+    .qtyBtn {
+        padding: 4px;
+        font-size: 0.8rem;
+    }
+
+    .addButton {
+        font-size: 0.85rem;
+        padding: 8px;
     }
 }

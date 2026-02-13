@@ -72,3 +72,182 @@
 .clearBtn:hover {
   background: #f2b800;
 }
+
+/* Tablet - Large */
+@media (max-width: 1199px) {
+  .container {
+    padding: 18px;
+    max-width: 600px;
+  }
+
+  .heading {
+    font-size: 1.8rem;
+    margin-bottom: 18px;
+  }
+
+  .item {
+    margin: 10px 0;
+    padding: 10px;
+  }
+
+  .total {
+    font-size: 1.3rem;
+    margin-top: 18px;
+  }
+}
+
+/* Tablet - Medium */
+@media (max-width: 1024px) {
+  .container {
+    padding: 16px;
+  }
+
+  .heading {
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+  }
+
+  .item {
+    margin: 8px 0;
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .removeBtn {
+    margin-left: 8px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+  }
+
+  .total {
+    font-size: 1.2rem;
+    margin-top: 16px;
+  }
+
+  .clearBtn {
+    margin-top: 12px;
+    padding: 8px 16px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Tablet - Small / Large Phone */
+@media (max-width: 768px) {
+  .container {
+    padding: 14px;
+  }
+
+  .heading {
+    font-size: 1.4rem;
+    margin-bottom: 14px;
+  }
+
+  .item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 8px 0;
+    padding: 10px;
+  }
+
+  .removeBtn {
+    align-self: flex-end;
+    margin-left: 0;
+    margin-top: 4px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+
+  .total {
+    font-size: 1.1rem;
+    margin-top: 14px;
+  }
+
+  .clearBtn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Phone - Large */
+@media (max-width: 480px) {
+  .container {
+    padding: 12px;
+  }
+
+  .heading {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+
+  .item {
+    margin: 6px 0;
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .title {
+    font-size: 0.9rem;
+  }
+
+  .price {
+    font-size: 0.9rem;
+  }
+
+  .removeBtn {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+  }
+
+  .total {
+    font-size: 1rem;
+    margin-top: 12px;
+  }
+
+  .clearBtn {
+    margin-top: 10px;
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Phone - Extra Small */
+@media (max-width: 360px) {
+  .container {
+    padding: 10px;
+  }
+
+  .heading {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  .item {
+    margin: 6px 0;
+    padding: 6px;
+  }
+
+  .title {
+    font-size: 0.85rem;
+  }
+
+  .price {
+    font-size: 0.85rem;
+  }
+
+  .removeBtn {
+    padding: 4px 6px;
+    font-size: 0.75rem;
+  }
+
+  .total {
+    font-size: 0.95rem;
+  }
+
+  .clearBtn {
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+}

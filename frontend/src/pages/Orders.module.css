@@ -39,6 +39,7 @@
     justify-content: space-between;
     margin-bottom: 14px;
     flex-wrap: wrap;
+    gap: 8px;
 }
 
 .orderId {
@@ -56,6 +57,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .statusLabel {
@@ -95,4 +97,234 @@
     font-size: 1.2rem;
     font-weight: 700;
     color: #7fffd4;
+}
+
+/* Tablet - Large */
+@media (max-width: 1199px) {
+    .page {
+        padding: 28px;
+    }
+
+    .title {
+        font-size: 2rem;
+        margin-bottom: 28px;
+    }
+
+    .container {
+        max-width: 800px;
+    }
+
+    .card {
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 14px;
+    }
+}
+
+/* Tablet - Medium */
+@media (max-width: 1024px) {
+    .page {
+        padding: 24px;
+    }
+
+    .title {
+        font-size: 1.8rem;
+        margin-bottom: 24px;
+    }
+
+    .container {
+        max-width: 700px;
+    }
+
+    .card {
+        padding: 18px;
+        margin-bottom: 18px;
+    }
+
+    .header {
+        gap: 6px;
+    }
+
+    .orderId {
+        font-size: 0.9rem;
+    }
+
+    .date {
+        font-size: 0.9rem;
+    }
+
+    .item {
+        margin-bottom: 8px;
+        padding-bottom: 8px;
+        font-size: 0.9rem;
+    }
+
+    .total {
+        font-size: 1.1rem;
+    }
+}
+
+/* Tablet - Small / Large Phone */
+@media (max-width: 768px) {
+    .page {
+        padding: 16px;
+    }
+
+    .title {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+
+    .empty {
+        font-size: 1.2rem;
+        margin-top: 60px;
+    }
+
+    .card {
+        padding: 14px;
+        margin-bottom: 14px;
+        border-radius: 10px;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .orderId {
+        font-size: 0.85rem;
+    }
+
+    .date {
+        font-size: 0.85rem;
+    }
+
+    .statusRow {
+        gap: 8px;
+    }
+
+    .statusLabel {
+        font-size: 0.85rem;
+    }
+
+    .status {
+        padding: 4px 10px;
+        font-size: 0.8rem;
+    }
+
+    .item {
+        flex-direction: column;
+        gap: 4px;
+        padding-bottom: 8px;
+        font-size: 0.85rem;
+    }
+
+    .total {
+        font-size: 1rem;
+    }
+}
+
+/* Phone - Large */
+@media (max-width: 480px) {
+    .page {
+        padding: 12px;
+    }
+
+    .title {
+        font-size: 1.4rem;
+        margin-bottom: 16px;
+    }
+
+    .empty {
+        font-size: 1rem;
+        margin-top: 40px;
+    }
+
+    .card {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+
+    .header {
+        gap: 4px;
+    }
+
+    .orderId {
+        font-size: 0.8rem;
+    }
+
+    .date {
+        font-size: 0.8rem;
+    }
+
+    .statusRow {
+        gap: 6px;
+    }
+
+    .statusLabel {
+        font-size: 0.8rem;
+    }
+
+    .status {
+        padding: 3px 8px;
+        font-size: 0.75rem;
+    }
+
+    .item {
+        margin-bottom: 6px;
+        padding-bottom: 6px;
+        font-size: 0.8rem;
+    }
+
+    .itemTitle {
+        font-size: 0.8rem;
+    }
+
+    .itemPrice {
+        font-size: 0.8rem;
+    }
+
+    .total {
+        font-size: 0.95rem;
+        margin-top: 12px;
+    }
+}
+
+/* Phone - Extra Small */
+@media (max-width: 360px) {
+    .page {
+        padding: 10px;
+    }
+
+    .title {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+
+    .card {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .orderId {
+        font-size: 0.75rem;
+    }
+
+    .date {
+        font-size: 0.75rem;
+    }
+
+    .status {
+        font-size: 0.7rem;
+    }
+
+    .item {
+        font-size: 0.75rem;
+        margin-bottom: 4px;
+        padding-bottom: 4px;
+    }
+
+    .total {
+        font-size: 0.9rem;
+    }
 }

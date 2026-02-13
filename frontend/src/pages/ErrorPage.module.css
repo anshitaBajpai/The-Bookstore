@@ -51,6 +51,7 @@
     display: flex;
     gap: 16px;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .backBtn {
@@ -81,9 +82,164 @@
     font-size: 1rem;
     box-shadow: 0 6px 18px rgba(67, 198, 172, 0.5);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
 }
 
 .homeBtn:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 26px rgba(67, 198, 172, 0.7);
+}
+
+/* Tablet - Large */
+@media (max-width: 1199px) {
+    .card {
+        padding: 42px 36px;
+    }
+
+    .code {
+        font-size: 4.5rem;
+        letter-spacing: 2px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .text {
+        font-size: 1rem;
+    }
+
+    .backBtn,
+    .homeBtn {
+        font-size: 0.95rem;
+        padding: 10px 18px;
+    }
+}
+
+/* Tablet - Medium */
+@media (max-width: 1024px) {
+    .card {
+        padding: 36px 32px;
+        border-radius: 16px;
+    }
+
+    .code {
+        font-size: 4rem;
+    }
+
+    .title {
+        font-size: 1.3rem;
+    }
+
+    .text {
+        font-size: 0.95rem;
+        margin-bottom: 24px;
+    }
+
+    .actions {
+        gap: 12px;
+    }
+
+    .backBtn,
+    .homeBtn {
+        font-size: 0.9rem;
+        padding: 9px 16px;
+    }
+}
+
+/* Tablet - Small / Large Phone */
+@media (max-width: 768px) {
+    .wrapper {
+        padding: 16px;
+    }
+
+    .card {
+        padding: 32px 24px;
+    }
+
+    .code {
+        font-size: 3.5rem;
+        letter-spacing: 2px;
+        margin-bottom: 8px;
+    }
+
+    .title {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+    }
+
+    .text {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .backBtn,
+    .homeBtn {
+        font-size: 0.85rem;
+        padding: 10px 16px;
+        width: 100%;
+    }
+}
+
+/* Phone - Large */
+@media (max-width: 480px) {
+    .wrapper {
+        padding: 12px;
+    }
+
+    .card {
+        padding: 24px 16px;
+        border-radius: 12px;
+    }
+
+    .code {
+        font-size: 3rem;
+        margin-bottom: 6px;
+    }
+
+    .title {
+        font-size: 1.1rem;
+    }
+
+    .text {
+        font-size: 0.85rem;
+        margin-bottom: 16px;
+        line-height: 1.5;
+    }
+
+    .backBtn,
+    .homeBtn {
+        font-size: 0.8rem;
+        padding: 9px 12px;
+    }
+}
+
+/* Phone - Extra Small */
+@media (max-width: 360px) {
+    .card {
+        padding: 20px 12px;
+    }
+
+    .code {
+        font-size: 2.5rem;
+    }
+
+    .title {
+        font-size: 1rem;
+    }
+
+    .text {
+        font-size: 0.8rem;
+    }
+
+    .backBtn,
+    .homeBtn {
+        font-size: 0.75rem;
+        padding: 8px 10px;
+    }
 }

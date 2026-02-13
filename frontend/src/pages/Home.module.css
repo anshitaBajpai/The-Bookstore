@@ -52,3 +52,134 @@
     padding: 0 24px;
     justify-content: center;
 }
+
+/* Tablet - Large */
+@media (max-width: 1199px) {
+    .container {
+        padding: 20px 32px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 200px));
+        gap: 20px;
+        padding: 0 16px;
+    }
+
+    .searchInput {
+        width: 300px;
+        font-size: 1rem;
+        padding: 10px 16px;
+    }
+
+    .categorySelect {
+        font-size: 0.95rem;
+        padding: 10px 14px;
+    }
+}
+
+/* Tablet - Medium */
+@media (max-width: 1024px) {
+    .container {
+        padding: 16px 24px;
+    }
+
+    .controls {
+        gap: 12px;
+        margin: 20px 0 24px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 180px));
+        gap: 16px;
+        padding: 0 12px;
+    }
+
+    .searchInput {
+        width: 280px;
+        font-size: 1rem;
+        padding: 10px 14px;
+    }
+
+    .categorySelect {
+        font-size: 0.9rem;
+        padding: 9px 12px;
+    }
+}
+
+/* Tablet - Small / Large Phone */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px 16px;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 12px;
+        margin: 16px 0 20px;
+    }
+
+    .searchInput {
+        width: 100%;
+        font-size: 1rem;
+        padding: 10px 14px;
+    }
+
+    .categorySelect {
+        width: 100%;
+        font-size: 0.95rem;
+        padding: 10px 12px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 160px));
+        gap: 14px;
+        padding: 0 8px;
+    }
+}
+
+/* Phone - Large */
+@media (max-width: 480px) {
+    .container {
+        padding: 12px 12px;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 10px;
+        margin: 12px 0 16px;
+    }
+
+    .searchInput {
+        width: 100%;
+        font-size: 0.95rem;
+        padding: 9px 12px;
+    }
+
+    .categorySelect {
+        width: 100%;
+        font-size: 0.9rem;
+        padding: 8px 10px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 140px));
+        gap: 12px;
+        padding: 0;
+    }
+}
+
+/* Phone - Extra Small */
+@media (max-width: 360px) {
+    .container {
+        padding: 10px 8px;
+    }
+
+    .controls {
+        margin: 10px 0 12px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 120px));
+        gap: 10px;
+    }
+}

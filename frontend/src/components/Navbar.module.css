@@ -17,12 +17,14 @@
   font-size: 1.8rem;
   letter-spacing: 1px;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .links {
   display: flex;
   gap: 26px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .link {
@@ -31,6 +33,7 @@
   font-weight: 600;
   font-size: 1.05rem;
   transition: color 0.2s;
+  white-space: nowrap;
 }
 
 .link:hover {
@@ -62,9 +65,176 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .logoutBtn:hover {
   background: #7fffd4;
   color: #232946;
+}
+
+/* Tablet - Large */
+@media (max-width: 1199px) {
+  .navbar {
+    padding: 14px 32px;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
+  }
+
+  .links {
+    gap: 20px;
+  }
+
+  .link {
+    font-size: 1rem;
+  }
+
+  .logoutBtn {
+    padding: 5px 12px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Tablet - Medium */
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 12px 24px;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+  }
+
+  .links {
+    gap: 16px;
+  }
+
+  .link {
+    font-size: 0.95rem;
+  }
+
+  .username {
+    font-size: 0.95rem;
+  }
+
+  .logoutBtn {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Tablet - Small / Large Phone */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+    flex-basis: 100%;
+    order: -1;
+  }
+
+  .links {
+    gap: 12px;
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .link {
+    font-size: 0.9rem;
+  }
+
+  .username {
+    font-size: 0.85rem;
+  }
+
+  .cartBadge {
+    padding: 1px 6px;
+    font-size: 0.8rem;
+  }
+
+  .logoutBtn {
+    padding: 4px 8px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Phone - Large */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .logo {
+    font-size: 1.1rem;
+    width: 100%;
+  }
+
+  .links {
+    width: 100%;
+    gap: 8px;
+    justify-content: space-between;
+    font-size: 0.85rem;
+  }
+
+  .link {
+    font-size: 0.85rem;
+    padding: 4px;
+  }
+
+  .username {
+    font-size: 0.8rem;
+  }
+
+  .cartBadge {
+    padding: 1px 4px;
+    font-size: 0.7rem;
+  }
+
+  .logoutBtn {
+    padding: 3px 8px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Phone - Extra Small */
+@media (max-width: 360px) {
+  .navbar {
+    padding: 8px 8px;
+  }
+
+  .logo {
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+
+  .links {
+    gap: 6px;
+  }
+
+  .link {
+    font-size: 0.75rem;
+  }
+
+  .username {
+    display: none;
+  }
+
+  .cartBadge {
+    font-size: 0.65rem;
+  }
+
+  .logoutBtn {
+    padding: 3px 6px;
+    font-size: 0.75rem;
+  }
 }

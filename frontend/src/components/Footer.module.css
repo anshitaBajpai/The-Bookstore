@@ -11,10 +11,88 @@
 .copyright {
   margin: 0;
   font-weight: 600;
+  font-size: 1rem;
 }
 
 .tech {
   margin: 6px 0 0;
   font-size: 0.9rem;
   color: #7fffd4;
+}
+
+/* Tablet - Large */
+@media (max-width: 1199px) {
+  .footer {
+    padding: 18px 14px;
+  }
+
+  .copyright {
+    font-size: 0.95rem;
+  }
+
+  .tech {
+    font-size: 0.85rem;
+  }
+}
+
+/* Tablet - Medium */
+@media (max-width: 1024px) {
+  .footer {
+    padding: 16px 12px;
+  }
+
+  .copyright {
+    font-size: 0.9rem;
+  }
+
+  .tech {
+    font-size: 0.8rem;
+    margin-top: 4px;
+  }
+}
+
+/* Tablet - Small / Large Phone */
+@media (max-width: 768px) {
+  .footer {
+    padding: 14px 10px;
+  }
+
+  .copyright {
+    font-size: 0.85rem;
+  }
+
+  .tech {
+    font-size: 0.75rem;
+  }
+}
+
+/* Phone - Large */
+@media (max-width: 480px) {
+  .footer {
+    padding: 12px 8px;
+  }
+
+  .copyright {
+    font-size: 0.8rem;
+  }
+
+  .tech {
+    font-size: 0.7rem;
+    margin-top: 3px;
+  }
+}
+
+/* Phone - Extra Small */
+@media (max-width: 360px) {
+  .footer {
+    padding: 10px 6px;
+  }
+
+  .copyright {
+    font-size: 0.75rem;
+  }
+
+  .tech {
+    font-size: 0.65rem;
+  }
 }
