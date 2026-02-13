@@ -21,6 +21,8 @@ function Cart() {
     0,
   );
 
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   const handlePlaceOrder = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -46,40 +48,108 @@ function Cart() {
 
   return (
     <div className={styles.page}>
-      <h2 className={styles.heading}>🛒 Your Cart</h2>
-
-      <div className={styles.cartContainer}>
-        {cart.map((item) => (
-          <div key={item.id} className={styles.card}>
-            <div className={styles.bookInfo}>
-              <img src={item.image} alt={item.title} />
-              <div>
-                <h4>{item.title}</h4>
-                <p>₹{item.price}</p>
-              </div>
-            </div>
-
-            <div className={styles.quantity}>
-              <button onClick={() => decreaseQuantity(item.id)}>-</button>
-              <span>{item.quantity}</span>
-              <button onClick={() => increaseQuantity(item.id)}>+</button>
-            </div>
-
-            <button
-              className={styles.removeBtn}
-              onClick={() => removeFromCart(item.id)}
-            >
-              Remove
-            </button>
-          </div>
-        ))}
+      <div className={styles.header}>
+        <h2 className={styles.heading}>🛒 Your Cart</h2>
+        <p className={styles.itemCount}>
+          {totalItems} {totalItems === 1 ? "item" : "items"} in cart
+        </p>
       </div>
 
-      <div className={styles.summary}>
-        <h3>Total: ₹{totalPrice}</h3>
-        <button className={styles.orderBtn} onClick={handlePlaceOrder}>
-          Place Order
-        </button>
+      <div className={styles.container}>
+        <div className={styles.cartSection}>
+          {cart.map((item) => {
+            const itemTotal = item.price * item.quantity;
+            return (
+              <div key={item.id || item._id} className={styles.cartItem}>
+                <div className={styles.itemImage}>
+                  <img src={item.image} alt={item.title} />
+                </div>
+
+                <div className={styles.itemDetails}>
+                  <h3 className={styles.itemTitle}>{item.title}</h3>
+                  <p className={styles.itemAuthor}>✍️ {item.author}</p>
+                  <p className={styles.itemPrice}>
+                    ₹{item.price.toFixed(2)} per item
+                  </p>
+                </div>
+
+                <div className={styles.quantityControl}>
+                  <button
+                    className={styles.quantityBtn}
+                    onClick={() => decreaseQuantity(item.id || item._id)}
+                    title="Decrease quantity"
+                  >
+                    −
+                  </button>
+                  <input
+                    type="text"
+                    readOnly
+                    value={item.quantity}
+                    className={styles.quantityInput}
+                  />
+                  <button
+                    className={styles.quantityBtn}
+                    onClick={() => increaseQuantity(item.id || item._id)}
+                    title="Increase quantity"
+                  >
+                    +
+                  </button>
+                </div>
+
+                <div className={styles.itemTotal}>
+                  <p className={styles.subtotal}>₹{itemTotal.toFixed(2)}</p>
+                </div>
+
+                <button
+                  className={styles.removeBtn}
+                  onClick={() => removeFromCart(item.id || item._id)}
+                  title="Remove from cart"
+                  aria-label="Remove item"
+                >
+                  ✕
+                </button>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className={styles.summarySection}>
+          <div className={styles.summaryCard}>
+            <h3 className={styles.summaryTitle}>Order Summary</h3>
+
+            <div className={styles.summaryRow}>
+              <span>
+                Subtotal ({totalItems} {totalItems === 1 ? "item" : "items"})
+              </span>
+              <span className={styles.amount}>₹{totalPrice.toFixed(2)}</span>
+            </div>
+
+            <div className={styles.summaryRow}>
+              <span>Shipping</span>
+              <span className={styles.amount}>FREE</span>
+            </div>
+
+            <div className={styles.divider}></div>
+
+            <div className={styles.totalRow}>
+              <span>Total Amount</span>
+              <span className={styles.totalAmount}>
+                ₹{totalPrice.toFixed(2)}
+              </span>
+            </div>
+
+            <button className={styles.placeOrderBtn} onClick={handlePlaceOrder}>
+              🛍️ Place Order
+            </button>
+
+            <button
+              className={styles.continueShoppingBtn}
+              onClick={() => navigate("/")}
+            >
+              ← Continue Shopping
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
