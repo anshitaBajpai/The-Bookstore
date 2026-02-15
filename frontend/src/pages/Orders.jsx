@@ -61,17 +61,30 @@ const Orders = () => {
               </div>
 
               {/* Items */}
-              {order.items.map((item, index) => (
-                <div key={index} className={styles.item}>
-                  <span className={styles.itemTitle}>{item.title}</span>
-                  <span className={styles.itemPrice}>
-                    {item.quantity} × ₹{item.price}
-                  </span>
-                </div>
-              ))}
+              <div className={styles.itemsList}>
+                {order.items.map((item, index) => (
+                  <div key={index} className={styles.item}>
+                    <img
+                      src={item.image || "/placeholder-book.png"}
+                      alt={item.title}
+                      className={styles.itemImage}
+                    />
+                    <div className={styles.itemInfo}>
+                      <span className={styles.itemTitle}>{item.title}</span>
+                      <span className={styles.itemAuthor}>✍️ {item.author}</span>
+                      <span className={styles.itemPrice}>
+                        {item.quantity} × ₹{item.price}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
               {/* Total */}
-              <div className={styles.total}>Total: ₹{order.totalAmount}</div>
+              <div className={styles.totalRow}>
+                <span className={styles.totalLabel}>Total:</span>
+                <span className={styles.totalAmount}>₹{order.totalAmount}</span>
+              </div>
             </div>
           ))}
         </div>
