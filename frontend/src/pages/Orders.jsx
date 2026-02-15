@@ -71,7 +71,9 @@ const Orders = () => {
                     />
                     <div className={styles.itemInfo}>
                       <span className={styles.itemTitle}>{item.title}</span>
-                      <span className={styles.itemAuthor}>✍️ {item.author}</span>
+                      <span className={styles.itemAuthor}>
+                        ✍️ {item.author}
+                      </span>
                       <span className={styles.itemPrice}>
                         {item.quantity} × ₹{item.price}
                       </span>

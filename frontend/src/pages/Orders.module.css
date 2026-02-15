@@ -2,60 +2,70 @@
     min-height: 100vh;
     padding: 32px;
     background: linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%);
-.itemsList {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-.item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #3b4a6b;
-}
-.itemImage {
-    width: 48px;
-    height: 64px;
-    object-fit: cover;
-    border-radius: 6px;
-    background: #e0ffef;
-    box-shadow: 0 2px 8px #43c6ac33;
-}
-.itemInfo {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-.itemTitle {
-    color: #eebbc3;
-    font-weight: 600;
-    font-size: 1rem;
-}
-.itemAuthor {
-    color: #b8c1ec;
-    font-size: 0.9rem;
-}
-.itemPrice {
-    color: #a3bffa;
-    font-size: 0.95rem;
-}
-.totalRow {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-    margin-top: 18px;
-    font-size: 1.15rem;
-    font-weight: 700;
-}
-.totalLabel {
-    color: #b8c1ec;
-}
-.totalAmount {
-    color: #7fffd4;
-    font-size: 1.25rem;
-}
+
+    .itemsList {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #3b4a6b;
+    }
+
+    .itemImage {
+        width: 48px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 6px;
+        background: #e0ffef;
+        box-shadow: 0 2px 8px #43c6ac33;
+    }
+
+    .itemInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .itemTitle {
+        color: #eebbc3;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .itemAuthor {
+        color: #b8c1ec;
+        font-size: 0.9rem;
+    }
+
+    .itemPrice {
+        color: #a3bffa;
+        font-size: 0.95rem;
+    }
+
+    .totalRow {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+        margin-top: 18px;
+        font-size: 1.15rem;
+        font-weight: 700;
+    }
+
+    .totalLabel {
+        color: #b8c1ec;
+    }
+
+    .totalAmount {
+        color: #7fffd4;
+        font-size: 1.25rem;
+    }
 }
 
 .card {
