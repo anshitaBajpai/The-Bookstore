@@ -9,13 +9,20 @@ const bookSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ["Fiction", "Business", "Technology", "Self-Help", "Biography", "Education"]
+    enum: [
+      "Fiction",
+      "Business",
+      "Technology",
+      "Self-Help",
+      "Biography",
+      "Education",
+    ],
   },
   stock: {
     type: Number,
     required: true,
-    min: 0
-  }
+    min: 0,
+  },
 });
 
 const Book = mongoose.model("Book", bookSchema);

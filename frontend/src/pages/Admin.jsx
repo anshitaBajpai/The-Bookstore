@@ -125,7 +125,7 @@ const Admin = () => {
           className={styles.input}
           placeholder="Summary"
           value={summary}
-          onChange={e => setSummary(e.target.value)}
+          onChange={(e) => setSummary(e.target.value)}
           rows={3}
         />
         <button className={styles.primaryButton}>
