@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function AddBook() {
-  const [book, setBook] = useState({ title: "", author: "", price: "", image: "" });
+  const [book, setBook] = useState({ title: "", author: "", price: "", image: "", summary: "" });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,6 +27,7 @@ function AddBook() {
         <input name="author" placeholder="Author" onChange={handleChange} required /> <br />
         <input name="price" type="number" placeholder="Price" onChange={handleChange} required /> <br />
         <input name="image" placeholder="Image URL" onChange={handleChange} /> <br />
+        <textarea name="summary" placeholder="Summary" onChange={handleChange} rows={3} /> <br />
         <button type="submit">Add Book</button>
       </form>
     </div>

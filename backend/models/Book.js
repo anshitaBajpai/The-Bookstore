@@ -5,7 +5,8 @@ const bookSchema = new mongoose.Schema({
   author: { type: String, required: true },
   price: { type: Number, required: true },
   image: { type: String },
-   category: {
+  summary: { type: String },
+  category: {
     type: String,
     required: true,
     enum: ["Fiction", "Business", "Technology", "Self-Help", "Biography", "Education"]

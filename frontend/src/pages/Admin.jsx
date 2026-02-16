@@ -10,6 +10,7 @@ const Admin = () => {
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
   const [stock, setStock] = useState("");
+  const [summary, setSummary] = useState("");
   const [editingBook, setEditingBook] = useState(null);
 
   const token = localStorage.getItem("token");
@@ -25,9 +26,7 @@ const Admin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const payload = { title, author, price, image, category, stock };
-
+    const payload = { title, author, price, image, category, stock, summary };
     if (editingBook) {
       await axios.put(
         `http://localhost:5000/books/${editingBook.id}`,
@@ -39,15 +38,14 @@ const Admin = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
     }
-
     setTitle("");
     setAuthor("");
     setPrice("");
     setImage("");
     setCategory("");
     setStock("");
+    setSummary("");
     setEditingBook(null);
-
     fetchBooks();
   };
 
@@ -59,6 +57,7 @@ const Admin = () => {
     setImage(book.image);
     setCategory(book.category);
     setStock(book.stock);
+    setSummary(book.summary || "");
   };
 
   const handleDelete = async (id) => {
@@ -108,7 +107,6 @@ const Admin = () => {
           value={image}
           onChange={(e) => setImage(e.target.value)}
         />
-
         <select
           className={styles.select}
           value={category}
@@ -123,7 +121,13 @@ const Admin = () => {
           <option>Biography</option>
           <option>Education</option>
         </select>
-
+        <textarea
+          className={styles.input}
+          placeholder="Summary"
+          value={summary}
+          onChange={e => setSummary(e.target.value)}
+          rows={3}
+        />
         <button className={styles.primaryButton}>
           {editingBook ? "Update Book" : "Add Book"}
         </button>

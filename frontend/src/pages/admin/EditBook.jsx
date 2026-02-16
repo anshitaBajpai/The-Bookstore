@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function EditBook() {
   const { id } = useParams();
-  const [book, setBook] = useState({ title: "", author: "", price: "", image: "" });
+  const [book, setBook] = useState({ title: "", author: "", price: "", image: "", summary: "" });
   const navigate = useNavigate();
 
   // Fetch book details
@@ -59,6 +59,13 @@ function EditBook() {
           placeholder="Image URL"
           value={book.image}
           onChange={handleChange}
+        /> <br />
+        <textarea
+          name="summary"
+          placeholder="Summary"
+          value={book.summary}
+          onChange={handleChange}
+          rows={3}
         /> <br />
         <button type="submit">Update Book</button>
       </form>
