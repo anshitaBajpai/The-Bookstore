@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext.jsx";
 import styles from "./Navbar.module.css";
 
@@ -25,27 +25,48 @@ function Navbar() {
 
       {/* Navigation */}
       <div className={styles.links}>
-        <Link to="/" className={styles.link}>
+        <NavLink
+          to="/"
+          end
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
           Home
-        </Link>
+        </NavLink>
 
         {username && (
-          <Link to="/orders" className={styles.link}>
+          <NavLink
+            to="/orders"
+            className={({ isActive }) =>
+              isActive ? `${styles.link} ${styles.active}` : styles.link
+            }
+          >
             My Orders
-          </Link>
+          </NavLink>
         )}
 
-        <Link to="/cart" className={styles.link}>
+        <NavLink
+          to="/cart"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
           Cart
           {cartCount > 0 && (
             <span className={styles.cartBadge}>{cartCount}</span>
           )}
-        </Link>
+        </NavLink>
 
         {!username ? (
-          <Link to="/auth" className={styles.link}>
+          <NavLink
+            to="/auth"
+            className={({ isActive }) =>
+              isActive ? `${styles.link} ${styles.active}` : styles.link
+            }
+          >
             Login
-          </Link>
+          </NavLink>
         ) : (
           <>
             <span className={styles.username}>
@@ -53,9 +74,14 @@ function Navbar() {
             </span>
 
             {role === "admin" && (
-              <Link to="/admin" className={styles.link}>
+              <NavLink
+                to="/admin"
+                className={({ isActive }) =>
+                  isActive ? `${styles.link} ${styles.active}` : styles.link
+                }
+              >
                 Admin
-              </Link>
+              </NavLink>
             )}
 
             <button onClick={handleLogout} className={styles.logoutBtn}>
