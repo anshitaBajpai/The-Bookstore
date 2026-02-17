@@ -73,6 +73,42 @@
   color: #232946;
 }
 
+.active {
+  color: #7fffd4;
+  position: relative;
+}
+
+.active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #7fffd4;
+  border-radius: 2px;
+}
+
+.link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #7fffd4;
+  transition: width 0.3s ease;
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
 /* Tablet - Large */
 @media (max-width: 1199px) {
   .navbar {
