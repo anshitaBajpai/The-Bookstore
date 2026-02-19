@@ -53,6 +53,47 @@
     justify-content: center;
 }
 
+.emptyState {
+    text-align: center;
+    padding: 60px 20px;
+    color: white;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    max-width: 500px;
+    margin: 60px auto;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.emptyIcon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.emptyState h3 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.emptyState p {
+    font-size: 1rem;
+    opacity: 0.85;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Tablet - Large */
 @media (max-width: 1199px) {
     .container {

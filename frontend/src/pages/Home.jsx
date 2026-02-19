@@ -68,7 +68,11 @@ const Home = () => {
             <BookCard key={book.id || book._id} book={book} />
           ))
         ) : (
-          <p>No books found</p>
+          <div className={styles.emptyState}>
+            <div className={styles.emptyIcon}>📚</div>
+            <h3>No Books Found</h3>
+            <p>Try adjusting your search or category filter.</p>
+          </div>
         )}
       </div>
     </div>
