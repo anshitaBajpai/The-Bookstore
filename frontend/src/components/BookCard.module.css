@@ -92,6 +92,13 @@
   color: red;
 }
 
+.wishlistButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+
 /* Tablet - Large */
 @media (max-width: 1199px) {
   .image {

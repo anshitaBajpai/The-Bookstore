@@ -1,5 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
-
+import { createContext, useState, useEffect } from "react";
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
@@ -30,7 +29,7 @@ export function CartProvider({ children }) {
         return prev.map((item) =>
           getBookId(item) === bookId
             ? { ...item, quantity: item.quantity + 1 }
-            : item
+            : item,
         );
       }
 
@@ -53,7 +52,7 @@ export function CartProvider({ children }) {
           return { ...item, quantity: item.quantity + 1 };
         }
         return item;
-      })
+      }),
     );
   };
 
@@ -63,9 +62,9 @@ export function CartProvider({ children }) {
         .map((item) =>
           getBookId(item) === id
             ? { ...item, quantity: item.quantity - 1 }
-            : item
+            : item,
         )
-        .filter((item) => item.quantity > 0)
+        .filter((item) => item.quantity > 0),
     );
   };
 

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext.jsx";
 import styles from "./BookCard.module.css";
 import { useNavigate } from "react-router-dom";
+import { WishlistContext } from "../context/WishlistContext.jsx";
 
 const BookCard = ({ book }) => {
   const { addToCart, cart } = useContext(CartContext);
@@ -12,6 +13,19 @@ const BookCard = ({ book }) => {
 
   const remainingStock =
     Number(book.stock) - (cartItem ? cartItem.quantity : 0);
+
+  const { addToWishlist, removeFromWishlist, isInWishlist } =
+    useContext(WishlistContext);
+
+  const inWishlist = isInWishlist(book.id);
+
+  const handleWishlist = () => {
+    if (inWishlist) {
+      removeFromWishlist(book.id);
+    } else {
+      addToWishlist(book);
+    }
+  };
 
   return (
     <div className={styles.card}>
@@ -31,6 +45,10 @@ const BookCard = ({ book }) => {
         }`}
       >
         {remainingStock <= 0 ? "Out of Stock" : "Add to Cart"}
+      </button>
+
+      <button className={styles.wishlistButton} onClick={handleWishlist}>
+        {inWishlist ? "❤️ Remove" : "🤍 Wishlist"}
       </button>
 
       <p className={styles.stock}>
