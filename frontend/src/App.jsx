@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import BookDetails from "./pages/BookDetails";
 import AuthHeader from "./components/AuthHeader";
+import Wishlist from "./pages/Wishlist";
 import ErrorPage from "./pages/ErrorPage";
 
 const App = () => {
@@ -54,6 +55,7 @@ const App = () => {
         />
         <Route path="/books/:id" element={<BookDetails />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/wishlist" element={<Wishlist />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
       {!shouldHideFooter && <Footer />}

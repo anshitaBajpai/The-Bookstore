@@ -2,10 +2,11 @@ import React, { useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext.jsx";
 import styles from "./Navbar.module.css";
+import { WishlistContext } from "../context/WishlistContext.jsx";
 
 function Navbar() {
   const { cart } = useContext(CartContext);
-
+  const { wishlist } = useContext(WishlistContext);
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const username = localStorage.getItem("username");
@@ -55,6 +56,18 @@ function Navbar() {
           Cart
           {cartCount > 0 && (
             <span className={styles.cartBadge}>{cartCount}</span>
+          )}
+        </NavLink>
+
+        <NavLink
+          to="/wishlist"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          Wishlist
+          {wishlist.length > 0 && (
+            <span className={styles.cartBadge}>{wishlist.length}</span>
           )}
         </NavLink>
 
