@@ -1,4 +1,4 @@
-# 📚 The Bookstore
+# 📚 The BookStore
 
 A modern full-stack web application for browsing, purchasing, and managing books. Built with React (frontend), Express.js (backend), and MongoDB (database). Features a clean, sea green-themed UI, cart functionality, admin portal, and secure authentication.
 
@@ -18,32 +18,46 @@ A modern full-stack web application for browsing, purchasing, and managing books
 ### 🔧 Backend Setup
 
 1.Navigate to the backend folder:
+
 ```
 cd backend
 ```
+
 2.Install dependencies:
+
 ```
 npm install
 ```
+
 3.Create a .env file in the backend folder and add:
+
 ```
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 ```
+
 4.Start the backend server:
+
 ```
 npm run dev
 ```
+
 ### 🎨 Frontend Setup
+
 1.Navigate to the frontend folder:
+
 ```
 cd frontend
 ```
+
 2.Install dependencies:
+
 ```
 npm install
 ```
+
 3.Start the frontend development server:
+
 ```
 npm run dev
 ```
@@ -63,14 +77,3 @@ npm run dev
 <img width="1919" height="939" alt="image" src="https://github.com/user-attachments/assets/351ea3ab-d648-4241-9aa0-54801366b4db" />
 
 <img width="1919" height="947" alt="image" src="https://github.com/user-attachments/assets/348e8273-4329-4929-8a93-41c3a4952c9e" />
-
-
-
-
-
-
-
-
-
-
-
