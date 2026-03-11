@@ -1,6 +1,6 @@
 # 📚 The BookStore
 
-A modern full-stack web application for browsing, purchasing, and managing books. Built with React (frontend), Express.js (backend), and MongoDB (database). Features a clean, sea green-themed UI, cart functionality, admin portal, and secure authentication.
+It is a modern full-stack e-commerce web application built for browsing, managing, and purchasing books online. It provides a seamless shopping experience with features like authentication, cart management, wishlist functionality, and an admin dashboard for managing books. Built with React (frontend), Express.js (backend), and MongoDB (database).
 
 ## 🚀 Features
 
