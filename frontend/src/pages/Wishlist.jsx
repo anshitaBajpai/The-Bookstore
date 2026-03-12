@@ -10,7 +10,7 @@ function Wishlist() {
   if (wishlist.length === 0) {
     return (
       <div className={styles.empty}>
-        <h2>Your wishlist is empty 💔</h2>
+        <h2>Your wishlist is empty </h2>
         <p>Add books you love to see them here.</p>
         <button onClick={() => navigate("/")} className={styles.browseBtn}>
           Browse Books
