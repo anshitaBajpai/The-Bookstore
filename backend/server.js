@@ -12,7 +12,17 @@ dotenv.config();
 const app = express();
 
 /* ===================== Middleware ===================== */
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://the-bookstore.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use("/auth", authRoutes);
 
