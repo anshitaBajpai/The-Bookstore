@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import BookCard from "../components/BookCard";
 import styles from "./Home.module.css";
+import { API_URL } from "../config.js";
 
 const Home = () => {
   const [books, setBooks] = useState([]);
@@ -20,15 +21,12 @@ const Home = () => {
 
   const fetchBooks = async () => {
     try {
-      const res = await axios.get(
-        "https://the-bookstore-ujuo.onrender.com/books",
-        {
-          params: {
-            q: debouncedSearch || undefined,
-            category: category || undefined,
-          },
+      const res = await axios.get(`${API_URL}/books`, {
+        params: {
+          q: debouncedSearch || undefined,
+          category: category || undefined,
         },
-      );
+      });
       setBooks(res.data);
     } catch (err) {
       console.error("Failed to fetch books", err);

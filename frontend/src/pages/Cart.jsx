@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import EmptyCart from "../components/EmptyCart.jsx";
 import styles from "./Cart.module.css";
+import { API_URL } from "../config.js";
 
 function Cart() {
   const {
@@ -28,7 +29,7 @@ function Cart() {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "http://localhost:5000/orders",
+        `${API_URL}/orders`,
         { cart },
         {
           headers: {

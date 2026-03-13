@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { API_URL } from "../config.js";
 
 function EditBook() {
   const { id } = useParams();
@@ -14,7 +15,7 @@ function EditBook() {
 
   // Fetch book details
   useEffect(() => {
-    fetch(`http://localhost:5000/books/${id}`)
+    fetch(`${API_URL}/books/${id}`)
       .then((res) => res.json())
       .then((data) => setBook(data))
       .catch((err) => console.error(err));
@@ -26,7 +27,7 @@ function EditBook() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetch(`http://localhost:5000/books/${id}`, {
+    await fetch(`${API_URL}/books/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(book),
