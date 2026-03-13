@@ -17,9 +17,12 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/orders", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          "https://the-bookstore-ujuo.onrender.com/orders",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
         setOrders(res.data);
       } catch (err) {
         console.error("Failed to fetch orders", err);
