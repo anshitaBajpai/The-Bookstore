@@ -20,12 +20,15 @@ const Home = () => {
 
   const fetchBooks = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/books", {
-        params: {
-          q: debouncedSearch || undefined,
-          category: category || undefined,
+      const res = await axios.get(
+        "https://the-bookstore-ujuo.onrender.com/books",
+        {
+          params: {
+            q: debouncedSearch || undefined,
+            category: category || undefined,
+          },
         },
-      });
+      );
       setBooks(res.data);
     } catch (err) {
       console.error("Failed to fetch books", err);
