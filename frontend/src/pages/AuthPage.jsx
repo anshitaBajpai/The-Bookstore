@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./AuthPage.module.css";
+import { API_URL } from "../config.js";
 
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -25,9 +26,7 @@ function AuthPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = isLogin
-      ? "http://localhost:5000/auth/login"
-      : "http://localhost:5000/auth/signup";
+    const url = isLogin ? `${API_URL}/auth/login` : `${API_URL}/auth/signup`;
 
     const payload = isLogin
       ? {
@@ -47,13 +46,10 @@ function AuthPage() {
       } else {
         // After successful signup, attempt to auto-login the user
         try {
-          const loginRes = await axios.post(
-            "http://localhost:5000/auth/login",
-            {
-              email: formData.email,
-              password: formData.password,
-            },
-          );
+          const loginRes = await axios.post(`${API_URL}/auth/login`, {
+            email: formData.email,
+            password: formData.password,
+          });
 
           localStorage.setItem("token", loginRes.data.token);
           localStorage.setItem("role", loginRes.data.role);

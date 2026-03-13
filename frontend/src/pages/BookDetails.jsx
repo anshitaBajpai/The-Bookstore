@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CartContext } from "../context/CartContext.jsx";
 import styles from "./BookDetails.module.css";
+import { API_URL } from "../config.js";
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -18,7 +19,7 @@ const BookDetails = () => {
 
     const fetchBook = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/books/${id}`);
+        const res = await axios.get(`${API_URL}/books/${id}`);
         if (isMounted) {
           setBook(res.data);
           setError(null);

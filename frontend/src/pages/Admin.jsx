@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./Admin.module.css";
+import { API_URL } from "../config.js";
 
 const Admin = () => {
   const [books, setBooks] = useState([]);
@@ -16,7 +17,7 @@ const Admin = () => {
   const token = localStorage.getItem("token");
 
   const fetchBooks = async () => {
-    const res = await axios.get("http://localhost:5000/books");
+    const res = await axios.get(`${API_URL}/books`);
     setBooks(res.data);
   };
 
@@ -28,13 +29,11 @@ const Admin = () => {
     e.preventDefault();
     const payload = { title, author, price, image, category, stock, summary };
     if (editingBook) {
-      await axios.put(
-        `http://localhost:5000/books/${editingBook.id}`,
-        payload,
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+      await axios.put(`${API_URL}/books/${editingBook.id}`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     } else {
-      await axios.post("http://localhost:5000/books", payload, {
+      await axios.post(`${API_URL}/books`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
     }
@@ -61,7 +60,7 @@ const Admin = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/books/${id}`, {
+    await axios.delete(`${API_URL}/books/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     fetchBooks();
