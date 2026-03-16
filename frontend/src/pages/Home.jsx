@@ -3,9 +3,11 @@ import axios from "axios";
 import BookCard from "../components/BookCard";
 import styles from "./Home.module.css";
 import { API_URL } from "../config.js";
+import ShimmerCard from "../components/ShimmerCard.jsx";
 
 const Home = () => {
   const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
@@ -21,6 +23,7 @@ const Home = () => {
 
   const fetchBooks = async () => {
     try {
+      setLoading(true);
       const res = await axios.get(`${API_URL}/books`, {
         params: {
           q: debouncedSearch || undefined,
@@ -30,6 +33,8 @@ const Home = () => {
       setBooks(res.data);
     } catch (err) {
       console.error("Failed to fetch books", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,6 +66,14 @@ const Home = () => {
           <option value="Biography">Biography</option>
           <option value="Education">Education</option>
         </select>
+      </div>
+
+      <div className={styles.grid}>
+        {loading
+          ? Array(10)
+              .fill()
+              .map((_, i) => <ShimmerCard key={i} />)
+          : books.map((book) => <BookCard key={book.id} book={book} />)}
       </div>
 
       <div className={styles.grid}>
