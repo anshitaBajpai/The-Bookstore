@@ -69,15 +69,11 @@ const Home = () => {
       </div>
 
       <div className={styles.grid}>
-        {loading
-          ? Array(10)
-              .fill()
-              .map((_, i) => <ShimmerCard key={i} />)
-          : books.map((book) => <BookCard key={book.id} book={book} />)}
-      </div>
-
-      <div className={styles.grid}>
-        {books.length > 0 ? (
+        {loading ? (
+          Array(10)
+            .fill()
+            .map((_, i) => <ShimmerCard key={i} />)
+        ) : books.length > 0 ? (
           books.map((book) => (
             <BookCard key={book.id || book._id} book={book} />
           ))
