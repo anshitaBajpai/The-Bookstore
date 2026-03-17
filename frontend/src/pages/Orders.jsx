@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./Orders.module.css";
+import { API_URL } from "../config.js";
 
 // 🔹 Status color helper
 const getStatusColor = (status) => {
@@ -17,12 +18,12 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get(
-          "https://the-bookstore-ujuo.onrender.com/orders",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
+        const token = localStorage.getItem("token");
+
+        const res = await axios.get(`${API_URL}/orders`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
         setOrders(res.data);
       } catch (err) {
         console.error("Failed to fetch orders", err);
@@ -30,7 +31,7 @@ const Orders = () => {
     };
 
     fetchOrders();
-  }, [token]);
+  }, []);
 
   return (
     <div className={styles.page}>
