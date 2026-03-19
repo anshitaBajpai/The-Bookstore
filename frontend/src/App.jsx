@@ -23,41 +23,22 @@ const App = () => {
     >
       {shouldHideFooter ? <AuthHeader /> : <Navbar />}
       <Routes>
-        {/* Home and Cart are protected */}
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <PrivateRoute>
-              <Cart />
-            </PrivateRoute>
-          }
-        />
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+        </Route>
 
-        {/* Auth page is public */}
-        <Route path="/auth" element={<AuthPage />} />
+        <Route element={<PrivateRoute adminOnly={true} />}>
+          <Route path="/admin" element={<Admin />} />
+        </Route>
 
-        {/* Admin page protected for admin only */}
-        <Route
-          path="/admin"
-          element={
-            <PrivateRoute adminOnly={true}>
-              <Admin />
-            </PrivateRoute>
-          }
-        />
         <Route path="/books/:id" element={<BookDetails />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/auth" element={<AuthPage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
+
       {!shouldHideFooter && <Footer />}
     </div>
   );

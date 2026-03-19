@@ -1,7 +1,7 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-const PrivateRoute = ({ children, adminOnly = false }) => {
+const PrivateRoute = ({ adminOnly = false }) => {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
 
@@ -15,7 +15,7 @@ const PrivateRoute = ({ children, adminOnly = false }) => {
     return <Navigate to="/" />;
   }
 
-  return children;
+  return <Outlet />;
 };
 
 export default PrivateRoute;
