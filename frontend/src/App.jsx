@@ -12,6 +12,7 @@ import BookDetails from "./pages/BookDetails";
 import AuthHeader from "./components/AuthHeader";
 import Wishlist from "./pages/Wishlist";
 import ErrorPage from "./pages/ErrorPage";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const location = useLocation();
@@ -22,6 +23,7 @@ const App = () => {
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
       {shouldHideFooter ? <AuthHeader /> : <Navbar />}
+      <Toaster position="top-right" />
       <Routes>
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Home />} />

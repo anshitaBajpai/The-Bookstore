@@ -5,6 +5,7 @@ import axios from "axios";
 import EmptyCart from "../components/EmptyCart.jsx";
 import styles from "./Cart.module.css";
 import { API_URL } from "../config.js";
+import { toast } from "react-hot-toast";
 
 function Cart() {
   const {
@@ -39,9 +40,10 @@ function Cart() {
       );
 
       clearCart();
+      toast.success("Order placed successfully!");
       navigate("/orders");
     } catch (err) {
-      alert("❌ Failed to place order");
+      toast.error("Failed to place order");
     }
   };
 
