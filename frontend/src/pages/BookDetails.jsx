@@ -18,6 +18,11 @@ const BookDetails = () => {
     let isMounted = true;
 
     const fetchBook = async () => {
+      if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+        if (isMounted) { setError("Book not found"); setLoading(false); }
+        return;
+      }
+
       try {
         const res = await axios.get(`${API_URL}/books/${id}`);
         if (isMounted) {

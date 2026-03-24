@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext.jsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,6 +16,7 @@ function Cart() {
     clearCart,
   } = useContext(CartContext);
 
+  const [ordering, setOrdering] = useState(false);
   const navigate = useNavigate();
 
   const totalPrice = cart.reduce(
@@ -26,14 +27,16 @@ function Cart() {
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const handlePlaceOrder = async () => {
+    setOrdering(true);
     try {
       await axios.post(`${API_URL}/orders`, { cart });
-
       clearCart();
       toast.success("Order placed successfully!");
       navigate("/orders");
     } catch (err) {
       toast.error("Failed to place order");
+    } finally {
+      setOrdering(false);
     }
   };
 
@@ -131,8 +134,8 @@ function Cart() {
               </span>
             </div>
 
-            <button className={styles.placeOrderBtn} onClick={handlePlaceOrder}>
-              🛍️ Place Order
+            <button className={styles.placeOrderBtn} onClick={handlePlaceOrder} disabled={ordering}>
+              {ordering ? "Placing Order..." : "🛍️ Place Order"}
             </button>
 
             <button

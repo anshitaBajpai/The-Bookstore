@@ -64,8 +64,17 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
+  .then(() => {
+    console.log("✅ MongoDB connected");
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () =>
+      console.log(`🚀 Backend running on http://localhost:${PORT}`),
+    );
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB connection error:", err);
+    process.exit(1);
+  });
 
 /* ===================== Helpers ===================== */
 const formatBook = ({ _id, __v, ...rest }) => ({
@@ -100,17 +109,28 @@ const authMiddleware = (roles = []) => {
 
 /* ===================== BOOK ROUTES ===================== */
 
-// Unified books route (search + category)
+// Unified books route (search + category + pagination)
 app.get("/books", async (req, res) => {
   try {
-    const { q, category } = req.query;
+    const { q, category, page = 1, limit = 20 } = req.query;
+    const pageNum = Math.max(1, Number(page));
+    const limitNum = Math.min(100, Math.max(1, Number(limit)));
 
     const filter = {};
     if (q) filter.title = { $regex: q, $options: "i" };
     if (category) filter.category = category;
 
-    const books = await Book.find(filter).lean();
-    res.json(books.map(formatBook));
+    const [books, total] = await Promise.all([
+      Book.find(filter).skip((pageNum - 1) * limitNum).limit(limitNum).lean(),
+      Book.countDocuments(filter),
+    ]);
+
+    res.json({
+      books: books.map(formatBook),
+      total,
+      page: pageNum,
+      pages: Math.ceil(total / limitNum),
+    });
   } catch (err) {
     console.error("GET /books ERROR:", err);
     res.status(500).json({ error: "Internal server error" });
@@ -124,6 +144,7 @@ app.get("/books/:id", async (req, res) => {
     if (!book) return res.status(404).json({ error: "Book not found" });
     res.json(formatBook(book));
   } catch (err) {
+    if (err.name === "CastError") return res.status(404).json({ error: "Book not found" });
     console.error("GET /books/:id ERROR:", err);
     res.status(500).json({ error: "Internal server error" });
   }
@@ -263,8 +284,3 @@ app.get("/", (req, res) => {
   res.send("📚 Bookstore API is running...");
 });
 
-/* ===================== Start Server ===================== */
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`🚀 Backend running on http://localhost:${PORT}`),
-);
