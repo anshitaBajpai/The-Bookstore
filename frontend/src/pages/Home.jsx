@@ -21,30 +21,25 @@ const Home = () => {
     return () => clearTimeout(timer);
   }, [search]);
 
+  const fetchBooks = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get(`${API_URL}/books`, {
+        params: {
+          q: debouncedSearch || undefined,
+          category: category || undefined,
+        },
+      });
+      setBooks(res.data);
+    } catch (err) {
+      console.error("Failed to fetch books", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const controller = new AbortController();
-
-    const fetchBooks = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(`${API_URL}/books`, {
-          params: {
-            q: debouncedSearch || undefined,
-            category: category || undefined,
-          },
-          signal: controller.signal,
-        });
-        setBooks(res.data.books);
-      } catch (err) {
-        if (axios.isCancel(err)) return;
-        console.error("Failed to fetch books", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchBooks();
-    return () => controller.abort();
   }, [debouncedSearch, category]);
 
   return (
