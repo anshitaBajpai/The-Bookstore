@@ -12,18 +12,20 @@ export const WishlistProvider = ({ children }) => {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
 
+  const getBookId = (book) => book.id || book._id;
+
   const addToWishlist = (book) => {
-    if (!wishlist.find((item) => item.id === book.id)) {
+    if (!wishlist.find((item) => getBookId(item) === getBookId(book))) {
       setWishlist([...wishlist, book]);
     }
   };
 
   const removeFromWishlist = (id) => {
-    setWishlist(wishlist.filter((item) => item.id !== id));
+    setWishlist(wishlist.filter((item) => getBookId(item) !== id));
   };
 
   const isInWishlist = (id) => {
-    return wishlist.some((item) => item.id === id);
+    return wishlist.some((item) => getBookId(item) === id);
   };
 
   return (

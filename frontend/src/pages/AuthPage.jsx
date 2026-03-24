@@ -39,7 +39,6 @@ function AuthPage() {
       const res = await axios.post(url, payload);
 
       if (isLogin) {
-        localStorage.setItem("token", res.data.token);
         localStorage.setItem("role", res.data.role);
         localStorage.setItem("username", res.data.username);
         navigate("/");
@@ -51,7 +50,6 @@ function AuthPage() {
             password: formData.password,
           });
 
-          localStorage.setItem("token", loginRes.data.token);
           localStorage.setItem("role", loginRes.data.role);
           localStorage.setItem("username", loginRes.data.username);
           navigate("/");

@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
 import Book from "./models/Book.js";
 import Order from "./models/Order.js";
@@ -22,7 +23,7 @@ app.use(
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin) || origin.includes("vercel.app")) {
+      if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
 
@@ -31,6 +32,7 @@ app.use(
     credentials: true,
   }),
 );
+app.use(cookieParser());
 app.use(express.json());
 app.use("/auth", authRoutes);
 
@@ -52,12 +54,14 @@ const formatBook = ({ _id, __v, ...rest }) => ({
 /* ===================== Auth Middleware ===================== */
 const authMiddleware = (roles = []) => {
   return (req, res, next) => {
-    const authHeader = req.headers.authorization;
-    if (!authHeader)
+    const token =
+      req.cookies?.token ||
+      req.headers.authorization?.split(" ")[1];
+
+    if (!token)
       return res.status(401).json({ error: "No token provided" });
 
     try {
-      const token = authHeader.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       if (roles.length && !roles.includes(decoded.role)) {
@@ -150,16 +154,17 @@ app.post("/orders", authMiddleware(), async (req, res) => {
       return res.status(400).json({ error: "Cart is empty" });
     }
 
-    // Stock validation + update
+    // Atomic stock validation + update
     for (const item of cart) {
-      const book = await Book.findById(item.id || item._id);
+      const updated = await Book.findOneAndUpdate(
+        { _id: item.id || item._id, stock: { $gte: item.quantity } },
+        { $inc: { stock: -item.quantity } },
+        { new: true },
+      );
 
-      if (!book || book.stock < item.quantity) {
-        return res.status(400).json({ error: "Insufficient stock" });
+      if (!updated) {
+        return res.status(400).json({ error: `Insufficient stock for "${item.title}"` });
       }
-
-      book.stock -= item.quantity;
-      await book.save();
     }
 
     const totalAmount = cart.reduce(

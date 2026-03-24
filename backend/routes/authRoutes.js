@@ -8,7 +8,7 @@ const router = express.Router();
 // SIGNUP
 router.post("/signup", async (req, res) => {
   try {
-    const { username, email, password, role } = req.body;
+    const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
       return res.status(400).json({ error: "All fields required" });
@@ -25,7 +25,7 @@ router.post("/signup", async (req, res) => {
       username,
       email,
       password: hashedPassword,
-      role: role || "user",
+      role: "user",
     });
 
     await newUser.save();
@@ -54,15 +54,24 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1d" },
     );
 
-    res.json({
-      token,
-      role: user.role,
-      username: user.username,
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
     });
+
+    res.json({ role: user.role, username: user.username });
   } catch (err) {
     console.error("LOGIN ERROR:", err);
     res.status(500).json({ error: err.message });
   }
+});
+
+// LOGOUT
+router.post("/logout", (_req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Logged out successfully" });
 });
 
 export default router;

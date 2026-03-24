@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
+import axios from "axios";
 import { CartContext } from "../context/CartContext.jsx";
 import styles from "./Navbar.module.css";
 import { WishlistContext } from "../context/WishlistContext.jsx";
+import { API_URL } from "../config.js";
 
 function Navbar() {
   const { cart } = useContext(CartContext);
@@ -12,7 +14,8 @@ function Navbar() {
   const username = localStorage.getItem("username");
   const role = localStorage.getItem("role");
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await axios.post(`${API_URL}/auth/logout`).catch(() => {});
     localStorage.clear();
     window.location.href = "/auth";
   };

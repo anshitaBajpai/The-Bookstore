@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 import styles from "./Admin.module.css";
 import { API_URL } from "../config.js";
 
@@ -14,8 +15,6 @@ const Admin = () => {
   const [summary, setSummary] = useState("");
   const [editingBook, setEditingBook] = useState(null);
 
-  const token = localStorage.getItem("token");
-
   const fetchBooks = async () => {
     const res = await axios.get(`${API_URL}/books`);
     setBooks(res.data);
@@ -28,24 +27,26 @@ const Admin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = { title, author, price, image, category, stock, summary };
-    if (editingBook) {
-      await axios.put(`${API_URL}/books/${editingBook.id}`, payload, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-    } else {
-      await axios.post(`${API_URL}/books`, payload, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+    try {
+      if (editingBook) {
+        await axios.put(`${API_URL}/books/${editingBook.id}`, payload);
+        toast.success("Book updated successfully");
+      } else {
+        await axios.post(`${API_URL}/books`, payload);
+        toast.success("Book added successfully");
+      }
+      setTitle("");
+      setAuthor("");
+      setPrice("");
+      setImage("");
+      setCategory("");
+      setStock("");
+      setSummary("");
+      setEditingBook(null);
+      fetchBooks();
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Operation failed");
     }
-    setTitle("");
-    setAuthor("");
-    setPrice("");
-    setImage("");
-    setCategory("");
-    setStock("");
-    setSummary("");
-    setEditingBook(null);
-    fetchBooks();
   };
 
   const handleEdit = (book) => {
@@ -60,10 +61,13 @@ const Admin = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`${API_URL}/books/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    fetchBooks();
+    try {
+      await axios.delete(`${API_URL}/books/${id}`);
+      toast.success("Book deleted");
+      fetchBooks();
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Delete failed");
+    }
   };
 
   return (
