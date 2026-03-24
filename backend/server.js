@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
+import rateLimit from "express-rate-limit";
 import authRoutes from "./routes/authRoutes.js";
 import Book from "./models/Book.js";
 import Order from "./models/Order.js";
@@ -34,6 +35,27 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
+
+// Rate limiting on auth routes
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: { error: "Too many requests, please try again later." },
+});
+app.use("/auth", authLimiter);
+
+// CSRF protection: reject state-changing requests from unexpected origins
+const csrfProtection = (req, res, next) => {
+  const origin = req.headers.origin || req.headers.referer;
+  if (!origin || allowedOrigins.some((o) => origin.startsWith(o))) {
+    return next();
+  }
+  return res.status(403).json({ error: "Forbidden" });
+};
+app.post("*", csrfProtection);
+app.put("*", csrfProtection);
+app.delete("*", csrfProtection);
+
 app.use("/auth", authRoutes);
 
 /* ===================== MongoDB Connection ===================== */
@@ -90,7 +112,8 @@ app.get("/books", async (req, res) => {
     const books = await Book.find(filter).lean();
     res.json(books.map(formatBook));
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("GET /books ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -101,7 +124,8 @@ app.get("/books/:id", async (req, res) => {
     if (!book) return res.status(404).json({ error: "Book not found" });
     res.json(formatBook(book));
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("GET /books/:id ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -112,7 +136,8 @@ app.post("/books", authMiddleware(["admin"]), async (req, res) => {
     const saved = await book.save();
     res.json(formatBook(saved.toObject()));
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("POST /books ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -127,7 +152,8 @@ app.put("/books/:id", authMiddleware(["admin"]), async (req, res) => {
 
     res.json(formatBook(updated));
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("PUT /books/:id ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -139,7 +165,8 @@ app.delete("/books/:id", authMiddleware(["admin"]), async (req, res) => {
 
     res.json({ message: "Book deleted successfully" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("DELETE /books/:id ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -187,8 +214,8 @@ app.post("/orders", authMiddleware(), async (req, res) => {
 
     res.json({ message: "Order placed successfully ✅", order });
   } catch (err) {
-    console.error("ORDER ERROR:", err);
-    res.status(500).json({ error: err.message });
+    console.error("POST /orders ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -200,13 +227,19 @@ app.get("/orders", authMiddleware(), async (req, res) => {
     });
     res.json(orders);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("GET /orders ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
 app.put("/orders/:id/status", authMiddleware(["admin"]), async (req, res) => {
   try {
     const { status } = req.body;
+    const validStatuses = ["PLACED", "SHIPPED", "DELIVERED"];
+
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ error: `Invalid status. Must be one of: ${validStatuses.join(", ")}` });
+    }
 
     const order = await Order.findByIdAndUpdate(
       req.params.id,
@@ -220,7 +253,8 @@ app.put("/orders/:id/status", authMiddleware(["admin"]), async (req, res) => {
 
     res.json(order);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("ORDER STATUS ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

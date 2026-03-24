@@ -13,16 +13,11 @@ const getStatusColor = (status) => {
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const token = localStorage.getItem("token");
-
-        const res = await axios.get(`${API_URL}/orders`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(`${API_URL}/orders`);
 
         setOrders(res.data);
       } catch (err) {

@@ -9,6 +9,8 @@ function AddBook() {
     price: "",
     image: "",
     summary: "",
+    category: "",
+    stock: "",
   });
   const navigate = useNavigate();
 
@@ -21,6 +23,7 @@ function AddBook() {
     await fetch(`${API_URL}/books`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify(book),
     });
     navigate("/admin");
@@ -63,6 +66,21 @@ function AddBook() {
           placeholder="Summary"
           onChange={handleChange}
           rows={3}
+        />{" "}
+        <br />
+        <input
+          name="category"
+          placeholder="Category"
+          onChange={handleChange}
+          required
+        />{" "}
+        <br />
+        <input
+          name="stock"
+          type="number"
+          placeholder="Stock"
+          onChange={handleChange}
+          required
         />{" "}
         <br />
         <button type="submit">Add Book</button>

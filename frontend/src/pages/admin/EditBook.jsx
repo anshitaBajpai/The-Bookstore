@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { API_URL } from "../config.js";
+import { API_URL } from "../../config.js";
 
 function EditBook() {
   const { id } = useParams();
@@ -30,6 +30,7 @@ function EditBook() {
     await fetch(`${API_URL}/books/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify(book),
     });
     navigate("/admin");

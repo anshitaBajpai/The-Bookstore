@@ -27,17 +27,7 @@ function Cart() {
 
   const handlePlaceOrder = async () => {
     try {
-      const token = localStorage.getItem("token");
-
-      await axios.post(
-        `${API_URL}/orders`,
-        { cart },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      await axios.post(`${API_URL}/orders`, { cart });
 
       clearCart();
       toast.success("Order placed successfully!");
