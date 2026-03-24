@@ -12,6 +12,7 @@ function AddBook() {
     category: "",
     stock: "",
   });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,13 +21,18 @@ function AddBook() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetch(`${API_URL}/books`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(book),
-    });
-    navigate("/admin");
+    setLoading(true);
+    try {
+      await fetch(`${API_URL}/books`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(book),
+      });
+      navigate("/admin");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -83,7 +89,9 @@ function AddBook() {
           required
         />{" "}
         <br />
-        <button type="submit">Add Book</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Adding..." : "Add Book"}
+        </button>
       </form>
     </div>
   );

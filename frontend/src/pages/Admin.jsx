@@ -14,10 +14,12 @@ const Admin = () => {
   const [stock, setStock] = useState("");
   const [summary, setSummary] = useState("");
   const [editingBook, setEditingBook] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
 
   const fetchBooks = async () => {
     const res = await axios.get(`${API_URL}/books`);
-    setBooks(res.data);
+    setBooks(res.data.books);
   };
 
   useEffect(() => {
@@ -26,6 +28,7 @@ const Admin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
     const payload = { title, author, price, image, category, stock, summary };
     try {
       if (editingBook) {
@@ -46,6 +49,8 @@ const Admin = () => {
       fetchBooks();
     } catch (err) {
       toast.error(err.response?.data?.error || "Operation failed");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -61,12 +66,15 @@ const Admin = () => {
   };
 
   const handleDelete = async (id) => {
+    setDeletingId(id);
     try {
       await axios.delete(`${API_URL}/books/${id}`);
       toast.success("Book deleted");
       fetchBooks();
     } catch (err) {
       toast.error(err.response?.data?.error || "Delete failed");
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -131,8 +139,8 @@ const Admin = () => {
           onChange={(e) => setSummary(e.target.value)}
           rows={3}
         />
-        <button className={styles.primaryButton}>
-          {editingBook ? "Update Book" : "Add Book"}
+        <button className={styles.primaryButton} disabled={submitting}>
+          {submitting ? "Saving..." : editingBook ? "Update Book" : "Add Book"}
         </button>
       </form>
 
@@ -155,8 +163,9 @@ const Admin = () => {
               <button
                 className={styles.deleteBtn}
                 onClick={() => handleDelete(book.id)}
+                disabled={deletingId === book.id}
               >
-                Delete
+                {deletingId === book.id ? "Deleting..." : "Delete"}
               </button>
             </div>
           </div>

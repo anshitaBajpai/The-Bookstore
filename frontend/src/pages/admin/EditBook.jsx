@@ -11,6 +11,7 @@ function EditBook() {
     image: "",
     summary: "",
   });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   // Fetch book details
@@ -27,13 +28,18 @@ function EditBook() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetch(`${API_URL}/books/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(book),
-    });
-    navigate("/admin");
+    setLoading(true);
+    try {
+      await fetch(`${API_URL}/books/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(book),
+      });
+      navigate("/admin");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -80,7 +86,9 @@ function EditBook() {
           rows={3}
         />{" "}
         <br />
-        <button type="submit">Update Book</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Updating..." : "Update Book"}
+        </button>
       </form>
     </div>
   );
