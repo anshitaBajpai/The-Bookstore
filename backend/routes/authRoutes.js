@@ -54,24 +54,18 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1d" },
     );
 
-    const isProd = process.env.NODE_ENV === "production";
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? "none" : "strict",
-      maxAge: 24 * 60 * 60 * 1000,
+    res.json({
+      token,
+      role: user.role,
+      username: user.username,
     });
-
-    res.json({ role: user.role, username: user.username });
   } catch (err) {
     console.error("LOGIN ERROR:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-// LOGOUT
-router.post("/logout", (_req, res) => {
-  res.clearCookie("token");
+router.post("/logout", (req, res) => {
   res.json({ message: "Logged out successfully" });
 });
 

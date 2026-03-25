@@ -17,6 +17,7 @@ function Navbar() {
   const handleLogout = async () => {
     await axios.post(`${API_URL}/auth/logout`).catch(() => {});
     localStorage.clear();
+    delete axios.defaults.headers.common.Authorization;
     window.location.href = "/auth";
   };
 

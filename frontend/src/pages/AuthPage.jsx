@@ -39,8 +39,10 @@ function AuthPage() {
       const res = await axios.post(url, payload);
 
       if (isLogin) {
+        localStorage.setItem("token", res.data.token);
         localStorage.setItem("role", res.data.role);
         localStorage.setItem("username", res.data.username);
+        axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
         navigate("/");
       } else {
         // After successful signup, attempt to auto-login the user
@@ -50,8 +52,11 @@ function AuthPage() {
             password: formData.password,
           });
 
+          localStorage.setItem("token", loginRes.data.token);
           localStorage.setItem("role", loginRes.data.role);
           localStorage.setItem("username", loginRes.data.username);
+          axios.defaults.headers.common.Authorization =
+            `Bearer ${loginRes.data.token}`;
           navigate("/");
         } catch (loginErr) {
           // If auto-login fails, fall back to showing signup success and switch to login

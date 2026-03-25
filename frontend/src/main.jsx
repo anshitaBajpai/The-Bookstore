@@ -4,6 +4,10 @@ import axios from "axios";
 import App from "./App";
 
 axios.defaults.withCredentials = true;
+const savedToken = localStorage.getItem("token");
+if (savedToken) {
+  axios.defaults.headers.common.Authorization = `Bearer ${savedToken}`;
+}
 import { CartProvider } from "./context/CartContext.jsx";
 import { BrowserRouter as Router } from "react-router-dom";
 import "./index.css";
