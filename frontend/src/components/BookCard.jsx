@@ -30,7 +30,13 @@ const BookCard = ({ book }) => {
   return (
     <div className={styles.card}>
       <div onClick={() => navigate(`/books/${bookId}`)}>
-        <img src={book.image} alt={book.title} className={styles.image} />
+        <img
+          src={book.image}
+          alt={book.title}
+          className={styles.image}
+          loading="lazy"
+          decoding="async"
+        />
 
         <h3 className={styles.title}>{book.title}</h3>
         <p className={styles.author}>✍️ {book.author}</p>

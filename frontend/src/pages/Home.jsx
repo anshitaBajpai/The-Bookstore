@@ -30,7 +30,7 @@ const Home = () => {
           category: category || undefined,
         },
       });
-      setBooks(res.data);
+      setBooks(Array.isArray(res.data) ? res.data : res.data.books || []);
     } catch (err) {
       console.error("Failed to fetch books", err);
     } finally {

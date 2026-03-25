@@ -52,9 +52,12 @@ const csrfProtection = (req, res, next) => {
   }
   return res.status(403).json({ error: "Forbidden" });
 };
-app.post("*", csrfProtection);
-app.put("*", csrfProtection);
-app.delete("*", csrfProtection);
+app.use((req, res, next) => {
+  if (["POST", "PUT", "DELETE"].includes(req.method)) {
+    return csrfProtection(req, res, next);
+  }
+  return next();
+});
 
 app.use("/auth", authRoutes);
 
