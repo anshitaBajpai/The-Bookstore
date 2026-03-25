@@ -3,18 +3,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%);
+    background: transparent;
     padding: 16px;
 }
 
 .card {
-    background: #ffffff;
+    background: linear-gradient(180deg, rgba(255, 253, 249, 0.98), rgba(243, 236, 226, 0.94));
     padding: 2.5rem;
-    border-radius: 16px;
+    border-radius: 28px;
     text-align: center;
     max-width: 420px;
     width: 100%;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 24px 48px rgba(73, 54, 38, 0.08);
+    border: 1px solid #ded6ca;
 }
 
 .icon {
@@ -23,13 +24,14 @@
 }
 
 .card h2 {
-    color: #134e4a;
+    color: #2f2a24;
     margin-bottom: 0.5rem;
     font-size: 1.8rem;
+    font-family: Georgia, "Times New Roman", serif;
 }
 
 .card p {
-    color: #4b5563;
+    color: #6b6257;
     margin-bottom: 1.5rem;
     font-size: 1rem;
 }
@@ -37,8 +39,8 @@
 .button {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background-color: #134e4a;
-    color: #ffffff;
+    background-color: #a65a3a;
+    color: #fffaf4;
     border-radius: 999px;
     text-decoration: none;
     font-weight: 600;
@@ -49,7 +51,7 @@
 }
 
 .button:hover {
-    background-color: #0f766e;
+    background-color: #87452a;
     transform: translateY(-2px);
 }
 

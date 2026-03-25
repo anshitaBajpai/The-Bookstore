@@ -44,6 +44,15 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
+      <section className={styles.hero}>
+        <p className={styles.eyebrow}>Curated Reading Room</p>
+        <h1 className={styles.heroTitle}>Find your next thoughtful read.</h1>
+        <p className={styles.heroText}>
+          Browse a warm collection of fiction, biography, business, and craft
+          titles selected for slow afternoons and ambitious mornings.
+        </p>
+      </section>
+
       <div className={styles.controls}>
         <input
           type="text"

@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #e0ffef 0%, #43c6ac 50%, #191654 100%);
+  background: transparent;
   padding: 40px 20px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -14,13 +14,14 @@
 .heading {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #134e4a;
+  color: #2f2a24;
   margin: 0 0 8px 0;
   letter-spacing: -0.5px;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 .itemCount {
-  color: #0f7860;
+  color: #6b6257;
   font-size: 1rem;
   font-weight: 500;
   margin: 0;
@@ -45,18 +46,18 @@
   grid-template-columns: 100px 1fr 130px 110px 40px;
   gap: 16px;
   align-items: center;
-  background: white;
+  background: linear-gradient(180deg, rgba(255, 253, 249, 0.98), rgba(243, 236, 226, 0.94));
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(67, 198, 172, 0.15);
-  border: 1px solid rgba(67, 198, 172, 0.3);
+  border-radius: 22px;
+  box-shadow: 0 18px 36px rgba(73, 54, 38, 0.08);
+  border: 1px solid #ded6ca;
   transition: all 0.3s ease;
 }
 
 .cartItem:hover {
-  box-shadow: 0 8px 24px rgba(67, 198, 172, 0.25);
+  box-shadow: 0 22px 40px rgba(73, 54, 38, 0.12);
   transform: translateY(-2px);
-  border-color: rgba(67, 198, 172, 0.5);
+  border-color: #d8b79c;
 }
 
 .itemImage {
@@ -69,9 +70,9 @@
   width: 90px;
   height: 120px;
   object-fit: cover;
-  border-radius: 8px;
-  background: #f5f5f5;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  background: #f3ece2;
+  box-shadow: 0 12px 22px rgba(47, 42, 36, 0.12);
 }
 
 .itemDetails {
@@ -84,20 +85,21 @@
   margin: 0;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #134e4a;
+  color: #2f2a24;
   line-height: 1.3;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 .itemAuthor {
   margin: 0;
-  color: #0f7860;
+  color: #6b6257;
   font-size: 0.9rem;
   font-weight: 500;
 }
 
 .itemPrice {
   margin: 0;
-  color: #43c6ac;
+  color: #a65a3a;
   font-size: 0.95rem;
   font-weight: 600;
 }
@@ -107,21 +109,21 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background: #f0f9f8;
+  background: #fffaf4;
   padding: 6px;
-  border-radius: 8px;
-  border: 2px solid #43c6ac;
+  border-radius: 16px;
+  border: 1px solid #ded6ca;
   width: 100%;
   height: 42px;
 }
 
 .quantityBtn {
-  background: #43c6ac;
-  border: none;
-  color: white;
+  background: #f3ece2;
+  border: 1px solid transparent;
+  color: #2f2a24;
   width: 28px;
   height: 28px;
-  border-radius: 5px;
+  border-radius: 999px;
   cursor: pointer;
   font-size: 1.1rem;
   font-weight: bold;
@@ -133,8 +135,8 @@
 }
 
 .quantityBtn:hover {
-  background: #134e4a;
-  transform: scale(1.08);
+  background: #e9dcc8;
+  transform: scale(1.05);
 }
 
 .quantityBtn:active {
@@ -146,12 +148,14 @@
   height: 28px;
   text-align: center;
   border: none;
-  background: white;
-  color: #134e4a;
+  background: transparent;
+  color: #2f2a24;
   font-weight: 700;
   font-size: 0.95rem;
   border-radius: 4px;
   flex-shrink: 0;
+  margin-bottom: 0;
+  box-shadow: none;
 }
 
 .itemTotal {
@@ -165,16 +169,16 @@
   margin: 0;
   font-size: 1.2rem;
   font-weight: 800;
-  color: #134e4a;
+  color: #2f2a24;
 }
 
 .removeBtn {
   width: 36px;
   height: 36px;
-  background: #ffebee;
-  border: 2px solid #e53935;
-  color: #e53935;
-  border-radius: 6px;
+  background: transparent;
+  border: 1px solid #d8b79c;
+  color: #a65a3a;
+  border-radius: 999px;
   cursor: pointer;
   font-size: 1.2rem;
   font-weight: bold;
@@ -186,9 +190,9 @@
 }
 
 .removeBtn:hover {
-  background: #e53935;
-  color: white;
-  transform: scale(1.1);
+  background: #f3ece2;
+  color: #87452a;
+  transform: scale(1.05);
 }
 
 .removeBtn:active {
@@ -202,19 +206,20 @@
 }
 
 .summaryCard {
-  background: white;
+  background: linear-gradient(180deg, rgba(255, 253, 249, 0.98), rgba(243, 236, 226, 0.94));
   padding: 28px 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(67, 198, 172, 0.2);
-  border: 2px solid #43c6ac;
+  border-radius: 24px;
+  box-shadow: 0 20px 38px rgba(73, 54, 38, 0.08);
+  border: 1px solid #ded6ca;
 }
 
 .summaryTitle {
   margin: 0 0 20px 0;
   font-size: 1.3rem;
   font-weight: 800;
-  color: #134e4a;
+  color: #2f2a24;
   text-align: center;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 .summaryRow {
@@ -222,18 +227,18 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
-  color: #555;
+  color: #6b6257;
   font-size: 0.95rem;
 }
 
 .amount {
   font-weight: 600;
-  color: #134e4a;
+  color: #2f2a24;
 }
 
 .divider {
   height: 1px;
-  background: #e0e0e0;
+  background: #ded6ca;
   margin: 16px 0;
 }
 
@@ -248,17 +253,17 @@
 
 .totalAmount {
   font-size: 1.4rem;
-  color: #43c6ac;
+  color: #a65a3a;
   font-weight: 900;
 }
 
 .placeOrderBtn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #43c6ac 0%, #134e4a 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
+  background: #a65a3a;
+  color: #fffaf4;
+  border: 1px solid transparent;
+  border-radius: 999px;
   font-size: 1.05rem;
   font-weight: 700;
   cursor: pointer;
@@ -268,7 +273,7 @@
 
 .placeOrderBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(67, 198, 172, 0.3);
+  box-shadow: 0 14px 28px rgba(135, 69, 42, 0.2);
 }
 
 .placeOrderBtn:active {
@@ -278,10 +283,10 @@
 .continueShoppingBtn {
   width: 100%;
   padding: 12px;
-  background: #f5f5f5;
-  color: #134e4a;
-  border: 2px solid #43c6ac;
-  border-radius: 8px;
+  background: transparent;
+  color: #6b6257;
+  border: 1px solid #d8b79c;
+  border-radius: 999px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -289,8 +294,8 @@
 }
 
 .continueShoppingBtn:hover {
-  background: #43c6ac;
-  color: white;
+  background: #f3ece2;
+  color: #2f2a24;
 }
 
 /* Tablet - Large */

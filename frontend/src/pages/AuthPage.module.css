@@ -1,18 +1,20 @@
 .container {
-  padding: 32px;
-  max-width: 400px;
-  margin: 40px auto;
-  background: linear-gradient(120deg, #232946 0%, #7fffd4 100%);
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(26, 34, 63, 0.35);
+  padding: 36px 32px;
+  max-width: 460px;
+  margin: 48px auto;
+  background: linear-gradient(180deg, rgba(255, 253, 249, 0.98), rgba(243, 236, 226, 0.94));
+  border: 1px solid #ded6ca;
+  border-radius: 28px;
+  box-shadow: 0 24px 48px rgba(73, 54, 38, 0.08);
 }
 
 .heading {
   text-align: center;
-  color: #232946;
+  color: #2f2a24;
   font-weight: 700;
-  font-size: 2rem;
-  margin-bottom: 32px;
+  font-size: 2.2rem;
+  margin-bottom: 28px;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 .form {
@@ -22,20 +24,20 @@
 }
 
 .input {
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1.5px solid #7fffd4;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid #ded6ca;
   font-size: 1rem;
   outline: none;
   transition: border 0.2s, box-shadow 0.2s;
+  background: rgba(255, 253, 249, 0.92);
+  color: #2f2a24;
 }
 
 .input:focus {
-  border-color: #232946;
-  box-shadow: 0 0 0 2px rgba(35, 41, 70, 0.25);
+  border-color: #a65a3a;
+  box-shadow: 0 0 0 4px rgba(166, 90, 58, 0.12);
 }
-
-
 
 .passwordWrapper {
   position: relative;
@@ -46,27 +48,27 @@
 .passwordWrapper .input {
   width: 100%;
   padding-right: 44px;
-
 }
 
 .eyeButton {
   position: absolute;
   right: 10px;
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
   font-size: 1.2rem;
-  color: #232946;
+  color: #6b6257;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 6px;
   border-radius: 50%;
   transition: background 0.2s, transform 0.1s;
+  box-shadow: none;
 }
 
 .eyeButton:hover {
-  background: rgba(35, 41, 70, 0.15);
+  background: #f3ece2;
 }
 
 .eyeButton:active {
@@ -76,11 +78,11 @@
 
 
 .button {
-  background: #7fffd4;
-  color: #232946;
+  background: #a65a3a;
+  color: #fffaf4;
   font-weight: 700;
-  border: none;
-  border-radius: 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
   padding: 14px;
   font-size: 1.1rem;
   cursor: pointer;
@@ -88,8 +90,8 @@
 }
 
 .button:hover {
-  background: #232946;
-  color: #7fffd4;
+  background: #87452a;
+  color: #fffaf4;
 }
 
 .button:active {
@@ -98,7 +100,7 @@
 
 
 .error {
-  color: #e53935;
+  color: #b44a3a;
   text-align: center;
   margin-top: 18px;
   font-weight: 600;
@@ -107,18 +109,18 @@
 .switchText {
   text-align: center;
   margin-top: 20px;
-  color: #232946;
+  color: #6b6257;
 }
 
 .switchText span {
-  color: #0000ee;
+  color: #a65a3a;
   cursor: pointer;
   font-weight: 600;
   transition: color 0.2s;
 }
 
 .switchText span:hover {
-  color: #232946;
+  color: #87452a;
   text-decoration: underline;
 }
 
@@ -126,12 +128,12 @@
 @media (max-width: 1199px) {
   .container {
     padding: 28px;
-    max-width: 380px;
+    max-width: 420px;
     margin: 36px auto;
   }
 
   .heading {
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin-bottom: 28px;
   }
 
@@ -158,12 +160,12 @@
 @media (max-width: 1024px) {
   .container {
     padding: 24px;
-    max-width: 360px;
+    max-width: 400px;
     margin: 32px auto;
   }
 
   .heading {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     margin-bottom: 24px;
   }
 
@@ -196,11 +198,11 @@
     padding: 20px;
     max-width: 90%;
     margin: 24px auto;
-    border-radius: 12px;
+    border-radius: 22px;
   }
 
   .heading {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     margin-bottom: 20px;
   }
 
@@ -247,11 +249,11 @@
     padding: 18px;
     max-width: 95%;
     margin: 20px auto;
-    border-radius: 10px;
+    border-radius: 18px;
   }
 
   .heading {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     margin-bottom: 18px;
   }
 
@@ -297,11 +299,11 @@
     padding: 16px;
     max-width: 100%;
     margin: 16px auto;
-    border-radius: 8px;
+    border-radius: 16px;
   }
 
   .heading {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     margin-bottom: 16px;
   }
 

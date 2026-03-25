@@ -1,42 +1,48 @@
 .container {
-  padding: 32px;
-  max-width: 700px;
+  padding: 36px 32px 48px;
+  max-width: 820px;
   margin: 0 auto;
-  background: linear-gradient(120deg, #e0ffef 0%, #43c6ac 60%, #191654 100%);
-  border-radius: 16px;
-  box-shadow: 0 4px 24px #134e4a55;
+  background: transparent;
 }
 
 .heading {
   text-align: center;
-  color: #134e4a;
+  color: #2f2a24;
   font-weight: 700;
-  font-size: 2rem;
-  margin-bottom: 32px;
-  letter-spacing: 1px;
+  font-size: 2.5rem;
+  margin-bottom: 28px;
+  letter-spacing: 0.02em;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 18px;
+  padding: 28px;
+  background: linear-gradient(180deg, rgba(255, 253, 249, 0.98), rgba(243, 236, 226, 0.94));
+  border: 1px solid #ded6ca;
+  border-radius: 28px;
+  box-shadow: 0 18px 36px rgba(73, 54, 38, 0.08);
 }
 
 .input,
 .select {
-  padding: 12px;
-  border-radius: 8px;
-  border: 1.5px solid #7fffd4;
-  font-size: 1.1rem;
-  box-shadow: 0 2px 8px #23294622;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid #ded6ca;
+  font-size: 1rem;
+  box-shadow: none;
+  background: rgba(255, 253, 249, 0.92);
+  color: #2f2a24;
 }
 
 .primaryButton {
-  background: #43c6ac;
-  color: #134e4a;
+  background: #a65a3a;
+  color: #fffaf4;
   font-weight: 700;
-  border: none;
-  border-radius: 8px;
+  border: 1px solid transparent;
+  border-radius: 999px;
   padding: 14px;
   font-size: 1.1rem;
   cursor: pointer;
@@ -44,51 +50,57 @@
 }
 
 .primaryButton:hover {
-  background: #134e4a;
-  color: #43c6ac;
+  background: #87452a;
+  color: #fffaf4;
 }
 
 .listContainer {
-  background: #e0ffef;
-  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255, 253, 249, 0.98), rgba(243, 236, 226, 0.94));
+  border-radius: 28px;
   padding: 24px;
-  box-shadow: 0 2px 12px #43c6ac99;
+  box-shadow: 0 18px 36px rgba(73, 54, 38, 0.08);
   margin-top: 24px;
+  border: 1px solid #ded6ca;
 }
 
 .bookRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #43c6ac;
-  gap: 8px;
+  padding: 16px 0;
+  border-bottom: 1px solid #ded6ca;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
+.bookRow:last-child {
+  border-bottom: none;
+}
+
 .bookTitle {
-  color: #134e4a;
-  font-weight: 600;
+  color: #2f2a24;
+  font-weight: 700;
   flex: 1;
   min-width: 150px;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 .bookAuthor {
-  color: #43c6ac;
+  color: #6b6257;
   font-size: 0.9rem;
 }
 
 .bookPrice {
-  color: #191654;
+  color: #a65a3a;
   font-weight: 600;
 }
 
 .editBtn {
-  background: #43c6ac;
-  color: #134e4a;
-  border: none;
-  border-radius: 8px;
-  padding: 6px 12px;
+  background: transparent;
+  color: #6b6257;
+  border: 1px solid #d8b79c;
+  border-radius: 999px;
+  padding: 8px 14px;
   font-weight: 600;
   margin-right: 8px;
   cursor: pointer;
@@ -98,16 +110,16 @@
 }
 
 .editBtn:hover {
-  background: #134e4a;
-  color: #43c6ac;
+  background: #f3ece2;
+  color: #2f2a24;
 }
 
 .deleteBtn {
-  background: #e53935;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 6px 12px;
+  background: #a65a3a;
+  color: #fffaf4;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 8px 14px;
   font-weight: 600;
   cursor: pointer;
   font-size: 0.9rem;
@@ -116,25 +128,25 @@
 }
 
 .deleteBtn:hover {
-  background: #c62828;
+  background: #87452a;
 }
 
 /* Tablet - Large */
 @media (max-width: 1199px) {
   .container {
     padding: 28px;
-    max-width: 600px;
+    max-width: 720px;
   }
 
   .heading {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     margin-bottom: 28px;
   }
 
   .input,
   .select {
     font-size: 1rem;
-    padding: 10px;
+    padding: 12px;
   }
 
   .primaryButton {
@@ -152,22 +164,22 @@
   .container {
     padding: 24px;
     max-width: 90%;
-    border-radius: 12px;
   }
 
   .heading {
-    font-size: 1.6rem;
+    font-size: 2rem;
     margin-bottom: 24px;
   }
 
   .form {
     gap: 14px;
+    padding: 22px;
   }
 
   .input,
   .select {
     font-size: 0.95rem;
-    padding: 9px;
+    padding: 11px;
   }
 
   .primaryButton {
@@ -194,16 +206,17 @@
   .container {
     padding: 20px;
     max-width: 100%;
-    border-radius: 0;
   }
 
   .heading {
-    font-size: 1.4rem;
+    font-size: 1.7rem;
     margin-bottom: 20px;
   }
 
   .form {
     gap: 12px;
+    padding: 18px;
+    border-radius: 22px;
   }
 
   .input,
@@ -220,6 +233,7 @@
   .listContainer {
     padding: 14px;
     margin-top: 20px;
+    border-radius: 22px;
   }
 
   .bookRow {
@@ -252,7 +266,7 @@
   }
 
   .heading {
-    font-size: 1.2rem;
+    font-size: 1.45rem;
     margin-bottom: 16px;
   }
 
@@ -294,7 +308,7 @@
 
   .editBtn,
   .deleteBtn {
-    padding: 5px 8px;
+    padding: 6px 10px;
     font-size: 0.8rem;
     margin-right: 4px;
   }
@@ -307,8 +321,8 @@
   }
 
   .heading {
-    font-size: 1.1rem;
-    letter-spacing: 0;
+    font-size: 1.2rem;
+    letter-spacing: 0.01em;
   }
 
   .input,

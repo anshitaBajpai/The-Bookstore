@@ -1,8 +1,9 @@
 .card {
   padding: 16px;
-  border-radius: 12px;
-  background: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 24px;
+  background: linear-gradient(180deg, #fffdf9, #f3ece2);
+  border: 1px solid #ded6ca;
+  box-shadow: 0 18px 38px rgba(73, 54, 38, 0.08);
 }
 
 .image,
@@ -11,17 +12,18 @@
 .price,
 .button {
   background: linear-gradient(90deg,
-      #f0f0f0 25%,
-      #e0e0e0 37%,
-      #f0f0f0 63%);
+      #f3ece2 25%,
+      #e9dcc8 37%,
+      #f3ece2 63%);
   background-size: 400% 100%;
   animation: shimmer 1.4s ease infinite;
   border-radius: 6px;
 }
 
 .image {
-  height: 220px;
+  height: 280px;
   margin-bottom: 14px;
+  border-radius: 16px;
 }
 
 .title {
