@@ -19,7 +19,7 @@ router.post("/signup", async (req, res) => {
       return res.status(400).json({ error: "Email already exists" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 8);
 
     const newUser = new User({
       username,

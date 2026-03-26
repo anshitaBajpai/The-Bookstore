@@ -120,7 +120,10 @@ app.get("/books", async (req, res) => {
     const limitNum = Math.min(100, Math.max(1, Number(limit)));
 
     const filter = {};
-    if (q) filter.title = { $regex: q, $options: "i" };
+    if (q) filter.$or = [
+      { title: { $regex: q, $options: "i" } },
+      { author: { $regex: q, $options: "i" } },
+    ];
     if (category) filter.category = category;
 
     const [books, total] = await Promise.all([
