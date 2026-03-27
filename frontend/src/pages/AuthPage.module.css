@@ -329,3 +329,16 @@
     font-size: 0.75rem;
   }
 }
+
+.forgotLink {
+  display: block;
+  text-align: right;
+  font-size: 0.82rem;
+  color: #8a7560;
+  margin-top: 6px;
+  text-decoration: none;
+}
+
+.forgotLink:hover {
+  text-decoration: underline;
+}

@@ -3,6 +3,8 @@ import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import Cart from "./pages/Cart";
 import AuthPage from "./pages/AuthPage";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import PrivateRoute from "./components/PrivateRoute";
 import Orders from "./pages/Orders";
 import Footer from "./components/Footer";
@@ -16,8 +18,10 @@ import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const location = useLocation();
-  const hideFooterRoutes = ["/auth"];
-  const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
+  const hideFooterRoutes = ["/auth", "/forgot-password"];
+  const shouldHideFooter =
+    hideFooterRoutes.includes(location.pathname) ||
+    location.pathname.startsWith("/reset-password");
   return (
     <div
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
@@ -38,6 +42,8 @@ const App = () => {
 
         <Route path="/books/:id" element={<BookDetails />} />
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
 

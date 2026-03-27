@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import styles from "./AuthPage.module.css";
 import { API_URL } from "../config.js";
@@ -123,6 +123,11 @@ function AuthPage() {
         <button type="submit" className={styles.button}>
           {isLogin ? "Login" : "Signup"}
         </button>
+        {isLogin && (
+          <Link to="/forgot-password" className={styles.forgotLink}>
+            Forgot password?
+          </Link>
+        )}
       </form>
 
       {error && <p className={styles.error}>{error}</p>}
