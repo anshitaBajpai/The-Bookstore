@@ -26,37 +26,43 @@ function ForgotPassword() {
   };
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.heading}>Forgot Password</h2>
-      <p style={{ color: "#aaa", marginBottom: "1rem", textAlign: "center" }}>
-        Enter your email and we'll send you a reset link.
-      </p>
-
-      {message ? (
-        <p className={styles.switchText} style={{ color: "#4ade80", textAlign: "center" }}>
-          {message}
+    <div className={styles.cardPage}>
+      <div className={styles.cardPageInner}>
+        <h2 className={styles.cardHeading}>Forgot Password</h2>
+        <p className={styles.cardSubheading}>
+          Enter your email and we'll send you a reset link.
         </p>
-      ) : (
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={styles.input}
-            required
-          />
-          <button type="submit" className={styles.button} disabled={loading}>
-            {loading ? "Sending..." : "Send Reset Link"}
-          </button>
-        </form>
-      )}
 
-      {error && <p className={styles.error}>{error}</p>}
+        {message ? (
+          <p className={styles.successMsg}>{message}</p>
+        ) : (
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.field}>
+              <label className={styles.label}>Email</label>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={styles.input}
+                required
+                autoComplete="email"
+              />
+            </div>
 
-      <p className={styles.switchText}>
-        <Link to="/auth">Back to Login</Link>
-      </p>
+            {error && <p className={styles.error}>{error}</p>}
+
+            <button type="submit" className={styles.button} disabled={loading}>
+              {loading && <span className={styles.spinner} />}
+              {loading ? "Sending…" : "Send Reset Link"}
+            </button>
+          </form>
+        )}
+
+        <p className={styles.switchText}>
+          <Link to="/auth">← Back to Sign In</Link>
+        </p>
+      </div>
     </div>
   );
 }

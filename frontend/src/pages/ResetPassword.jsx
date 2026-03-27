@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { API_URL } from "../config.js";
@@ -31,38 +31,52 @@ function ResetPassword() {
   };
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.heading}>Reset Password</h2>
+    <div className={styles.cardPage}>
+      <div className={styles.cardPageInner}>
+        <h2 className={styles.cardHeading}>Reset Password</h2>
+        <p className={styles.cardSubheading}>Choose a new password for your account.</p>
 
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <input
-          type="password"
-          placeholder="New password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className={styles.input}
-          required
-          minLength={6}
-        />
-        <input
-          type="password"
-          placeholder="Confirm new password"
-          value={confirm}
-          onChange={(e) => setConfirm(e.target.value)}
-          className={styles.input}
-          required
-          minLength={6}
-        />
-        <button type="submit" className={styles.button} disabled={loading}>
-          {loading ? "Resetting..." : "Reset Password"}
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.field}>
+            <label className={styles.label}>New Password</label>
+            <input
+              type="password"
+              placeholder="Min. 6 characters"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={styles.input}
+              required
+              minLength={6}
+              autoComplete="new-password"
+            />
+          </div>
 
-      {error && <p className={styles.error}>{error}</p>}
+          <div className={styles.field}>
+            <label className={styles.label}>Confirm Password</label>
+            <input
+              type="password"
+              placeholder="Re-enter your password"
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              className={styles.input}
+              required
+              minLength={6}
+              autoComplete="new-password"
+            />
+          </div>
 
-      <p className={styles.switchText}>
-        <Link to="/auth">Back to Login</Link>
-      </p>
+          {error && <p className={styles.error}>{error}</p>}
+
+          <button type="submit" className={styles.button} disabled={loading}>
+            {loading && <span className={styles.spinner} />}
+            {loading ? "Resetting…" : "Reset Password"}
+          </button>
+        </form>
+
+        <p className={styles.switchText}>
+          <Link to="/auth">← Back to Sign In</Link>
+        </p>
+      </div>
     </div>
   );
 }

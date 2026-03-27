@@ -13,26 +13,27 @@ function AuthPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const switchMode = (mode) => {
+    setIsLogin(mode === "login");
+    setError("");
+    setFormData({ username: "", email: "", password: "" });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
 
     const url = isLogin ? `${API_URL}/auth/login` : `${API_URL}/auth/signup`;
-
     const payload = isLogin
-      ? {
-          email: formData.email,
-          password: formData.password,
-        }
+      ? { email: formData.email, password: formData.password }
       : formData;
 
     try {
@@ -45,21 +46,17 @@ function AuthPage() {
         axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
         navigate("/");
       } else {
-        // After successful signup, attempt to auto-login the user
         try {
           const loginRes = await axios.post(`${API_URL}/auth/login`, {
             email: formData.email,
             password: formData.password,
           });
-
           localStorage.setItem("token", loginRes.data.token);
           localStorage.setItem("role", loginRes.data.role);
           localStorage.setItem("username", loginRes.data.username);
-          axios.defaults.headers.common.Authorization =
-            `Bearer ${loginRes.data.token}`;
+          axios.defaults.headers.common.Authorization = `Bearer ${loginRes.data.token}`;
           navigate("/");
         } catch (loginErr) {
-          // If auto-login fails, fall back to showing signup success and switch to login
           setError(
             loginErr.response?.data?.error ||
               "Signup succeeded but auto-login failed",
@@ -67,84 +64,154 @@ function AuthPage() {
           setIsLogin(true);
         }
       }
-
-      setError("");
     } catch (err) {
-      setError(err.response?.data?.error || "Something went wrong ❌");
+      setError(err.response?.data?.error || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.heading}>{isLogin ? "Login" : "Signup"}</h2>
-
-      <form onSubmit={handleSubmit} className={styles.form}>
-        {!isLogin && (
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
-            className={styles.input}
-            required
-          />
-        )}
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          className={styles.input}
-          required
-        />
-
-        <div className={styles.passwordWrapper}>
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            className={styles.input}
-            required
-          />
-          <button
-            type="button"
-            className={styles.eyeButton}
-            onClick={() => setShowPassword((prev) => !prev)}
-          >
-            {showPassword ? "🙈" : "👁️"}
-          </button>
+    <div className={styles.page}>
+      {/* Left — Brand Panel */}
+      <div className={styles.brand}>
+        <div className={styles.brandInner}>
+          <h1 className={styles.brandName}>The BookStore</h1>
+          <p className={styles.brandTagline}>
+            A curated collection for thoughtful readers.
+          </p>
+          <div className={styles.brandQuote}>
+            <span className={styles.quoteText}>
+              "A reader lives a thousand lives before he dies. The man who never
+              reads lives only one."
+            </span>
+            <span className={styles.quoteAuthor}>— George R.R. Martin</span>
+          </div>
         </div>
+        <div className={styles.brandDecor1} />
+        <div className={styles.brandDecor2} />
+      </div>
 
-        <button type="submit" className={styles.button}>
-          {isLogin ? "Login" : "Signup"}
-        </button>
-        {isLogin && (
-          <Link to="/forgot-password" className={styles.forgotLink}>
-            Forgot password?
-          </Link>
-        )}
-      </form>
+      {/* Right — Form Panel */}
+      <div className={styles.formPanel}>
+        <div className={styles.formCard}>
+          <div className={styles.tabs}>
+            <button
+              type="button"
+              className={`${styles.tab} ${isLogin ? styles.tabActive : ""}`}
+              onClick={() => switchMode("login")}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              className={`${styles.tab} ${!isLogin ? styles.tabActive : ""}`}
+              onClick={() => switchMode("signup")}
+            >
+              Create Account
+            </button>
+          </div>
 
-      {error && <p className={styles.error}>{error}</p>}
+          <p className={styles.subheading}>
+            {isLogin
+              ? "Welcome back. Sign in to continue."
+              : "Join us and start your reading journey."}
+          </p>
 
-      <p className={styles.switchText}>
-        {isLogin ? (
-          <>
-            Don’t have an account?{" "}
-            <span onClick={() => setIsLogin(false)}>Signup</span>
-          </>
-        ) : (
-          <>
-            Already have an account?{" "}
-            <span onClick={() => setIsLogin(true)}>Login</span>
-          </>
-        )}
-      </p>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            {!isLogin && (
+              <div className={styles.field}>
+                <label className={styles.label}>Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Sara"
+                  value={formData.username}
+                  onChange={handleChange}
+                  className={styles.input}
+                  required
+                  autoComplete="username"
+                />
+              </div>
+            )}
+
+            <div className={styles.field}>
+              <label className={styles.label}>Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                value={formData.email}
+                onChange={handleChange}
+                className={styles.input}
+                required
+                autoComplete="email"
+              />
+            </div>
+
+            <div className={styles.field}>
+              <div className={styles.labelRow}>
+                <label className={styles.label}>Password</label>
+                {isLogin && (
+                  <Link to="/forgot-password" className={styles.forgotLink}>
+                    Forgot password?
+                  </Link>
+                )}
+              </div>
+              <div className={styles.passwordWrapper}>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder={
+                    isLogin ? "Enter your password" : "Min. 6 characters"
+                  }
+                  value={formData.password}
+                  onChange={handleChange}
+                  className={styles.input}
+                  required
+                  minLength={isLogin ? undefined : 6}
+                  autoComplete={isLogin ? "current-password" : "new-password"}
+                />
+                <button
+                  type="button"
+                  className={styles.eyeButton}
+                  onClick={() => setShowPassword((p) => !p)}
+                  tabIndex={-1}
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </button>
+              </div>
+            </div>
+
+            {error && <p className={styles.error}>{error}</p>}
+
+            <button type="submit" className={styles.button} disabled={loading}>
+              {loading && <span className={styles.spinner} />}
+              {loading
+                ? isLogin
+                  ? "Signing in…"
+                  : "Creating account…"
+                : isLogin
+                  ? "Sign In"
+                  : "Create Account"}
+            </button>
+          </form>
+
+          <p className={styles.switchText}>
+            {isLogin ? (
+              <>
+                Don't have an account?{" "}
+                <span onClick={() => switchMode("signup")}>Sign up</span>
+              </>
+            ) : (
+              <>
+                Already have an account?{" "}
+                <span onClick={() => switchMode("login")}>Sign in</span>
+              </>
+            )}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
