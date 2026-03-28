@@ -5,9 +5,11 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
+import bcrypt from "bcryptjs";
 import authRoutes from "./routes/authRoutes.js";
 import Book from "./models/Book.js";
 import Order from "./models/Order.js";
+import User from "./models/User.js";
 
 dotenv.config();
 
@@ -281,6 +283,58 @@ app.put("/orders/:id/status", authMiddleware(["admin"]), async (req, res) => {
     res.json(order);
   } catch (err) {
     console.error("ORDER STATUS ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+/* ===================== Profile Routes ===================== */
+
+app.get("/profile", authMiddleware(), async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("username email");
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json({ username: user.username, email: user.email });
+  } catch (err) {
+    console.error("GET PROFILE ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.put("/profile", authMiddleware(), async (req, res) => {
+  try {
+    const { username } = req.body;
+    if (!username?.trim()) return res.status(400).json({ error: "Username is required" });
+
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { username: username.trim() },
+      { new: true },
+    ).select("username email");
+
+    res.json({ username: user.username, email: user.email });
+  } catch (err) {
+    console.error("UPDATE PROFILE ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.put("/profile/password", authMiddleware(), async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword)
+      return res.status(400).json({ error: "Both current and new password are required" });
+    if (newPassword.length < 6)
+      return res.status(400).json({ error: "New password must be at least 6 characters" });
+
+    const user = await User.findById(req.user.id);
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) return res.status(400).json({ error: "Current password is incorrect" });
+
+    user.password = await bcrypt.hash(newPassword, 8);
+    await user.save();
+    res.json({ message: "Password updated successfully" });
+  } catch (err) {
+    console.error("CHANGE PASSWORD ERROR:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });

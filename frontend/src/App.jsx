@@ -5,6 +5,7 @@ import Cart from "./pages/Cart";
 import AuthPage from "./pages/AuthPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
 import Orders from "./pages/Orders";
 import Footer from "./components/Footer";
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
 
         <Route element={<PrivateRoute adminOnly={true} />}>

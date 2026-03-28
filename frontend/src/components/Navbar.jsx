@@ -86,9 +86,9 @@ function Navbar() {
           </NavLink>
         ) : (
           <>
-            <span className={styles.username}>
+            <Link to="/profile" className={styles.username}>
               Hi, {username.charAt(0).toUpperCase() + username.slice(1)}
-            </span>
+            </Link>
 
             {role === "admin" && (
               <NavLink
