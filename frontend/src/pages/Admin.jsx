@@ -145,15 +145,40 @@ const Admin = () => {
       </form>
 
       <div className={styles.listContainer}>
+        {(() => {
+          const lowStockBooks = books.filter((b) => b.stock < 5);
+          return lowStockBooks.length > 0 ? (
+            <div className={styles.lowStockBanner}>
+              ⚠️ {lowStockBooks.length} book{lowStockBooks.length > 1 ? "s" : ""} running low on stock
+            </div>
+          ) : null;
+        })()}
+
         {books.map((book) => (
-          <div key={book.id} className={styles.bookRow}>
-            <div>
-              <span className={styles.bookTitle}>{book.title}</span> –{" "}
-              <span className={styles.bookAuthor}>{book.author}</span> –{" "}
-              <span className={styles.bookPrice}>₹{book.price}</span>
+          <div
+            key={book.id}
+            className={`${styles.bookRow} ${book.stock < 5 ? styles.bookRowLowStock : ""}`}
+          >
+            <div className={styles.bookInfo}>
+              <span className={styles.bookTitle}>{book.title}</span>
+              <span className={styles.bookMeta}>
+                <span className={styles.bookAuthor}>{book.author}</span>
+                <span className={styles.bookPrice}>₹{book.price}</span>
+                <span
+                  className={
+                    book.stock === 0
+                      ? styles.badgeOut
+                      : book.stock < 5
+                        ? styles.badgeLow
+                        : styles.badgeOk
+                  }
+                >
+                  {book.stock === 0 ? "Out of stock" : `${book.stock} in stock`}
+                </span>
+              </span>
             </div>
 
-            <div>
+            <div className={styles.bookActions}>
               <button
                 className={styles.editBtn}
                 onClick={() => handleEdit(book)}
