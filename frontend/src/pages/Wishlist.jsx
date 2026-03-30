@@ -27,7 +27,7 @@ function Wishlist() {
         {wishlist.map((book) => (
           <div key={book.id} className={styles.card}>
             <div onClick={() => navigate(`/books/${book.id}`)}>
-              <img src={book.image} alt={book.title} className={styles.image} />
+              <img src={book.image} alt={book.title} className={styles.image} loading="lazy" decoding="async" />
 
               <h3 className={styles.bookTitle}>{book.title}</h3>
               <p className={styles.author}>✍️ {book.author}</p>

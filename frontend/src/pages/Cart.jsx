@@ -58,7 +58,7 @@ function Cart() {
             return (
               <div key={item.id || item._id} className={styles.cartItem}>
                 <div className={styles.itemImage}>
-                  <img src={item.image} alt={item.title} />
+                  <img src={item.image} alt={item.title} loading="lazy" decoding="async" />
                 </div>
 
                 <div className={styles.itemDetails}>

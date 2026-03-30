@@ -71,7 +71,7 @@ const BookDetails = () => {
 
       <div className={styles.card}>
         <div className={styles.imageWrap}>
-          <img src={book.image} alt={book.title} className={styles.image} />
+          <img src={book.image} alt={book.title} className={styles.image} loading="lazy" decoding="async" />
         </div>
 
         <div className={styles.details}>
