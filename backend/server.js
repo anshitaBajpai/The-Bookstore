@@ -287,6 +287,29 @@ app.put("/orders/:id/status", authMiddleware(["admin"]), async (req, res) => {
   }
 });
 
+/* ===================== Admin Stats ===================== */
+
+app.get("/admin/stats", authMiddleware(["admin"]), async (req, res) => {
+  try {
+    const [totalBooks, totalOrders, revenueAgg, lowStock] = await Promise.all([
+      Book.countDocuments(),
+      Order.countDocuments(),
+      Order.aggregate([{ $group: { _id: null, total: { $sum: "$totalAmount" } } }]),
+      Book.countDocuments({ stock: { $lt: 5 } }),
+    ]);
+
+    res.json({
+      totalBooks,
+      totalOrders,
+      totalRevenue: revenueAgg[0]?.total || 0,
+      lowStock,
+    });
+  } catch (err) {
+    console.error("STATS ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 /* ===================== Profile Routes ===================== */
 
 app.get("/profile", authMiddleware(), async (req, res) => {

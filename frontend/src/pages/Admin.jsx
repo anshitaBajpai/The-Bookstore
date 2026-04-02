@@ -16,14 +16,25 @@ const Admin = () => {
   const [editingBook, setEditingBook] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
+  const [stats, setStats] = useState(null);
 
   const fetchBooks = async () => {
     const res = await axios.get(`${API_URL}/books`);
-    setBooks(res.data.books);
+    setBooks(Array.isArray(res.data) ? res.data : res.data.books || []);
+  };
+
+  const fetchStats = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/admin/stats`);
+      setStats(res.data);
+    } catch {
+      // stats are non-critical, fail silently
+    }
   };
 
   useEffect(() => {
     fetchBooks();
+    fetchStats();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -81,6 +92,35 @@ const Admin = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.heading}>Admin Dashboard</h1>
+
+      {stats && (
+        <div className={styles.statsGrid}>
+          <div className={styles.statCard}>
+            <span className={styles.statIcon}>📚</span>
+            <span className={styles.statValue}>{stats.totalBooks}</span>
+            <span className={styles.statLabel}>Total Books</span>
+          </div>
+          <div className={styles.statCard}>
+            <span className={styles.statIcon}>📦</span>
+            <span className={styles.statValue}>{stats.totalOrders}</span>
+            <span className={styles.statLabel}>Total Orders</span>
+          </div>
+          <div className={styles.statCard}>
+            <span className={styles.statIcon}>💰</span>
+            <span className={styles.statValue}>
+              ₹{stats.totalRevenue.toLocaleString("en-IN")}
+            </span>
+            <span className={styles.statLabel}>Total Revenue</span>
+          </div>
+          <div
+            className={`${styles.statCard} ${stats.lowStock > 0 ? styles.statCardWarn : ""}`}
+          >
+            <span className={styles.statIcon}>⚠️</span>
+            <span className={styles.statValue}>{stats.lowStock}</span>
+            <span className={styles.statLabel}>Low Stock</span>
+          </div>
+        </div>
+      )}
 
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
@@ -149,7 +189,8 @@ const Admin = () => {
           const lowStockBooks = books.filter((b) => b.stock < 5);
           return lowStockBooks.length > 0 ? (
             <div className={styles.lowStockBanner}>
-              ⚠️ {lowStockBooks.length} book{lowStockBooks.length > 1 ? "s" : ""} running low on stock
+              ⚠️ {lowStockBooks.length} book
+              {lowStockBooks.length > 1 ? "s" : ""} running low on stock
             </div>
           ) : null;
         })()}
