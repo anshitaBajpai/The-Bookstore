@@ -261,6 +261,28 @@ app.get("/orders", authMiddleware(), async (req, res) => {
   }
 });
 
+// Cancel order (user, PLACED only)
+app.put("/orders/:id/cancel", authMiddleware(), async (req, res) => {
+  try {
+    const order = await Order.findOne({ _id: req.params.id, userId: req.user.id });
+    if (!order) return res.status(404).json({ error: "Order not found" });
+    if (order.status !== "PLACED")
+      return res.status(400).json({ error: "Only orders with status PLACED can be cancelled" });
+
+    // Restore stock for each item
+    for (const item of order.items) {
+      await Book.findByIdAndUpdate(item.bookId, { $inc: { stock: item.quantity } });
+    }
+
+    order.status = "CANCELLED";
+    await order.save();
+    res.json(order);
+  } catch (err) {
+    console.error("CANCEL ORDER ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 app.put("/orders/:id/status", authMiddleware(["admin"]), async (req, res) => {
   try {
     const { status } = req.body;
