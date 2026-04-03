@@ -102,6 +102,34 @@
     color: #a65a3a;
 }
 
+.cardCancelled {
+    opacity: 0.65;
+    border-color: #fca5a5;
+}
+
+.cancelBtn {
+    margin-left: auto;
+    padding: 4px 14px;
+    border-radius: 999px;
+    border: 1.5px solid #f87171;
+    background: transparent;
+    color: #dc2626;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: none;
+}
+
+.cancelBtn:hover:not(:disabled) {
+    background: #fee2e2;
+}
+
+.cancelBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 /* Tablet - Large */
 @media (max-width: 1199px) {
     .page {
