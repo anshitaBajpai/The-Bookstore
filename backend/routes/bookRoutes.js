@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
 // Get all books (supports q, category, minPrice, maxPrice, sort, limit)
 router.get("/", async (req, res) => {
   try {
-    const { q, category, minPrice, maxPrice, sort, limit } = req.query;
+    const { q, category, sort, limit } = req.query;
 
     const filter = {};
 
@@ -35,13 +35,6 @@ router.get("/", async (req, res) => {
 
     if (category) {
       filter.category = category;
-    }
-
-    if (minPrice !== undefined || maxPrice !== undefined) {
-      filter.price = {};
-      if (minPrice !== undefined && minPrice !== "") filter.price.$gte = Number(minPrice);
-      if (maxPrice !== undefined && maxPrice !== "") filter.price.$lte = Number(maxPrice);
-      if (Object.keys(filter.price).length === 0) delete filter.price;
     }
 
     let sortOption = { _id: -1 }; // newest first by default

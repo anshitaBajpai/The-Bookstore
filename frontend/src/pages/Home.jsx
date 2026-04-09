@@ -12,10 +12,6 @@ const Home = () => {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [category, setCategory] = useState("");
-  const [priceMin, setPriceMin] = useState("");
-  const [priceMax, setPriceMax] = useState("");
-  const [debouncedPriceMin, setDebouncedPriceMin] = useState("");
-  const [debouncedPriceMax, setDebouncedPriceMax] = useState("");
   const [sort, setSort] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -28,15 +24,6 @@ const Home = () => {
     const timer = setTimeout(() => setDebouncedSearch(search), 500);
     return () => clearTimeout(timer);
   }, [search]);
-
-  // 500ms debounce for price range
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedPriceMin(priceMin);
-      setDebouncedPriceMax(priceMax);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [priceMin, priceMax]);
 
   // 200ms debounce for suggestions
   useEffect(() => {
@@ -84,8 +71,6 @@ const Home = () => {
           params: {
             q: debouncedSearch || undefined,
             category: category || undefined,
-            minPrice: debouncedPriceMin || undefined,
-            maxPrice: debouncedPriceMax || undefined,
             sort: sort || undefined,
           },
         });
@@ -97,7 +82,7 @@ const Home = () => {
       }
     };
     fetchBooks();
-  }, [debouncedSearch, category, debouncedPriceMin, debouncedPriceMax, sort]);
+  }, [debouncedSearch, category, sort]);
 
   const handleSuggestionClick = (book) => {
     setShowSuggestions(false);
@@ -204,26 +189,6 @@ const Home = () => {
           <option value="Biography">Biography</option>
           <option value="Education">Education</option>
         </select>
-
-        <div className={styles.priceRange}>
-          <input
-            type="number"
-            placeholder="Min $"
-            value={priceMin}
-            min={0}
-            onChange={(e) => setPriceMin(e.target.value)}
-            className={styles.priceInput}
-          />
-          <span className={styles.priceSep}>–</span>
-          <input
-            type="number"
-            placeholder="Max $"
-            value={priceMax}
-            min={0}
-            onChange={(e) => setPriceMax(e.target.value)}
-            className={styles.priceInput}
-          />
-        </div>
 
         <select
           value={sort}
