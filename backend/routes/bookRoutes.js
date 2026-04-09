@@ -19,10 +19,39 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Get all books
+// Get all books (supports q, category, minPrice, maxPrice, sort, limit)
 router.get("/", async (req, res) => {
   try {
-    const books = await Book.find().lean();
+    const { q, category, minPrice, maxPrice, sort, limit } = req.query;
+
+    const filter = {};
+
+    if (q) {
+      filter.$or = [
+        { title: { $regex: q, $options: "i" } },
+        { author: { $regex: q, $options: "i" } },
+      ];
+    }
+
+    if (category) {
+      filter.category = category;
+    }
+
+    if (minPrice !== undefined || maxPrice !== undefined) {
+      filter.price = {};
+      if (minPrice !== undefined && minPrice !== "") filter.price.$gte = Number(minPrice);
+      if (maxPrice !== undefined && maxPrice !== "") filter.price.$lte = Number(maxPrice);
+      if (Object.keys(filter.price).length === 0) delete filter.price;
+    }
+
+    let sortOption = { _id: -1 }; // newest first by default
+    if (sort === "price_asc") sortOption = { price: 1 };
+    else if (sort === "price_desc") sortOption = { price: -1 };
+
+    let query = Book.find(filter).sort(sortOption).lean();
+    if (limit) query = query.limit(Number(limit));
+
+    const books = await query;
     res.json(books.map(formatBook));
   } catch (err) {
     res.status(500).json({ error: err.message });
