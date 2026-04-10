@@ -114,10 +114,10 @@ const authMiddleware = (roles = []) => {
 
 /* ===================== BOOK ROUTES ===================== */
 
-// Unified books route (search + category + pagination)
+// Unified books route (search + category + sort + pagination)
 app.get("/books", async (req, res) => {
   try {
-    const { q, category, page = 1, limit = 20 } = req.query;
+    const { q, category, sort, page = 1, limit = 20 } = req.query;
     const pageNum = Math.max(1, Number(page));
     const limitNum = Math.min(100, Math.max(1, Number(limit)));
 
@@ -128,8 +128,12 @@ app.get("/books", async (req, res) => {
     ];
     if (category) filter.category = category;
 
+    let sortOption = { _id: -1 };
+    if (sort === "price_asc") sortOption = { price: 1 };
+    else if (sort === "price_desc") sortOption = { price: -1 };
+
     const [books, total] = await Promise.all([
-      Book.find(filter).skip((pageNum - 1) * limitNum).limit(limitNum).lean(),
+      Book.find(filter).sort(sortOption).skip((pageNum - 1) * limitNum).limit(limitNum).lean(),
       Book.countDocuments(filter),
     ]);
 
