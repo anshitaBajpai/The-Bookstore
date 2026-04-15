@@ -23,6 +23,8 @@ const bookSchema = new mongoose.Schema({
     required: true,
     min: 0,
   },
+  avgRating: { type: Number, default: 0 },
+  reviewCount: { type: Number, default: 0 },
 });
 
 const Book = mongoose.model("Book", bookSchema);
