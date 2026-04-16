@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { CartContext } from "../context/CartContext.jsx";
 import styles from "./BookCard.module.css";
 import { useNavigate } from "react-router-dom";
@@ -41,6 +41,12 @@ const BookCard = ({ book }) => {
         <h3 className={styles.title}>{book.title}</h3>
         <p className={styles.author}>✍️ {book.author}</p>
         <p className={styles.price}>💰 ₹{book.price}</p>
+        {book.avgRating > 0 && (
+          <p className={styles.rating}>
+            ⭐ {book.avgRating}
+            <span className={styles.ratingCount}> ({book.reviewCount})</span>
+          </p>
+        )}
       </div>
 
       <button

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 import styles from "./Orders.module.css";
 import { API_URL } from "../config.js";
 
@@ -93,6 +94,11 @@ const Orders = () => {
                 <div key={index} className={styles.item}>
                   <span className={styles.itemTitle}>{item.title}</span>
                   <span className={styles.itemPrice}>{item.quantity} × ₹{item.price}</span>
+                  {order.status === "DELIVERED" && (
+                    <Link to={`/books/${item.bookId}`} className={styles.reviewLink}>
+                      Write a Review
+                    </Link>
+                  )}
                 </div>
               ))}
 

@@ -49,7 +49,19 @@
   color: #a65a3a;
   font-weight: 700;
   font-size: 1.15rem;
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
+}
+
+.rating {
+  color: #6b6257;
+  font-size: 0.85rem;
+  margin: 0 0 8px 0;
+  font-weight: 600;
+}
+
+.ratingCount {
+  color: #a0947e;
+  font-weight: 400;
 }
 
 .button {
