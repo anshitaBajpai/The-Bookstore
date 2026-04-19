@@ -1,8 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import styles from "./Admin.module.css";
 import { API_URL } from "../config.js";
+
+const STATUS_FLOW = { PLACED: "SHIPPED", SHIPPED: "DELIVERED" };
+const STATUS_LABEL = { PLACED: "Mark Shipped", SHIPPED: "Mark Delivered" };
+const STATUS_COLOR = {
+  PLACED: styles.statusPlaced,
+  SHIPPED: styles.statusShipped,
+  DELIVERED: styles.statusDelivered,
+  CANCELLED: styles.statusCancelled,
+};
 
 const Admin = () => {
   const [books, setBooks] = useState([]);
@@ -17,6 +26,8 @@ const Admin = () => {
   const [submitting, setSubmitting] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
   const [stats, setStats] = useState(null);
+  const [orders, setOrders] = useState([]);
+  const [updatingOrderId, setUpdatingOrderId] = useState(null);
 
   const fetchBooks = async () => {
     const res = await axios.get(`${API_URL}/books`);
@@ -32,10 +43,33 @@ const Admin = () => {
     }
   };
 
+  const fetchOrders = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/admin/orders`);
+      setOrders(res.data);
+    } catch (err) {
+      console.error("Failed to fetch orders", err);
+    }
+  };
+
   useEffect(() => {
     fetchBooks();
     fetchStats();
+    fetchOrders();
   }, []);
+
+  const handleStatusUpdate = async (orderId, nextStatus) => {
+    setUpdatingOrderId(orderId);
+    try {
+      const res = await axios.put(`${API_URL}/orders/${orderId}/status`, { status: nextStatus });
+      setOrders((prev) => prev.map((o) => (o._id === orderId ? { ...o, status: res.data.status } : o)));
+      toast.success(`Order marked as ${nextStatus}`);
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Failed to update status");
+    } finally {
+      setUpdatingOrderId(null);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -236,6 +270,56 @@ const Admin = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Orders Management */}
+      <div className={styles.sectionHeading}>Orders</div>
+      <div className={styles.listContainer}>
+        {orders.length === 0 ? (
+          <p className={styles.emptyOrders}>No orders yet.</p>
+        ) : (
+          orders.map((order) => {
+            const nextStatus = STATUS_FLOW[order.status];
+            const user = order.userId;
+            return (
+              <div key={order._id} className={styles.orderRow}>
+                <div className={styles.orderInfo}>
+                  <div className={styles.orderTopRow}>
+                    <span className={styles.orderId}>#{order._id.slice(-6).toUpperCase()}</span>
+                    <span className={`${styles.orderStatus} ${STATUS_COLOR[order.status] || ""}`}>
+                      {order.status}
+                    </span>
+                    <span className={styles.orderDate}>
+                      {new Date(order.createdAt).toLocaleDateString("en-IN", {
+                        day: "numeric", month: "short", year: "numeric",
+                      })}
+                    </span>
+                  </div>
+                  <div className={styles.orderUser}>
+                    {user ? `${user.username} (${user.email})` : "Unknown user"}
+                  </div>
+                  <div className={styles.orderItems}>
+                    {order.items.map((item, i) => (
+                      <span key={i} className={styles.orderItem}>
+                        {item.title} ×{item.quantity}
+                      </span>
+                    ))}
+                  </div>
+                  <div className={styles.orderTotal}>₹{order.totalAmount}</div>
+                </div>
+                {nextStatus && (
+                  <button
+                    className={styles.statusBtn}
+                    onClick={() => handleStatusUpdate(order._id, nextStatus)}
+                    disabled={updatingOrderId === order._id}
+                  >
+                    {updatingOrderId === order._id ? "Updating…" : STATUS_LABEL[order.status]}
+                  </button>
+                )}
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );
