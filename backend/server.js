@@ -10,6 +10,7 @@ import authRoutes from "./routes/authRoutes.js";
 import Book from "./models/Book.js";
 import Order from "./models/Order.js";
 import User from "./models/User.js";
+import Review from "./models/Review.js";
 
 dotenv.config();
 
@@ -201,6 +202,86 @@ app.delete("/books/:id", authMiddleware(["admin"]), async (req, res) => {
   }
 });
 
+/* ===================== REVIEW ROUTES ===================== */
+
+// Get reviews for a book (public; optional auth to determine canReview)
+app.get("/books/:id/reviews", async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const reviews = await Review.find({ bookId }).sort({ createdAt: -1 }).lean();
+
+    let canReview = false;
+    let userReview = null;
+
+    const token = req.cookies?.token || req.headers.authorization?.split(" ")[1];
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decoded.id;
+        const deliveredOrder = await Order.findOne({
+          userId,
+          status: "DELIVERED",
+          "items.bookId": bookId,
+        });
+        userReview = reviews.find((r) => r.userId.toString() === userId) || null;
+        canReview = !!deliveredOrder && !userReview;
+      } catch {
+        // invalid/expired token — treat as guest
+      }
+    }
+
+    res.json({ reviews, canReview, userReview });
+  } catch (err) {
+    console.error("GET /books/:id/reviews ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Submit a review (must be authenticated + have a DELIVERED order for this book)
+app.post("/books/:id/reviews", authMiddleware(), async (req, res) => {
+  try {
+    const { rating, text } = req.body;
+    const bookId = req.params.id;
+    const userId = req.user.id;
+
+    if (!rating || rating < 1 || rating > 5)
+      return res.status(400).json({ error: "Rating must be between 1 and 5." });
+    if (!text?.trim())
+      return res.status(400).json({ error: "Review text is required." });
+
+    const deliveredOrder = await Order.findOne({
+      userId,
+      status: "DELIVERED",
+      "items.bookId": bookId,
+    });
+
+    if (!deliveredOrder)
+      return res.status(403).json({ error: "You can only review books you have purchased and received." });
+
+    const review = new Review({
+      bookId,
+      userId,
+      username: (await User.findById(userId).select("username")).username,
+      rating,
+      text: text.trim(),
+    });
+    await review.save();
+
+    // Recalculate avgRating and reviewCount on the Book document
+    const allReviews = await Review.find({ bookId }).lean();
+    const avgRating =
+      Math.round((allReviews.reduce((s, r) => s + r.rating, 0) / allReviews.length) * 10) / 10;
+    await Book.findByIdAndUpdate(bookId, { avgRating, reviewCount: allReviews.length });
+
+    res.status(201).json(review);
+  } catch (err) {
+    if (err.code === 11000)
+      return res.status(400).json({ error: "You have already reviewed this book." });
+    console.error("POST /books/:id/reviews ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 /* ===================== ORDER ROUTES ===================== */
 
 // Place order
@@ -307,6 +388,20 @@ app.put("/orders/:id/status", authMiddleware(["admin"]), async (req, res) => {
     res.json(order);
   } catch (err) {
     console.error("ORDER STATUS ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Get all orders (admin)
+app.get("/admin/orders", authMiddleware(["admin"]), async (req, res) => {
+  try {
+    const orders = await Order.find()
+      .sort({ createdAt: -1 })
+      .populate("userId", "username email")
+      .lean();
+    res.json(orders);
+  } catch (err) {
+    console.error("GET /admin/orders ERROR:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
