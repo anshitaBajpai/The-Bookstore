@@ -286,15 +286,58 @@
   background: #87452a;
 }
 
-/* ── Orders section ─────────────────────────────────────── */
-.sectionHeading {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #2f2a24;
-  margin: 32px 0 12px;
+/* ── Tabs ───────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: 1px solid #ded6ca;
+  background: rgba(255, 253, 249, 0.9);
+  color: #6b6257;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab:hover {
+  background: #f3ece2;
+  color: #2f2a24;
+}
+
+.tabActive {
+  background: #a65a3a;
+  color: #fffaf4;
+  border-color: #a65a3a;
+}
+
+.tabActive:hover {
+  background: #87452a;
+  color: #fffaf4;
+}
+
+.tabBadge {
+  background: rgba(255, 255, 255, 0.25);
+  color: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
+.tabActive .tabBadge {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Orders section ─────────────────────────────────────── */
 .emptyOrders {
   color: #8a7560;
   text-align: center;
