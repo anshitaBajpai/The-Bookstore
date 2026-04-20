@@ -28,6 +28,7 @@ const Admin = () => {
   const [stats, setStats] = useState(null);
   const [orders, setOrders] = useState([]);
   const [updatingOrderId, setUpdatingOrderId] = useState(null);
+  const [activeTab, setActiveTab] = useState("books");
 
   const fetchBooks = async () => {
     const res = await axios.get(`${API_URL}/books`);
@@ -146,9 +147,7 @@ const Admin = () => {
             </span>
             <span className={styles.statLabel}>Total Revenue</span>
           </div>
-          <div
-            className={`${styles.statCard} ${stats.lowStock > 0 ? styles.statCardWarn : ""}`}
-          >
+          <div className={`${styles.statCard} ${stats.lowStock > 0 ? styles.statCardWarn : ""}`}>
             <span className={styles.statIcon}>⚠️</span>
             <span className={styles.statValue}>{stats.lowStock}</span>
             <span className={styles.statLabel}>Low Stock</span>
@@ -156,171 +155,177 @@ const Admin = () => {
         </div>
       )}
 
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <input
-          className={styles.input}
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <input
-          className={styles.input}
-          placeholder="Author"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-          required
-        />
-        <input
-          className={styles.input}
-          placeholder="Price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          required
-        />
-        <input
-          className={styles.input}
-          type="number"
-          placeholder="Stock"
-          value={stock}
-          onChange={(e) => setStock(e.target.value)}
-          required
-        />
-        <input
-          className={styles.input}
-          placeholder="Image URL"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-        />
-        <select
-          className={styles.select}
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          required
+      {/* Tabs */}
+      <div className={styles.tabs}>
+        <button
+          className={`${styles.tab} ${activeTab === "books" ? styles.tabActive : ""}`}
+          onClick={() => setActiveTab("books")}
         >
-          <option value="">Select Category</option>
-          <option>Fiction</option>
-          <option>Business</option>
-          <option>Technology</option>
-          <option>Self-Help</option>
-          <option>Biography</option>
-          <option>Education</option>
-        </select>
-        <textarea
-          className={styles.input}
-          placeholder="Summary"
-          value={summary}
-          onChange={(e) => setSummary(e.target.value)}
-          rows={3}
-        />
-        <button className={styles.primaryButton} disabled={submitting}>
-          {submitting ? "Saving..." : editingBook ? "Update Book" : "Add Book"}
+          Books
         </button>
-      </form>
-
-      <div className={styles.listContainer}>
-        {(() => {
-          const lowStockBooks = books.filter((b) => b.stock < 5);
-          return lowStockBooks.length > 0 ? (
-            <div className={styles.lowStockBanner}>
-              ⚠️ {lowStockBooks.length} book
-              {lowStockBooks.length > 1 ? "s" : ""} running low on stock
-            </div>
-          ) : null;
-        })()}
-
-        {books.map((book) => (
-          <div
-            key={book.id}
-            className={`${styles.bookRow} ${book.stock < 5 ? styles.bookRowLowStock : ""}`}
-          >
-            <div className={styles.bookInfo}>
-              <span className={styles.bookTitle}>{book.title}</span>
-              <span className={styles.bookMeta}>
-                <span className={styles.bookAuthor}>{book.author}</span>
-                <span className={styles.bookPrice}>₹{book.price}</span>
-                <span
-                  className={
-                    book.stock === 0
-                      ? styles.badgeOut
-                      : book.stock < 5
-                        ? styles.badgeLow
-                        : styles.badgeOk
-                  }
-                >
-                  {book.stock === 0 ? "Out of stock" : `${book.stock} in stock`}
-                </span>
-              </span>
-            </div>
-
-            <div className={styles.bookActions}>
-              <button
-                className={styles.editBtn}
-                onClick={() => handleEdit(book)}
-              >
-                Edit
-              </button>
-              <button
-                className={styles.deleteBtn}
-                onClick={() => handleDelete(book.id)}
-                disabled={deletingId === book.id}
-              >
-                {deletingId === book.id ? "Deleting..." : "Delete"}
-              </button>
-            </div>
-          </div>
-        ))}
+        <button
+          className={`${styles.tab} ${activeTab === "orders" ? styles.tabActive : ""}`}
+          onClick={() => setActiveTab("orders")}
+        >
+          Orders
+          {orders.length > 0 && <span className={styles.tabBadge}>{orders.length}</span>}
+        </button>
       </div>
 
-      {/* Orders Management */}
-      <div className={styles.sectionHeading}>Orders</div>
-      <div className={styles.listContainer}>
-        {orders.length === 0 ? (
-          <p className={styles.emptyOrders}>No orders yet.</p>
-        ) : (
-          orders.map((order) => {
-            const nextStatus = STATUS_FLOW[order.status];
-            const user = order.userId;
-            return (
-              <div key={order._id} className={styles.orderRow}>
-                <div className={styles.orderInfo}>
-                  <div className={styles.orderTopRow}>
-                    <span className={styles.orderId}>#{order._id.slice(-6).toUpperCase()}</span>
-                    <span className={`${styles.orderStatus} ${STATUS_COLOR[order.status] || ""}`}>
-                      {order.status}
-                    </span>
-                    <span className={styles.orderDate}>
-                      {new Date(order.createdAt).toLocaleDateString("en-IN", {
-                        day: "numeric", month: "short", year: "numeric",
-                      })}
-                    </span>
-                  </div>
-                  <div className={styles.orderUser}>
-                    {user ? `${user.username} (${user.email})` : "Unknown user"}
-                  </div>
-                  <div className={styles.orderItems}>
-                    {order.items.map((item, i) => (
-                      <span key={i} className={styles.orderItem}>
-                        {item.title} ×{item.quantity}
-                      </span>
-                    ))}
-                  </div>
-                  <div className={styles.orderTotal}>₹{order.totalAmount}</div>
+      {activeTab === "books" && (
+        <>
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <input
+              className={styles.input}
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+            <input
+              className={styles.input}
+              placeholder="Author"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+              required
+            />
+            <input
+              className={styles.input}
+              placeholder="Price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              required
+            />
+            <input
+              className={styles.input}
+              type="number"
+              placeholder="Stock"
+              value={stock}
+              onChange={(e) => setStock(e.target.value)}
+              required
+            />
+            <input
+              className={styles.input}
+              placeholder="Image URL"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+            />
+            <select
+              className={styles.select}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              required
+            >
+              <option value="">Select Category</option>
+              <option>Fiction</option>
+              <option>Business</option>
+              <option>Technology</option>
+              <option>Self-Help</option>
+              <option>Biography</option>
+              <option>Education</option>
+            </select>
+            <textarea
+              className={styles.input}
+              placeholder="Summary"
+              value={summary}
+              onChange={(e) => setSummary(e.target.value)}
+              rows={3}
+            />
+            <button className={styles.primaryButton} disabled={submitting}>
+              {submitting ? "Saving..." : editingBook ? "Update Book" : "Add Book"}
+            </button>
+          </form>
+
+          <div className={styles.listContainer}>
+            {(() => {
+              const lowStockBooks = books.filter((b) => b.stock < 5);
+              return lowStockBooks.length > 0 ? (
+                <div className={styles.lowStockBanner}>
+                  ⚠️ {lowStockBooks.length} book
+                  {lowStockBooks.length > 1 ? "s" : ""} running low on stock
                 </div>
-                {nextStatus && (
+              ) : null;
+            })()}
+            {books.map((book) => (
+              <div
+                key={book.id}
+                className={`${styles.bookRow} ${book.stock < 5 ? styles.bookRowLowStock : ""}`}
+              >
+                <div className={styles.bookInfo}>
+                  <span className={styles.bookTitle}>{book.title}</span>
+                  <span className={styles.bookMeta}>
+                    <span className={styles.bookAuthor}>{book.author}</span>
+                    <span className={styles.bookPrice}>₹{book.price}</span>
+                    <span className={book.stock === 0 ? styles.badgeOut : book.stock < 5 ? styles.badgeLow : styles.badgeOk}>
+                      {book.stock === 0 ? "Out of stock" : `${book.stock} in stock`}
+                    </span>
+                  </span>
+                </div>
+                <div className={styles.bookActions}>
+                  <button className={styles.editBtn} onClick={() => handleEdit(book)}>Edit</button>
                   <button
-                    className={styles.statusBtn}
-                    onClick={() => handleStatusUpdate(order._id, nextStatus)}
-                    disabled={updatingOrderId === order._id}
+                    className={styles.deleteBtn}
+                    onClick={() => handleDelete(book.id)}
+                    disabled={deletingId === book.id}
                   >
-                    {updatingOrderId === order._id ? "Updating…" : STATUS_LABEL[order.status]}
+                    {deletingId === book.id ? "Deleting..." : "Delete"}
                   </button>
-                )}
+                </div>
               </div>
-            );
-          })
-        )}
-      </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {activeTab === "orders" && (
+        <div className={styles.listContainer}>
+          {orders.length === 0 ? (
+            <p className={styles.emptyOrders}>No orders yet.</p>
+          ) : (
+            orders.map((order) => {
+              const nextStatus = STATUS_FLOW[order.status];
+              const user = order.userId;
+              return (
+                <div key={order._id} className={styles.orderRow}>
+                  <div className={styles.orderInfo}>
+                    <div className={styles.orderTopRow}>
+                      <span className={styles.orderId}>#{order._id.slice(-6).toUpperCase()}</span>
+                      <span className={`${styles.orderStatus} ${STATUS_COLOR[order.status] || ""}`}>
+                        {order.status}
+                      </span>
+                      <span className={styles.orderDate}>
+                        {new Date(order.createdAt).toLocaleDateString("en-IN", {
+                          day: "numeric", month: "short", year: "numeric",
+                        })}
+                      </span>
+                    </div>
+                    <div className={styles.orderUser}>
+                      {user ? `${user.username} (${user.email})` : "Unknown user"}
+                    </div>
+                    <div className={styles.orderItems}>
+                      {order.items.map((item, i) => (
+                        <span key={i} className={styles.orderItem}>
+                          {item.title} ×{item.quantity}
+                        </span>
+                      ))}
+                    </div>
+                    <div className={styles.orderTotal}>₹{order.totalAmount}</div>
+                  </div>
+                  {nextStatus && (
+                    <button
+                      className={styles.statusBtn}
+                      onClick={() => handleStatusUpdate(order._id, nextStatus)}
+                      disabled={updatingOrderId === order._id}
+                    >
+                      {updatingOrderId === order._id ? "Updating…" : STATUS_LABEL[order.status]}
+                    </button>
+                  )}
+                </div>
+              );
+            })
+          )}
+        </div>
+      )}
     </div>
   );
 };
