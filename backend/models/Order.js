@@ -19,15 +19,24 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-   
-  
+    paymentMethod: {
+      type: String,
+      enum: ["COD"],
+      default: "COD",
+      required: true,
+    },
+    paymentStatus: {
+      type: String,
+      enum: ["PENDING", "PAID", "CANCELLED"],
+      default: "PENDING",
+      required: true,
+    },
     status: {
       type: String,
       enum: ["PLACED", "SHIPPED", "DELIVERED", "CANCELLED"],
       default: "PLACED",
     },
   },
- 
   { timestamps: true }
 );
 
