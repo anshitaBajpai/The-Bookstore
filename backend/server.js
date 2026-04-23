@@ -287,10 +287,14 @@ app.post("/books/:id/reviews", authMiddleware(), async (req, res) => {
 // Place order
 app.post("/orders", authMiddleware(), async (req, res) => {
   try {
-    const { cart } = req.body;
+    const { cart, paymentMethod = "COD" } = req.body;
 
     if (!cart || cart.length === 0) {
       return res.status(400).json({ error: "Cart is empty" });
+    }
+
+    if (paymentMethod !== "COD") {
+      return res.status(400).json({ error: "Only Cash on Delivery is available right now" });
     }
 
     // Atomic stock validation + update
@@ -320,6 +324,8 @@ app.post("/orders", authMiddleware(), async (req, res) => {
         quantity: item.quantity,
       })),
       totalAmount,
+      paymentMethod,
+      paymentStatus: "PENDING",
     });
 
     await order.save();
@@ -358,6 +364,7 @@ app.put("/orders/:id/cancel", authMiddleware(), async (req, res) => {
     }
 
     order.status = "CANCELLED";
+    order.paymentStatus = "CANCELLED";
     await order.save();
     res.json(order);
   } catch (err) {
@@ -375,11 +382,13 @@ app.put("/orders/:id/status", authMiddleware(["admin"]), async (req, res) => {
       return res.status(400).json({ error: `Invalid status. Must be one of: ${validStatuses.join(", ")}` });
     }
 
-    const order = await Order.findByIdAndUpdate(
-      req.params.id,
-      { status },
-      { new: true },
-    );
+    const update = { status };
+
+    if (status === "DELIVERED") {
+      update.paymentStatus = "PAID";
+    }
+
+    const order = await Order.findByIdAndUpdate(req.params.id, update, { new: true });
 
     if (!order) {
       return res.status(404).json({ error: "Order not found" });
