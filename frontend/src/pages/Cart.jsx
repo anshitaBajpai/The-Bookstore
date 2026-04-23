@@ -17,6 +17,7 @@ function Cart() {
   } = useContext(CartContext);
 
   const [ordering, setOrdering] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("COD");
   const navigate = useNavigate();
 
   const totalPrice = cart.reduce(
@@ -29,12 +30,12 @@ function Cart() {
   const handlePlaceOrder = async () => {
     setOrdering(true);
     try {
-      await axios.post(`${API_URL}/orders`, { cart });
+      await axios.post(`${API_URL}/orders`, { cart, paymentMethod });
       clearCart();
       toast.success("Order placed successfully!");
       navigate("/orders");
     } catch (err) {
-      toast.error("Failed to place order");
+      toast.error(err.response?.data?.error || "Failed to place order");
     } finally {
       setOrdering(false);
     }
@@ -58,7 +59,12 @@ function Cart() {
             return (
               <div key={item.id || item._id} className={styles.cartItem}>
                 <div className={styles.itemImage}>
-                  <img src={item.image} alt={item.title} loading="lazy" decoding="async" />
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
 
                 <div className={styles.itemDetails}>
@@ -134,8 +140,39 @@ function Cart() {
               </span>
             </div>
 
-            <button className={styles.placeOrderBtn} onClick={handlePlaceOrder} disabled={ordering}>
-              {ordering ? "Placing Order..." : "🛍️ Place Order"}
+            <div className={styles.paymentSection}>
+              <div className={styles.paymentHeader}>
+                <p className={styles.paymentTitle}>Payment Method</p>
+                <span className={styles.paymentBadge}>COD only</span>
+              </div>
+              <label className={styles.paymentOption}>
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="COD"
+                  checked={paymentMethod === "COD"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                />
+                <span className={styles.paymentRadio}></span>
+                <span className={styles.paymentIcon}>₹</span>
+                <span className={styles.paymentCopy}>
+                  <strong>Cash on Delivery</strong>
+                  <small>
+                    Pay safely at your doorstep when your books arrive.
+                  </small>
+                </span>
+              </label>
+              <p className={styles.paymentNote}>
+                Payment will be marked paid after delivery.
+              </p>
+            </div>
+
+            <button
+              className={styles.placeOrderBtn}
+              onClick={handlePlaceOrder}
+              disabled={ordering}
+            >
+              {ordering ? "Placing COD Order..." : "Place COD Order"}
             </button>
 
             <button

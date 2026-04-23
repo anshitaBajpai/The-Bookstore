@@ -293,6 +293,9 @@ const Admin = () => {
                       <span className={`${styles.orderStatus} ${STATUS_COLOR[order.status] || ""}`}>
                         {order.status}
                       </span>
+                      <span className={styles.orderStatus}>
+                        {(order.paymentMethod || "COD")} / {(order.paymentStatus || "PENDING")}
+                      </span>
                       <span className={styles.orderDate}>
                         {new Date(order.createdAt).toLocaleDateString("en-IN", {
                           day: "numeric", month: "short", year: "numeric",
