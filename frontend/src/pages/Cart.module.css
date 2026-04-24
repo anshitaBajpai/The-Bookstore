@@ -257,6 +257,116 @@
   font-weight: 900;
 }
 
+.paymentSection {
+  margin-bottom: 20px;
+  padding: 16px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at top right, rgba(216, 183, 156, 0.22), transparent 36%),
+    linear-gradient(135deg, #fffaf4, #f5ecdf);
+  border: 1px solid #d8b79c;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.paymentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.paymentTitle {
+  margin: 0;
+  color: #2f2a24;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.paymentBadge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(166, 90, 58, 0.12);
+  color: #87452a;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.paymentOption {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255, 253, 249, 0.92);
+  border: 1.5px solid #a65a3a;
+  box-shadow: 0 12px 24px rgba(73, 54, 38, 0.08);
+  color: #2f2a24;
+  cursor: pointer;
+}
+
+.paymentOption input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.paymentRadio {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 2px solid #a65a3a;
+  box-shadow: inset 0 0 0 4px #fffaf4;
+  background: #a65a3a;
+  flex: 0 0 auto;
+}
+
+.paymentIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #2f2a24;
+  color: #fffaf4;
+  font-size: 1.15rem;
+  font-weight: 900;
+  flex: 0 0 auto;
+}
+
+.paymentCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.paymentCopy strong {
+  color: #2f2a24;
+  font-size: 0.98rem;
+}
+
+.paymentCopy small {
+  color: #6b6257;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.paymentNote {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 250, 244, 0.65);
+  color: #6b6257;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
 .placeOrderBtn {
   width: 100%;
   padding: 14px;
@@ -488,6 +598,11 @@
     font-size: 1.3rem;
   }
 
+  .paymentSection {
+    margin-bottom: 18px;
+    padding: 12px;
+  }
+
   .placeOrderBtn {
     font-size: 1rem;
     padding: 12px;
@@ -602,6 +717,10 @@
 
   .totalAmount {
     font-size: 1.2rem;
+  }
+
+  .paymentSection {
+    padding: 10px;
   }
 
   .placeOrderBtn {

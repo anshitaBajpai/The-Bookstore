@@ -13,6 +13,12 @@ const getStatusColor = (status) => {
   return "#e5e7eb";
 };
 
+const getPaymentStatusColor = (status) => {
+  if (status === "PAID") return "#bbf7d0";
+  if (status === "CANCELLED") return "#fecaca";
+  return "#fde68a";
+};
+
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [cancellingId, setCancellingId] = useState(null);
@@ -76,6 +82,13 @@ const Orders = () => {
                   style={{ background: getStatusColor(order.status) }}
                 >
                   {order.status}
+                </span>
+                <span className={styles.statusLabel}>Payment:</span>
+                <span
+                  className={styles.status}
+                  style={{ background: getPaymentStatusColor(order.paymentStatus || "PENDING") }}
+                >
+                  {(order.paymentMethod || "COD")} • {(order.paymentStatus || "PENDING")}
                 </span>
 
                 {order.status === "PLACED" && (
