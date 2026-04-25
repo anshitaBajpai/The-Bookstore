@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import { API_URL } from "../config.js";
 import styles from "./AuthPage.module.css";
 
@@ -18,8 +19,11 @@ function ForgotPassword() {
     try {
       const res = await axios.post(`${API_URL}/auth/forgot-password`, { email });
       setMessage(res.data.message);
+      toast.success(res.data.message || "Reset link sent");
     } catch (err) {
-      setError(err.response?.data?.error || "Something went wrong");
+      const message = err.response?.data?.error || "Something went wrong";
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }

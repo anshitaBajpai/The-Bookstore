@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import BookCard from "../components/BookCard";
 import styles from "./Home.module.css";
@@ -77,6 +78,7 @@ const Home = () => {
         setBooks(Array.isArray(res.data) ? res.data : res.data.books || []);
       } catch (err) {
         console.error("Failed to fetch books", err);
+        toast.error("Failed to load books");
       } finally {
         setLoading(false);
       }
