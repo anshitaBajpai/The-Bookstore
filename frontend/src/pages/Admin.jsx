@@ -31,8 +31,13 @@ const Admin = () => {
   const [activeTab, setActiveTab] = useState("books");
 
   const fetchBooks = async () => {
-    const res = await axios.get(`${API_URL}/books`);
-    setBooks(Array.isArray(res.data) ? res.data : res.data.books || []);
+    try {
+      const res = await axios.get(`${API_URL}/books`);
+      setBooks(Array.isArray(res.data) ? res.data : res.data.books || []);
+    } catch (err) {
+      console.error("Failed to fetch books", err);
+      toast.error("Failed to load books");
+    }
   };
 
   const fetchStats = async () => {
@@ -50,6 +55,7 @@ const Admin = () => {
       setOrders(res.data);
     } catch (err) {
       console.error("Failed to fetch orders", err);
+      toast.error("Failed to load orders");
     }
   };
 

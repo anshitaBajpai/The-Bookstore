@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 import styles from "./AuthPage.module.css";
 import { API_URL } from "../config.js";
 
@@ -44,6 +45,7 @@ function AuthPage() {
         localStorage.setItem("role", res.data.role);
         localStorage.setItem("username", res.data.username);
         axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
+        toast.success("Signed in successfully");
         navigate("/");
       } else {
         try {
@@ -55,17 +57,21 @@ function AuthPage() {
           localStorage.setItem("role", loginRes.data.role);
           localStorage.setItem("username", loginRes.data.username);
           axios.defaults.headers.common.Authorization = `Bearer ${loginRes.data.token}`;
+          toast.success("Account created successfully");
           navigate("/");
         } catch (loginErr) {
-          setError(
+          const message =
             loginErr.response?.data?.error ||
-              "Signup succeeded but auto-login failed",
-          );
+            "Signup succeeded but auto-login failed";
+          setError(message);
+          toast.error(message);
           setIsLogin(true);
         }
       }
     } catch (err) {
-      setError(err.response?.data?.error || "Something went wrong");
+      const message = err.response?.data?.error || "Something went wrong";
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
