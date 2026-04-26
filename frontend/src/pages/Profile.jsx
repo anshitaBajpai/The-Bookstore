@@ -14,10 +14,16 @@ function Profile() {
   const [loadingPass, setLoadingPass] = useState(false);
 
   useEffect(() => {
-    axios.get(`${API_URL}/profile`).then((res) => {
-      setProfile(res.data);
-      setUsername(res.data.username);
-    });
+    axios
+      .get(`${API_URL}/profile`)
+      .then((res) => {
+        setProfile(res.data);
+        setUsername(res.data.username);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch profile", err);
+        toast.error("Failed to load profile");
+      });
   }, []);
 
   const handleUpdateInfo = async (e) => {

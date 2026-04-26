@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import { API_URL } from "../config.js";
 import styles from "./AuthPage.module.css";
 
@@ -16,15 +17,19 @@ function ResetPassword() {
     e.preventDefault();
     if (password !== confirm) {
       setError("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
     setLoading(true);
     setError("");
     try {
       await axios.post(`${API_URL}/auth/reset-password/${token}`, { password });
+      toast.success("Password reset successfully");
       navigate("/auth");
     } catch (err) {
-      setError(err.response?.data?.error || "Invalid or expired reset link");
+      const message = err.response?.data?.error || "Invalid or expired reset link";
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
