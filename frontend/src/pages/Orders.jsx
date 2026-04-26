@@ -30,6 +30,7 @@ const Orders = () => {
         setOrders(res.data);
       } catch (err) {
         console.error("Failed to fetch orders", err);
+        toast.error("Failed to load your orders");
       }
     };
     fetchOrders();
