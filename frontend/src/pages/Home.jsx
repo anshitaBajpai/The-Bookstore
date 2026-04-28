@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,8 @@ const Home = () => {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -63,6 +65,11 @@ const Home = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearch, category, sort]);
+
   // Main books fetch
   useEffect(() => {
     const fetchBooks = async () => {
@@ -73,9 +80,12 @@ const Home = () => {
             q: debouncedSearch || undefined,
             category: category || undefined,
             sort: sort || undefined,
+            page,
+            limit: 12,
           },
         });
-        setBooks(Array.isArray(res.data) ? res.data : res.data.books || []);
+        setBooks(res.data.books || []);
+        setTotalPages(res.data.pages || 1);
       } catch (err) {
         console.error("Failed to fetch books", err);
         toast.error("Failed to load books");
@@ -84,7 +94,24 @@ const Home = () => {
       }
     };
     fetchBooks();
-  }, [debouncedSearch, category, sort]);
+  }, [debouncedSearch, category, sort, page]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const getPageNumbers = () => {
+    if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1);
+    const pages = [1];
+    if (page > 3) pages.push("…");
+    for (let i = Math.max(2, page - 1); i <= Math.min(totalPages - 1, page + 1); i++) {
+      pages.push(i);
+    }
+    if (page < totalPages - 2) pages.push("…");
+    pages.push(totalPages);
+    return pages;
+  };
 
   const handleSuggestionClick = (book) => {
     setShowSuggestions(false);
@@ -205,7 +232,7 @@ const Home = () => {
 
       <div className={styles.grid}>
         {loading ? (
-          Array(10).fill().map((_, i) => <ShimmerCard key={i} />)
+          Array(12).fill().map((_, i) => <ShimmerCard key={i} />)
         ) : books.length > 0 ? (
           books.map((book) => <BookCard key={book.id || book._id} book={book} />)
         ) : (
@@ -216,6 +243,34 @@ const Home = () => {
           </div>
         )}
       </div>
+
+      {!loading && totalPages > 1 && (
+        <div className={styles.pagination}>
+          <button
+            className={styles.pageBtn}
+            onClick={() => handlePageChange(page - 1)}
+            disabled={page === 1}
+          >←</button>
+
+          {getPageNumbers().map((p, i) =>
+            p === "…" ? (
+              <span key={`e${i}`} className={styles.pageEllipsis}>…</span>
+            ) : (
+              <button
+                key={p}
+                className={`${styles.pageBtn} ${p === page ? styles.pageBtnActive : ""}`}
+                onClick={() => handlePageChange(p)}
+              >{p}</button>
+            )
+          )}
+
+          <button
+            className={styles.pageBtn}
+            onClick={() => handlePageChange(page + 1)}
+            disabled={page === totalPages}
+          >→</button>
+        </div>
+      )}
     </div>
   );
 };
