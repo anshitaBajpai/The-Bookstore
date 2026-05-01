@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import styles from "./Admin.module.css";
@@ -29,6 +29,7 @@ const Admin = () => {
   const [orders, setOrders] = useState([]);
   const [updatingOrderId, setUpdatingOrderId] = useState(null);
   const [activeTab, setActiveTab] = useState("books");
+  const formRef = useRef(null);
 
   const fetchBooks = async () => {
     try {
@@ -115,6 +116,7 @@ const Admin = () => {
     setCategory(book.category);
     setStock(book.stock);
     setSummary(book.summary || "");
+    setTimeout(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
   };
 
   const handleDelete = async (id) => {
@@ -180,7 +182,7 @@ const Admin = () => {
 
       {activeTab === "books" && (
         <>
-          <form className={styles.form} onSubmit={handleSubmit}>
+          <form ref={formRef} className={styles.form} onSubmit={handleSubmit}>
             <input
               className={styles.input}
               placeholder="Title"
