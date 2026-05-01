@@ -137,6 +137,33 @@
   color: #fffaf4;
 }
 
+.formActions {
+  display: flex;
+  gap: 12px;
+}
+
+.formActions .primaryButton {
+  flex: 1;
+}
+
+.cancelBtn {
+  padding: 14px 24px;
+  border-radius: 999px;
+  border: 1px solid #ded6ca;
+  background: transparent;
+  color: #6b6257;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelBtn:hover {
+  background: #f3ece2;
+  color: #2f2a24;
+  border-color: #d8b79c;
+}
+
 .listContainer {
   background: linear-gradient(180deg, rgba(255, 253, 249, 0.98), rgba(243, 236, 226, 0.94));
   border-radius: 28px;

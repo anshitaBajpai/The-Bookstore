@@ -91,20 +91,24 @@ const Admin = () => {
         await axios.post(`${API_URL}/books`, payload);
         toast.success("Book added successfully");
       }
-      setTitle("");
-      setAuthor("");
-      setPrice("");
-      setImage("");
-      setCategory("");
-      setStock("");
-      setSummary("");
-      setEditingBook(null);
+      handleCancelEdit();
       fetchBooks();
     } catch (err) {
       toast.error(err.response?.data?.error || "Operation failed");
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingBook(null);
+    setTitle("");
+    setAuthor("");
+    setPrice("");
+    setImage("");
+    setCategory("");
+    setStock("");
+    setSummary("");
   };
 
   const handleEdit = (book) => {
@@ -239,9 +243,16 @@ const Admin = () => {
               onChange={(e) => setSummary(e.target.value)}
               rows={3}
             />
-            <button className={styles.primaryButton} disabled={submitting}>
-              {submitting ? "Saving..." : editingBook ? "Update Book" : "Add Book"}
-            </button>
+            <div className={styles.formActions}>
+              <button className={styles.primaryButton} disabled={submitting}>
+                {submitting ? "Saving..." : editingBook ? "Update Book" : "Add Book"}
+              </button>
+              {editingBook && (
+                <button type="button" className={styles.cancelBtn} onClick={handleCancelEdit}>
+                  Cancel
+                </button>
+              )}
+            </div>
           </form>
 
           <div className={styles.listContainer}>
