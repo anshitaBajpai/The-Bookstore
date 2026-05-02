@@ -16,6 +16,7 @@ const Home = () => {
   const [sort, setSort] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalBooks, setTotalBooks] = useState(0);
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -86,6 +87,7 @@ const Home = () => {
         });
         setBooks(res.data.books || []);
         setTotalPages(res.data.pages || 1);
+        setTotalBooks(res.data.total || 0);
       } catch (err) {
         console.error("Failed to fetch books", err);
         toast.error("Failed to load books");
@@ -229,6 +231,12 @@ const Home = () => {
           <option value="price_desc">Price: High to Low</option>
         </select>
       </div>
+
+      {!loading && totalBooks > 0 && (
+        <p className={styles.resultsCount}>
+          Showing {Math.min(books.length, totalBooks)} of {totalBooks} book{totalBooks !== 1 ? "s" : ""}
+        </p>
+      )}
 
       <div className={styles.grid}>
         {loading ? (
