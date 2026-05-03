@@ -5,19 +5,16 @@ import { Link } from "react-router-dom";
 import styles from "./Orders.module.css";
 import { API_URL } from "../config.js";
 
-const getStatusColor = (status) => {
-  if (status === "PLACED")    return "#facc15";
-  if (status === "SHIPPED")   return "#38bdf8";
-  if (status === "DELIVERED") return "#22c55e";
-  if (status === "CANCELLED") return "#f87171";
-  return "#e5e7eb";
+const STATUS_COLORS = {
+  PLACED: "#facc15",
+  SHIPPED: "#38bdf8",
+  DELIVERED: "#22c55e",
+  CANCELLED: "#f87171",
 };
+const getStatusColor = (status) => STATUS_COLORS[status] ?? "#e5e7eb";
 
-const getPaymentStatusColor = (status) => {
-  if (status === "PAID") return "#bbf7d0";
-  if (status === "CANCELLED") return "#fecaca";
-  return "#fde68a";
-};
+const PAYMENT_COLORS = { PAID: "#bbf7d0", CANCELLED: "#fecaca" };
+const getPaymentStatusColor = (status) => PAYMENT_COLORS[status] ?? "#fde68a";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -104,8 +101,8 @@ const Orders = () => {
               </div>
 
               {/* Items */}
-              {order.items.map((item, index) => (
-                <div key={index} className={styles.item}>
+              {order.items.map((item) => (
+                <div key={item.bookId} className={styles.item}>
                   <span className={styles.itemTitle}>{item.title}</span>
                   <span className={styles.itemPrice}>{item.quantity} × ₹{item.price}</span>
                   {order.status === "DELIVERED" && (
