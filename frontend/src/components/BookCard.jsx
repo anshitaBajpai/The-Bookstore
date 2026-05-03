@@ -17,11 +17,11 @@ const BookCard = ({ book }) => {
   const { addToWishlist, removeFromWishlist, isInWishlist } =
     useContext(WishlistContext);
 
-  const inWishlist = isInWishlist(book.id);
+  const inWishlist = isInWishlist(bookId);
 
   const handleWishlist = () => {
     if (inWishlist) {
-      removeFromWishlist(book.id);
+      removeFromWishlist(bookId);
     } else {
       addToWishlist(book);
     }

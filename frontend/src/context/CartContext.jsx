@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
@@ -16,13 +17,13 @@ export function CartProvider({ children }) {
       const existing = prev.find((item) => getBookId(item) === bookId);
 
       if (Number(book.stock) === 0) {
-        alert("❌ This book is out of stock.");
+        toast.error("This book is out of stock.");
         return prev;
       }
 
       if (existing) {
         if (existing.quantity >= book.stock) {
-          alert("❌ Cannot add more. Stock limit reached.");
+          toast.error("Cannot add more. Stock limit reached.");
           return prev;
         }
 
@@ -46,7 +47,7 @@ export function CartProvider({ children }) {
       prev.map((item) => {
         if (getBookId(item) === id) {
           if (item.quantity >= item.stock) {
-            alert("❌ Stock limit reached.");
+            toast.error("Stock limit reached.");
             return item;
           }
           return { ...item, quantity: item.quantity + 1 };
