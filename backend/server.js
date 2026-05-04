@@ -249,11 +249,10 @@ app.post("/books/:id/reviews", authMiddleware(), async (req, res) => {
     if (!text?.trim())
       return res.status(400).json({ error: "Review text is required." });
 
-    const deliveredOrder = await Order.findOne({
-      userId,
-      status: "DELIVERED",
-      "items.bookId": bookId,
-    });
+    const [deliveredOrder, user] = await Promise.all([
+      Order.findOne({ userId, status: "DELIVERED", "items.bookId": bookId }),
+      User.findById(userId).select("username").lean(),
+    ]);
 
     if (!deliveredOrder)
       return res.status(403).json({ error: "You can only review books you have purchased and received." });
@@ -261,17 +260,18 @@ app.post("/books/:id/reviews", authMiddleware(), async (req, res) => {
     const review = new Review({
       bookId,
       userId,
-      username: (await User.findById(userId).select("username")).username,
+      username: user.username,
       rating,
       text: text.trim(),
     });
     await review.save();
 
-    // Recalculate avgRating and reviewCount on the Book document
-    const allReviews = await Review.find({ bookId }).lean();
-    const avgRating =
-      Math.round((allReviews.reduce((s, r) => s + r.rating, 0) / allReviews.length) * 10) / 10;
-    await Book.findByIdAndUpdate(bookId, { avgRating, reviewCount: allReviews.length });
+    const [agg] = await Review.aggregate([
+      { $match: { bookId: review.bookId } },
+      { $group: { _id: null, avg: { $avg: "$rating" }, count: { $sum: 1 } } },
+    ]);
+    const avgRating = Math.round(agg.avg * 10) / 10;
+    await Book.findByIdAndUpdate(bookId, { avgRating, reviewCount: agg.count });
 
     res.status(201).json(review);
   } catch (err) {
@@ -358,10 +358,14 @@ app.put("/orders/:id/cancel", authMiddleware(), async (req, res) => {
     if (order.status !== "PLACED")
       return res.status(400).json({ error: "Only orders with status PLACED can be cancelled" });
 
-    // Restore stock for each item
-    for (const item of order.items) {
-      await Book.findByIdAndUpdate(item.bookId, { $inc: { stock: item.quantity } });
-    }
+    await Book.bulkWrite(
+      order.items.map((item) => ({
+        updateOne: {
+          filter: { _id: item.bookId },
+          update: { $inc: { stock: item.quantity } },
+        },
+      })),
+    );
 
     order.status = "CANCELLED";
     order.paymentStatus = "CANCELLED";
