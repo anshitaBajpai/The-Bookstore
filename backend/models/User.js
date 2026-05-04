@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ["user", "admin"], default: "user" },
   resetToken: { type: String },
   resetTokenExpiry: { type: Date },
+  wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Book" }],
 });
 
 export default mongoose.model("User", userSchema);
