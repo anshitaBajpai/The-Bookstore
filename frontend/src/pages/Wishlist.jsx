@@ -6,13 +6,13 @@ import { API_URL } from "../config.js";
 import styles from "./Wishlist.module.css";
 
 function Wishlist() {
-  const { wishlist, removeFromWishlist, addToWishlist } =
+  const { wishlist, removeFromWishlist, addToWishlist, loading } =
     useContext(WishlistContext);
   const navigate = useNavigate();
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    if (wishlist.length === 0) {
+    if (!loading && wishlist.length === 0) {
       axios
         .get(`${API_URL}/books`, { params: { limit: 8 } })
         .then((res) => {
@@ -24,7 +24,9 @@ function Wishlist() {
         })
         .catch(() => {});
     }
-  }, [wishlist.length]);
+  }, [wishlist.length, loading]);
+
+  if (loading) return <div className={styles.container}></div>;
 
   if (wishlist.length === 0) {
     return (
