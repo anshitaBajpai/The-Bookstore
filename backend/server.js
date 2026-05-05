@@ -494,6 +494,43 @@ app.put("/profile/password", authMiddleware(), async (req, res) => {
   }
 });
 
+/* ===================== WISHLIST ROUTES ===================== */
+
+app.get("/wishlist", authMiddleware(), async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate("wishlist").lean();
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json((user.wishlist || []).map(formatBook));
+  } catch (err) {
+    console.error("GET /wishlist ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/wishlist/:bookId", authMiddleware(), async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(req.user.id, {
+      $addToSet: { wishlist: req.params.bookId },
+    });
+    res.json({ message: "Added to wishlist" });
+  } catch (err) {
+    console.error("POST /wishlist/:bookId ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.delete("/wishlist/:bookId", authMiddleware(), async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(req.user.id, {
+      $pull: { wishlist: req.params.bookId },
+    });
+    res.json({ message: "Removed from wishlist" });
+  } catch (err) {
+    console.error("DELETE /wishlist/:bookId ERROR:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 /* ===================== Root ===================== */
 app.get("/", (req, res) => {
   res.send("📚 Bookstore API is running...");
